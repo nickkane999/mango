@@ -1,0 +1,23 @@
+.nav-menu {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-menu li {
+    display: inline-block;
+  }
+  
+  .nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    padding: 10px;
+    transition: all 0.2s;
+  }
+  
+  .nav-menu a:hover {
+    background-color: #eee;
+  }
+  
