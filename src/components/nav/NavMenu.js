@@ -1,6 +1,6 @@
-import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-import './NavMenu.css';
+import React from "react";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import "./NavMenu.css";
 
 function NavMenu() {
   return (
@@ -11,7 +11,10 @@ function NavMenu() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/chart">Chart</Nav.Link>
+            <NavDropdown title="Charts" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/chart/d3">Chart D3</NavDropdown.Item>
+              <NavDropdown.Item href="/chart/chartist">Chart Chartist</NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link href="/contact">Contact</Nav.Link>
           </Nav>
         </Navbar.Collapse>
