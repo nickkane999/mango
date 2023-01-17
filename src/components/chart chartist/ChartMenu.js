@@ -28,7 +28,7 @@ function ChartMenu() {
     setSelectedOption(chartType);
     switch (chartType) {
       case "Bar Chart":
-        setCurrentComponent(<BarChartArea />);
+        setCurrentComponent(<BarChartForm />);
         console.log("bar chart selected");
         break;
       case "Grouped Bar Chart":
