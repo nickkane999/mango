@@ -4,7 +4,6 @@ import { LineChart } from "chartist";
 import ChartMenu from "../../components/chart chartist/ChartMenu";
 import ChartArea from "../../components/chart chartist/LineChart";
 
-import * as BarChart from "../../components/chart chartist/BarChart-old";
 import * as ChartUtil from "../../components/chart chartist/ChartUtil";
 import "./ChartChartist.css";
 
@@ -17,7 +16,7 @@ function ChartChartist() {
       //setData(info);
       //console.log("my data");
       //console.log(info);
-      BarChart.load(info);
+      //BarChart.load(info);
     });
   };
 

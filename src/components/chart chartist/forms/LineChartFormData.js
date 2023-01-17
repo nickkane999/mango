@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import { LineChart } from "chartist";
 
 export const fields = [
   { name: "Labels", key: "labels", type: "input", default: true },
@@ -56,56 +56,122 @@ export const fields = [
   { name: "End Class", key: "endClass", type: "input", default: false },
 ];
 
-export const data = [
-  { key: "A", value: 0.08167 },
-  { key: "B", value: 0.01492 },
-  { key: "C", value: 0.02782 },
-  { key: "D", value: 0.04253 },
-  { key: "E", value: 0.12702 },
-  { key: "F", value: 0.02288 },
-  { key: "G", value: 0.02015 },
-  { key: "H", value: 0.06094 },
-  { key: "I", value: 0.06966 },
-  { key: "J", value: 0.00153 },
-  { key: "K", value: 0.00772 },
-  { key: "L", value: 0.04025 },
-  { key: "M", value: 0.02406 },
-  { key: "N", value: 0.06749 },
-  { key: "O", value: 0.07507 },
-  { key: "P", value: 0.01929 },
-  { key: "Q", value: 0.00095 },
-  { key: "R", value: 0.05987 },
-  { key: "S", value: 0.06327 },
-  { key: "T", value: 0.09056 },
-  { key: "U", value: 0.02758 },
-  { key: "V", value: 0.00978 },
-  { key: "W", value: 0.0236 },
-  { key: "X", value: 0.0015 },
-  { key: "Y", value: 0.01974 },
-  { key: "Z", value: 0.00074 },
-];
+export const createChart = (chartRef, formData) => {
+  new LineChart(
+    chartRef.current,
+    {
+      // The labels array is used to describe the data points.
+      labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+      // The series array is used to store the data for the chart.
+      series: formData.data ? JSON.parse(formData.data) : [[50, 20, 40, 20, 10]],
+    },
+    {
+      // The options object is used to customize the chart.
 
-export const settings = {
-  x: (d) => d.key,
-  y: (d) => d.value,
-  xDomain: d3.groupSort(
-    data,
-    ([d]) => -d.value,
-    (d) => d.key
-  ), // sort by descending value
-};
-
-export const settings_old = {
-  x: (d) => d.key,
-  y: (d) => d.value,
-  xDomain: d3.groupSort(
-    data,
-    ([d]) => -d.value,
-    (d) => d.key
-  ), // sort by descending value
-  yFormat: "%",
-  yLabel: "↑ Frequency",
-  width: 1000,
-  height: 500,
-  color: "steelblue",
+      // API Recommended options
+      // Options for X-Axis
+      // Options for X-Axis
+      axisX: {
+        // The offset of the labels to the chart area
+        offset: formData.offset_axisx ? Number(formData.offset_axisx) : 30,
+        // Position where labels are placed. Can be set to `start` or `end` where `start` is equivalent to left or top on vertical axis and `end` is equivalent to right or bottom on horizontal axis.
+        position: formData.position_axisx ? formData.position_axisx : "end",
+        // Allows you to correct label positioning on this axis by positive or negative x and y offset.
+        labelOffset: {
+          x: formData.labelOffsetX_axisx ? Number(formData.labelOffsetX_axisx) : 0,
+          y: formData.labelOffsetY_axisx ? Number(formData.labelOffsetY_axisx) : 0,
+        },
+        // If labels should be shown or not
+        // was working
+        showLabel: formData.showLabel_axisx !== undefined ? formData.showLabel_axisx : true,
+        // If the axis grid should be drawn or not
+        // (wasn't working)
+        showGrid: formData.showGrid_axisx !== undefined ? formData.showGrid_axisx : true,
+        // Interpolation function that allows you to intercept the value from the axis label
+        labelInterpolationFnc: formData.labelInterpolationFnc_axisx
+          ? formData.labelInterpolationFnc_axisx
+          : function (value) {
+              return value;
+            },
+        // Set the axis type to be used to project values on this axis. If not defined, Chartist.StepAxis will be used for the X-Axis, where the ticks option will be set to the labels in the data and the stretch option will be set to the global fullWidth option. This type can be changed to any axis constructor available (e.g. Chartist.FixedScaleAxis), where all axis options should be present here.
+        type: formData.type_axisx ? formData.type_axisx : undefined,
+      },
+      // Options for Y-Axis
+      axisY: {
+        // The offset of the labels to the chart area
+        offset: formData.offset_axisy ? Number(formData.offset_axisy) : 30,
+        // Position where labels are placed. Can be set to `start` or `end` where `start` is equivalent to left or top on vertical axis and `end` is equivalent to right or bottom on horizontal axis.
+        position: formData.position_axisy ? formData.position_axisy : "start",
+        // Allows you to correct label positioning on this axis by positive or negative x and y offset.
+        labelOffset: {
+          x: formData.labelOffsetX_axisy ? Number(formData.labelOffsetX_axisy) : 0,
+          y: formData.labelOffsetY_axisy ? Number(formData.labelOffsetY_axisy) : 0,
+        },
+        // If labels should be shown or not
+        showLabel: formData.showLabel_axisy !== undefined ? formData.showLabel_axisy : true,
+        // If the axis grid should be drawn or not
+        showGrid: formData.showGrid_axisy !== undefined ? formData.showGrid_axisy : true,
+        // Interpolation function that allows you to intercept the value from the axis label
+        labelInterpolationFnc: formData.labelInterpolationFnc_axisy
+          ? formData.labelInterpolationFnc_axisy
+          : function (value) {
+              return value;
+            },
+        // Set the axis type to be used to project values on this axis. If not defined, Chartist.AutoScaleAxis will be used for the Y-Axis, where the high and low options will be set to the global high and low options. This type can be changed to any axis constructor available (e.g. Chartist.FixedScaleAxis), where all axis options should be present here.
+        type: formData.type_axisy ? formData.type_axisy : undefined,
+        // This value specifies the minimum height in pixel of the scale steps
+        scaleMinSpace: formData.scaleMinSpace_axisy ? Number(formData.scaleMinSpace_axisy) : 30,
+        // Use only integer values (whole numbers) for the scale steps
+        onlyInteger: formData.onlyInteger_axisy !== undefined ? formData.onlyInteger_axisy : false,
+      },
+      // Specify a fixed width for the chart as a string (i.e. '100px' or '50%')
+      width: formData.width ? formData.width : undefined,
+      // Specify a fixed height for the chart as a string (i.e. '100px' or '50%')
+      height: formData.height ? formData.height : undefined,
+      // If the line should be drawn or not
+      showLine: formData.showLine !== undefined ? formData.showLine : true,
+      // If dots should be drawn or not
+      showPoint: formData.showPoint !== undefined ? formData.showPoint : true,
+      // If the line chart should draw an area
+      showArea: formData.showArea !== undefined ? formData.showArea : false,
+      // The base for the area chart that will be used to close the area shape (is normally 0)
+      areaBase: formData.areaBase ? Number(formData.areaBase) : 0,
+      // Specify if the lines should be smoothed. This value can be true or false where true will result in smoothing using the default smoothing interpolation function Chartist.Interpolation.cardinal and false results in Chartist.Interpolation.none. You can also choose other smoothing / interpolation functions available in the Chartist.Interpolation module, or write your own interpolation function. Check the examples for a brief description.
+      lineSmooth: formData.lineSmooth !== undefined ? formData.lineSmooth : true,
+      // If the line chart should add a background fill to the .ct-grids group.
+      showGridBackground: formData.showGridBackground !== undefined ? formData.showGridBackground : false,
+      // Overriding the natural low of the chart allows you to zoom in or limit the charts lowest displayed value
+      low: formData.low ? formData.low : undefined,
+      // Overriding the natural high of the chart allows you to zoom in or limit the charts highest displayed value
+      high: formData.high ? formData.high : undefined,
+      // Padding of the chart drawing area to the container element and labels as a number or padding object {top: 5, right: 5, bottom: 5, left: 5}
+      chartPadding: {
+        top: formData.chartPaddingTop ? Number(formData.chartPaddingTop) : 15,
+        right: formData.chartPaddingRight ? Number(formData.chartPaddingRight) : 5,
+        bottom: formData.chartPaddingBottom ? Number(formData.chartPaddingBottom) : 5,
+        left: formData.chartPaddingLeft ? Number(formData.chartPaddingLeft) : 10,
+      },
+      // When set to true, the last grid line on the x-axis is not drawn and the chart elements will expand to the full available width of the chart. For the last label to be drawn correctly you might need to add chart padding or offset the last label with a draw event handler.
+      fullWidth: formData.fullWidth !== undefined ? formData.fullWidth : false,
+      // If true the whole data is reversed including labels, the series order as well as the whole series data arrays.
+      reverseData: formData.reverseData !== undefined ? formData.reverseData : false,
+      // Override the class names that get used to generate the SVG structure of the chart
+      classNames: {
+        chart: formData.chartClass ? formData.chartClass : "ct-chart-line",
+        label: formData.labelClass ? formData.labelClass : "ct-label",
+        labelGroup: formData.labelGroupClass ? formData.labelGroupClass : "ct-labels",
+        series: formData.seriesClass ? formData.seriesClass : "ct-series",
+        line: formData.lineClass ? formData.lineClass : "ct-line",
+        point: formData.pointClass ? formData.pointClass : "ct-point",
+        area: formData.areaClass ? formData.areaClass : "ct-area",
+        grid: formData.gridClass ? formData.gridClass : "ct-grid",
+        gridGroup: formData.gridGroupClass ? formData.gridGroupClass : "ct-grids",
+        gridBackground: formData.gridBackgroundClass ? formData.gridBackgroundClass : "ct-grid-background",
+        vertical: formData.verticalClass ? formData.verticalClass : "ct-vertical",
+        horizontal: formData.horizontalClass ? formData.horizontalClass : "ct-horizontal",
+        start: formData.startClass ? formData.startClass : "ct-start",
+        end: formData.endClass ? formData.endClass : "ct-end",
+      },
+    }
+  );
 };

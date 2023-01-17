@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Form, FormGroup, Container, Button, Row, Col } from "react-bootstrap";
 
 const ChartForm = (props) => {
   const { fields, updateFormInput, updateFormCheckbox, handleSubmit } = props;
 
+  // Form Logic
   const handleDisplayOptions = (event) => {
     if (event.target.checked) {
       document.querySelector(".displayOptions").style.display = "block";
@@ -19,6 +20,38 @@ const ChartForm = (props) => {
     }
   };
 
+  // Form HTML
+  const createCheckbox = (field) => {
+    return (
+      <Col className="form-group" xs={4}>
+        <Form.Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
+          <Form.Check type="checkbox" label={field.name} onChange={updateFormCheckbox} defaultChecked={false} name={field.key} />
+        </Form.Group>
+      </Col>
+    );
+  };
+
+  const createInputField = (field) => {
+    return (
+      <Col className="form-group" xs={4}>
+        <Form.Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
+          <Form.Label>{field.name}</Form.Label>
+          <Form.Control placeholder={field.name} onChange={updateFormInput} name={field.key} />
+        </Form.Group>
+      </Col>
+    );
+  };
+
+  const createCheckboxDisplayOptions = (field) => {
+    return (
+      <Col xs={3}>
+        <Form.Group key={field.key}>
+          <Form.Check type="checkbox" label={field.name} onChange={(event) => toggleFormField(event, field.key)} defaultChecked={false} />
+        </Form.Group>
+      </Col>
+    );
+  };
+
   return (
     <>
       <Container>
@@ -26,22 +59,9 @@ const ChartForm = (props) => {
           <Form onSubmit={handleSubmit}>
             {fields.map((field) => {
               if (field.type === "checkbox") {
-                return (
-                  <Col className="form-group" xs={4}>
-                    <Form.Group className={!field.default ? field.key + " field hidden" : field.key + " field"} key={field.key}>
-                      <Form.Check type="checkbox" label={field.name} onChange={updateFormCheckbox} defaultChecked={false} name={field.key} />
-                    </Form.Group>
-                  </Col>
-                );
+                return createCheckbox(field);
               } else if (field.type === "input") {
-                return (
-                  <Col className="form-group" xs={4}>
-                    <Form.Group className={!field.default ? field.key + " field hidden" : field.key + " field"} key={field.key}>
-                      <Form.Label>{field.name}</Form.Label>
-                      <Form.Control placeholder={field.name} onChange={updateFormInput} name={field.key} />
-                    </Form.Group>
-                  </Col>
-                );
+                return createInputField(field);
               }
             })}
             <Button variant="primary" type="submit">
@@ -59,13 +79,7 @@ const ChartForm = (props) => {
           <Row>
             {fields.map((field) => {
               if (field.default === false) {
-                return (
-                  <Col xs={3}>
-                    <Form.Group key={field.key}>
-                      <Form.Check type="checkbox" label={field.name} onChange={(event) => toggleFormField(event, field.key)} defaultChecked={false} />
-                    </Form.Group>
-                  </Col>
-                );
+                return createCheckboxDisplayOptions(field);
               }
             })}
           </Row>
