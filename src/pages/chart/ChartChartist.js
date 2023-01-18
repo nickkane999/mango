@@ -1,9 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { LineChart } from "chartist";
-
+import React, { useEffect } from "react";
 import ChartMenu from "../../components/chart chartist/ChartMenu";
-import ChartArea from "../../components/chart chartist/LineChart";
-
 import * as ChartUtil from "../../components/chart chartist/ChartUtil";
 import "./ChartChartist.css";
 
@@ -23,11 +19,6 @@ function ChartChartist() {
   return (
     <div>
       <h1>Chart Builder - Chartist</h1>
-      {/* 
-        <ChartMenu />
-        <ChartArea />      
-        <ChartistGraph data={data} options={options} type={type} listener={listener}/>
-      */}
       <ChartMenu />
     </div>
   );

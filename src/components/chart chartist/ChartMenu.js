@@ -14,7 +14,7 @@ function ChartMenu() {
     console.log(key);
     let data = chartLayouts[key];
     setSelectedOption(data);
-    setCurrentComponent(<ChartSection fields={data.fields} createChart={data.createChart} />);
+    setCurrentComponent(<ChartSection settings={data.settings} />);
   };
 
   const displayChartOptions = () => {

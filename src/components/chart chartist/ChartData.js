@@ -1,17 +1,23 @@
-import { fields as barFields, createChart as barCreateChart } from "./forms/BarChartFormData";
-import { fields as lineFields, createChart as lineCreateChart } from "./forms/LineChartFormData";
+import { fields as barFields, createChart as barCreateChart, template as barChartTemplate } from "./form-data/BarChartFormData";
+import { fields as lineFields, createChart as lineCreateChart, template as lineChartTemplate } from "./form-data/LineChartFormData";
 
 export const chartLayouts = {
   bar: {
     title: "Bar Chart",
     key: "bar",
-    fields: barFields,
-    createChart: barCreateChart,
+    settings: {
+      fields: barFields,
+      createChart: barCreateChart,
+      template: barChartTemplate,
+    },
   },
   line: {
     title: "Line Chart",
     key: "line",
-    fields: lineFields,
-    createChart: lineCreateChart,
+    settings: {
+      fields: lineFields,
+      createChart: lineCreateChart,
+      template: lineChartTemplate,
+    },
   },
 };

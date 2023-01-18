@@ -5,3 +5,9 @@
   float: left;
   padding: 0 10px;
 }
+.section {
+  margin: 20px 0;
+}
+.chartSettings button {
+  margin: 10px;
+}
