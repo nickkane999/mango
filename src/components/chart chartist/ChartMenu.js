@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import "./ChartMenu.css";
 import { chartLayouts } from "./ChartData";
 import ChartSection from "./forms/ChartSection";
-import PieChartArea from "./PieChart";
+//import PieChartArea from "./PieChart";
 
 function ChartMenu() {
-  const [data, setData] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
+  //const [selectedOption, setSelectedOption] = useState("");
   const [currentComponent, setCurrentComponent] = useState(null);
 
   const selectChartType = (key) => {
     console.log(key);
     let data = chartLayouts[key];
-    setSelectedOption(data);
+    //setSelectedOption(data);
     setCurrentComponent(<ChartSection settings={data.settings} />);
   };
 

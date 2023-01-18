@@ -16,6 +16,7 @@ function NavMenu() {
               <NavDropdown.Item href="/chart/chartist">Chart Chartist</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/contact">Contact</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
