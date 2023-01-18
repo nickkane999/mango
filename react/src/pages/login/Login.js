@@ -1,6 +1,7 @@
 import React from "react";
 import "./Login.css";
 import { useQuery, useMutation } from "react-query";
+import axios from "axios";
 
 function Login() {
   const loginQuery = useQuery({
@@ -13,7 +14,18 @@ function Login() {
 
   const createAccountMutation = useMutation({
     mutationFn: (info) => {
-      return fetch("https://localhost:5001/api/login").then((res) => res.json());
+      return axios
+        .post("http://localhost:5000/create-user", {
+          first_name: info.first_name,
+          last_name: info.last_name,
+          username: info.username,
+          email: info.email,
+          password: info.password,
+        })
+        .then((response) => response.data)
+        .catch((error) => {
+          throw error;
+        });
     },
     onSuccess: (data) => {
       console.log(data);
