@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./Login.css";
-import { useQuery, useMutation } from "react-query";
-import axios from "axios";
-import { gql, useLazyQuery, useQuery as useQueryApollo } from "@apollo/client";
-import { GET_USERS, LOGIN_USER } from "../../graphQL/queries";
-import { getCookie, setCookie } from "../../util/cookies";
+//import { useQuery, useMutation } from "react-query";
+import { useLazyQuery } from "@apollo/client";
+import { LOGIN_USER } from "../../graphQL/queries";
+import { setCookie } from "../../util/cookies";
 
 function Login() {
   const userRef = useRef();

@@ -28,9 +28,27 @@ module.exports = gql`
     password: String!
   }
 
-  input RecipeInput {
+  type Chart {
+    id: ID!
     name: String!
-    description: String!
+    type: String!
+    createdDate: String!
+    updatedDate: String!
+    user: User!
+    json: String!
+  }
+
+  input CreateChartInput {
+    name: String!
+    type: String!
+    json: String!
+    userId: ID!
+  }
+
+  input UpdateChartInput {
+    name: String
+    type: String
+    json: String
   }
 
   type Query {
@@ -38,9 +56,14 @@ module.exports = gql`
     user(id: ID!): User
     userByName(username: String!): User
     getUsers(amount: Int!): [User]
+    getCharts(amount: Int!): [Chart]
+    getChartsByUser(userId: ID!): [Chart]
   }
   type Mutation {
     createUser(createUserInput: CreateUserInput): User!
+    createChart(createChartInput: CreateChartInput): Chart!
+    updateChart(id: ID!, updateChartInput: UpdateChartInput): Chart!
+    deleteChart(id: ID!): Boolean!
     deleteUser(id: ID!): Boolean!
     editUser(id: ID!, editUserInput: EditUserInput): User!
   }

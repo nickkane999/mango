@@ -1,3 +1,4 @@
+/*
 const { buildSchema } = require("graphql");
 
 const schema = buildSchema(`
@@ -18,3 +19,4 @@ const schema = buildSchema(`
 `);
 
 module.exports = schema;
+*/
