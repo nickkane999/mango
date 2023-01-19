@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, FormGroup, Container, Button, Row, Col } from "react-bootstrap";
+import { Form, Container, Button, Row, Col } from "react-bootstrap";
 import "./ChartForm.css";
 
 const ChartForm = (props) => {
@@ -29,12 +29,13 @@ const ChartForm = (props) => {
   };
 
   // Form HTML components
+  const { Control, Label, Group, Check } = Form;
   const createCheckbox = (field) => {
     return (
       <Col className="form-group" xs={4}>
-        <Form.Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
-          <Form.Check type="checkbox" label={field.name} onChange={functions.updateFormCheckbox} defaultChecked={false} name={field.key} />
-        </Form.Group>
+        <Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
+          <Check type="checkbox" label={field.name} onChange={functions.updateFormCheckbox} defaultChecked={false} name={field.key} />
+        </Group>
       </Col>
     );
   };
@@ -42,10 +43,10 @@ const ChartForm = (props) => {
   const createInputField = (field) => {
     return (
       <Col className="form-group" xs={4}>
-        <Form.Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
-          <Form.Label>{field.name}</Form.Label>
-          <Form.Control placeholder={field.name} onChange={functions.updateFormInput} name={field.key} />
-        </Form.Group>
+        <Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
+          <Label>{field.name}</Label>
+          <Control placeholder={field.name} onChange={functions.updateFormInput} name={field.key} />
+        </Group>
       </Col>
     );
   };
@@ -53,9 +54,9 @@ const ChartForm = (props) => {
   const createCheckboxDisplayOptions = (field) => {
     return (
       <Col xs={3}>
-        <Form.Group key={field.key}>
-          <Form.Check type="checkbox" label={field.name} onChange={(event) => toggleFormField(event, field.key)} defaultChecked={false} />
-        </Form.Group>
+        <Group key={field.key}>
+          <Check type="checkbox" label={field.name} onChange={(event) => toggleFormField(event, field.key)} defaultChecked={false} />
+        </Group>
       </Col>
     );
   };
@@ -66,23 +67,23 @@ const ChartForm = (props) => {
       <Container className="section">
         <Row>
           <h2>Chart Settings</h2>
-          <Form.Group key="displayOptionSettings">
-            <Form.Check type="checkbox" label="Display Chart JSON" onChange={(event) => handleDisplayOptions(event, "settings")} defaultChecked={true} />
-          </Form.Group>
-          <Form.Group key="displayOptionFormFields">
-            <Form.Check type="checkbox" label="Chart Form" onChange={(event) => handleDisplayOptions(event, "form_fields")} defaultChecked={true} />
-          </Form.Group>
-          <Form.Group key="displayOptionFields">
-            <Form.Check type="checkbox" label="Select Chart Fields" onChange={(event) => handleDisplayOptions(event, "fields")} defaultChecked={true} />
-          </Form.Group>
+          <Group key="displayOptionSettings">
+            <Check type="checkbox" label="Display Chart JSON" onChange={(event) => handleDisplayOptions(event, "settings")} defaultChecked={true} />
+          </Group>
+          <Group key="displayOptionFormFields">
+            <Check type="checkbox" label="Chart Form" onChange={(event) => handleDisplayOptions(event, "form_fields")} defaultChecked={true} />
+          </Group>
+          <Group key="displayOptionFields">
+            <Check type="checkbox" label="Select Chart Fields" onChange={(event) => handleDisplayOptions(event, "fields")} defaultChecked={true} />
+          </Group>
           <Container className="chartSettingsError">
             <p className="error"></p>
           </Container>
           <Container className="chartSettings">
-            <Form.Group key="chartJSON" className="chartJSON">
-              <Form.Label>Enter JSON here</Form.Label>
-              <Form.Control as="textarea" rows="10" placeholder="Chart progress" onChange={functions.updateChartJSON} name="chartJSON" />
-            </Form.Group>
+            <Group key="chartJSON" className="chartJSON">
+              <Label>Enter JSON here</Label>
+              <Control as="textarea" rows="10" placeholder="Chart progress" onChange={functions.updateChartJSON} name="chartJSON" />
+            </Group>
             <Button variant="primary" type="submit" onClick={functions.loadChartJSON}>
               Load Chart
             </Button>

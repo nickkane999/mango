@@ -30,20 +30,21 @@ function GroupedBarChartForm() {
         chartUtil.loadNumbers(nums)
         */
   };
+  const { Control, Label, Group } = Form;
 
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
         {fields.map((field) => (
-          <Form.Group key={field.key}>
-            <Form.Label>{field.name}</Form.Label>
-            <Form.Control
+          <Group key={field.key}>
+            <Label>{field.name}</Label>
+            <Control
               placeholder={field.name}
               onChange={handleChange}
               name={field.key}
               /* value={field.default ? field.default : ''} */
             />
-          </Form.Group>
+          </Group>
         ))}
         <Button variant="primary" type="submit">
           Update

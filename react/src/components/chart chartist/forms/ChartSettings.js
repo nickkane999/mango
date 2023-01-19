@@ -21,12 +21,13 @@ const ChartSettings = (props) => {
   };
 
   // Form HTML
+  const { Control, Label, Group, Check } = Form;
   const createCheckbox = (field) => {
     return (
       <Col className="form-group" xs={4}>
-        <Form.Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
-          <Form.Check type="checkbox" label={field.name} onChange={updateFormCheckbox} defaultChecked={false} name={field.key} />
-        </Form.Group>
+        <Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
+          <Check type="checkbox" label={field.name} onChange={updateFormCheckbox} defaultChecked={false} name={field.key} />
+        </Group>
       </Col>
     );
   };
@@ -34,10 +35,10 @@ const ChartSettings = (props) => {
   const createInputField = (field) => {
     return (
       <Col className="form-group" xs={4}>
-        <Form.Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
-          <Form.Label>{field.name}</Form.Label>
-          <Form.Control placeholder={field.name} onChange={updateFormInput} name={field.key} />
-        </Form.Group>
+        <Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
+          <Label>{field.name}</Label>
+          <Control placeholder={field.name} onChange={updateFormInput} name={field.key} />
+        </Group>
       </Col>
     );
   };
@@ -45,9 +46,9 @@ const ChartSettings = (props) => {
   const createCheckboxDisplayOptions = (field) => {
     return (
       <Col xs={3}>
-        <Form.Group key={field.key}>
-          <Form.Check type="checkbox" label={field.name} onChange={(event) => toggleFormField(event, field.key)} defaultChecked={false} />
-        </Form.Group>
+        <Group key={field.key}>
+          <Check type="checkbox" label={field.name} onChange={(event) => toggleFormField(event, field.key)} defaultChecked={false} />
+        </Group>
       </Col>
     );
   };
@@ -72,9 +73,9 @@ const ChartSettings = (props) => {
       </Container>
       <Container>
         <h2> Show Fields</h2>
-        <Form.Group key="displayOptions">
-          <Form.Check type="checkbox" label="Display Options" onChange={handleDisplayOptions} defaultChecked={true} />
-        </Form.Group>
+        <Group key="displayOptions">
+          <Check type="checkbox" label="Display Options" onChange={handleDisplayOptions} defaultChecked={true} />
+        </Group>
         <Container className="displayOptions">
           <Row>
             {fields.map((field) => {
