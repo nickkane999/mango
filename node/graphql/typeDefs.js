@@ -1,45 +1,47 @@
 const { gql } = require("apollo-server");
 
 module.exports = gql`
-  type Recipe {
-    id: ID!
-    name: String!
-    description: String!
-    category: String
-    instructions: String
-    createdDate: String
-    likes: Int
-  }
   type User {
     id: ID!
-    email: String!
-    token: String!
-    username: String!
-    createdAt: String!
-  }
-  input RegisterInput {
     username: String!
     password: String!
-    confirmPassword: String!
-    email: String!
+    email: String
+    createdDate: String!
+    updatedDate: String!
   }
+  type AuthUser {
+    user: User!
+    token: String!
+  }
+  input CreateUserInput {
+    username: String!
+    password: String!
+    confirmPassword: String
+  }
+  input EditUserInput {
+    username: String
+    password: String
+    email: String
+  }
+  input LoginInput {
+    username: String!
+    password: String!
+  }
+
   input RecipeInput {
     name: String!
     description: String!
   }
 
-  input EditRecipeInput {
-    name: String!
-  }
-
   type Query {
-    recipe(id: ID!): Recipe
-    getRecipes(amount: Int!): [Recipe]
+    login(loginInput: LoginInput!): AuthUser!
+    user(id: ID!): User
+    userByName(username: String!): User
+    getUsers(amount: Int!): [User]
   }
   type Mutation {
-    createRecipe(recipeInput: RecipeInput): Recipe!
-    deleteRecipe(ID: ID!): Boolean!
-    editRecipe(ID: ID!, recipeInput: RecipeInput): Recipe!
-    register(registerInput: RegisterInput): User!
+    createUser(createUserInput: CreateUserInput): User!
+    deleteUser(id: ID!): Boolean!
+    editUser(id: ID!, editUserInput: EditUserInput): User!
   }
 `;
