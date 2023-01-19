@@ -1,5 +1,5 @@
-import React from 'react';
-import './Contact.css';
+import { useContext } from "react";
+import "./Contact.css";
 
 function Contact() {
   return (
