@@ -11,3 +11,16 @@
 .chartSettings button {
   margin: 10px;
 }
+.chart-selection {
+  margin-top: 20px;
+}
+.chart-selection-options button {
+  float: left;
+  margin: 20px;
+}
+.save-chart-json {
+  margin-top: 20px;
+}
+.no-user-charts {
+  margin-top: 20px;
+}

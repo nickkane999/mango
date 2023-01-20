@@ -7,10 +7,12 @@ import ChartSection from "./forms/ChartSection";
 
 function ChartMenu() {
   //const [selectedOption, setSelectedOption] = useState("");
+  const [selectedChartName, setSelectedChartName] = useState("Select a Chart Type");
   const [currentComponent, setCurrentComponent] = useState(null);
 
   const selectChartType = (key) => {
     let data = chartLayouts[key];
+    setSelectedChartName(data.title);
     //setSelectedOption(data);
     setCurrentComponent(<ChartSection settings={data.settings} chartType={key} />);
   };
@@ -25,9 +27,9 @@ function ChartMenu() {
 
   return (
     <div className="chart-form">
-      <Dropdown id="dropdown-chart-type" onSelect={selectChartType}>
+      <Dropdown id="dropdown-chart-type" className="chart-select" onSelect={selectChartType}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Select an option
+          {selectedChartName ? selectedChartName : "Select a Chart Type"}
         </Dropdown.Toggle>
         <Dropdown.Menu>{displayChartOptions()}</Dropdown.Menu>
       </Dropdown>

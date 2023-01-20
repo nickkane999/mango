@@ -11,6 +11,9 @@ export const fields = [
   { name: "ShowGrid Axis X", key: "showGrid_axisx", type: "checkbox", default: false },
   { name: "LabelInterpolationFnc Axis X", key: "labelInterpolationFnc_axisx", type: "input", default: false },
   { name: "Type Axis X", key: "type_axisx", type: "input", default: false },
+  { name: "OnlyInteger Axis X", key: "onlyInteger_axisx", type: "input", default: false },
+  { name: "ScaleMinSpace Axis X", key: "scaleMinSpace_axisx", type: "input", default: false },
+
   { name: "Offset Axis Y", key: "offset_axisy", type: "input", default: false },
   { name: "Position Axis Y", key: "position_axisy", type: "input", default: false },
   { name: "LabelOffsetX Axis Y", key: "labelOffsetX_axisy", type: "input", default: false },

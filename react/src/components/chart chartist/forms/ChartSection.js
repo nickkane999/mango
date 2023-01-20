@@ -1,13 +1,20 @@
 import React, { useState, useRef } from "react";
 import { Container } from "react-bootstrap";
 import ChartForm from "./ChartForm";
+import { useMutation } from "@apollo/client";
+import { UPDATE_CHART_BY_USER, CREATE_CHART_BY_USER } from "../../../graphQL/queries";
+import { user } from "../../../util/general";
+
 //import ChartSettings from "./ChartSettings";
 
 const ChartSection = (props) => {
   const [formData, setFormData] = useState({});
   const [chartJSON, setChartJSON] = useState();
   const { fields, createChart, template } = props.settings;
+  const [updateChartQuery] = useMutation(UPDATE_CHART_BY_USER);
+  const [createChartQuery] = useMutation(CREATE_CHART_BY_USER);
   const chartContainer = useRef(null);
+  const chartType = props.chartType;
 
   // Form field / submission functions
   const updateFormInput = (event) => {
@@ -40,10 +47,16 @@ const ChartSection = (props) => {
   };
 
   const updateFormData = (chartData) => {
+    // Console log statements help determine if saved json data has same (no extra)
+    // fields compared to the fields defined in the respective form-data file
     Object.entries(chartData).forEach(([key, value]) => {
+      //console.log(`${key}: ${value}`);
       if (typeof value === "boolean") {
+        //console.log(`${key}: ${value}`);
         document.querySelector(`.${key} input`).checked = value;
       } else {
+        //console.log("could be funny data type");
+        //console.log(`${key}: ${value}`);
         document.querySelector(`.${key} input`).value = value;
       }
     });
@@ -62,12 +75,56 @@ const ChartSection = (props) => {
       updateFormData(chartData);
       console.log(chartData);
     } catch (error) {
-      document.querySelector(".chartSettingsError .error").innerHTML = "Invalid JSON";
+      //document.querySelector(".chartSettingsError .error").innerHTML = "Invalid JSON";
     }
   };
 
-  const saveChartJSON = (event) => {
-    document.querySelector(".chartJSON textarea").value = JSON.stringify(formData, null, "\t");
+  const saveChartJSON = (saveChartName) => {
+    let chartJSON = document.querySelector(".chartJSON textarea").value;
+    let createChartInput = {
+      json: chartJSON,
+      name: saveChartName,
+      type: chartType,
+      userId: user.id,
+    };
+    //console.log(createChartInput);
+    //console.log("Saving chart to user");
+    //console.log(chartJSON);
+
+    if (user && user.id) {
+      createChartQuery({
+        variables: {
+          createChartInput,
+        },
+
+        onCompleted: (data) => {
+          console.log(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    }
+  };
+
+  const updateChartForAccount = (chart) => {
+    let chartJSON = document.querySelector(".chartJSON textarea").value;
+    if (chart.id) {
+      updateChartQuery({
+        variables: {
+          updateChartId: chart.id,
+          updateChartInput: {
+            json: chartJSON,
+          },
+        },
+        onCompleted: (data) => {
+          console.log(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    }
   };
 
   const loadChartJSONTemplate = () => {
@@ -75,8 +132,6 @@ const ChartSection = (props) => {
     document.querySelector(".chartJSON textarea").value = JSON.stringify(template, null, "\t");
     createChart(chartContainer, template);
     updateFormData(template);
-
-    console.log(template);
   };
 
   const hasChartType = (charts, type) => {
@@ -106,7 +161,18 @@ const ChartSection = (props) => {
     }
   };
 
-  const functions = { updateFormInput, updateFormCheckbox, handleSubmit, updateChartJSON, loadChartJSON, saveChartJSON, loadChartJSONTemplate, loadChartJSONFromAccount, hasChartType };
+  const functions = {
+    updateFormInput,
+    updateFormCheckbox,
+    handleSubmit,
+    updateChartJSON,
+    loadChartJSON,
+    saveChartJSON,
+    loadChartJSONTemplate,
+    loadChartJSONFromAccount,
+    updateChartForAccount,
+    hasChartType,
+  };
 
   return (
     <>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
-import { GET_CHARTS_BY_USER } from "../../../graphQL/queries";
+import { GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER } from "../../../graphQL/queries";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { user } from "../../../util/general";
 import "./ChartForm.css";
@@ -8,9 +8,11 @@ import "./ChartForm.css";
 const ChartForm = (props) => {
   const chartType = props.chartType;
   const [loadChartsQuery, { data }] = useLazyQuery(GET_CHARTS_BY_USER);
+  const [updateChartQuery] = useMutation(UPDATE_CHART_BY_USER);
   const { fields, functions } = props;
   const [settings, setText] = useState("");
   const [selectedChart, setSelectedChart] = useState({ name: "Load Existing Chart" });
+  const [saveChartName, setSaveChartName] = useState("");
   const formSections = {
     fields: ".displayOptions",
     settings: ".chartSettings",
@@ -88,42 +90,64 @@ const ChartForm = (props) => {
     );
   };
 
+  const handleSaveChartName = (event) => {
+    setSaveChartName(event.target.value);
+  };
+
   // Form HTML sections
   const createChartSettings = () => {
     return (
       <Container className="section">
         <Row>
           <h2>Chart Settings</h2>
-          <Group key="displayOptionSettings">
-            <Check type="checkbox" label="Display Chart JSON" onChange={(event) => handleDisplayOptions(event, "settings")} defaultChecked={true} />
-          </Group>
-          <Group key="displayOptionFormFields">
-            <Check type="checkbox" label="Chart Form" onChange={(event) => handleDisplayOptions(event, "form_fields")} defaultChecked={true} />
-          </Group>
-          <Group key="displayOptionFields">
-            <Check type="checkbox" label="Select Chart Fields" onChange={(event) => handleDisplayOptions(event, "fields")} defaultChecked={true} />
-          </Group>
-          {data && functions.hasChartType(data.getChartsByUser, chartType) ? (
-            <Group key="loadChart">
-              <Dropdown title="Charts" id="basic-nav-dropdown">
-                <Toggle variant="success" id="dropdown-basic">
-                  {selectedChart ? selectedChart.name : "Load Existing Chart"}
-                </Toggle>
-                <Menu>
-                  {data.getChartsByUser.map((chart) => {
-                    return (
-                      <Item key={chart.id} value={chart.id} onClick={() => pullChart(chart)}>
-                        {chart.name}
-                      </Item>
-                    );
-                  })}
-                </Menu>
-              </Dropdown>
-              <Button onClick={() => functions.loadChartJSONFromAccount(selectedChart)}>Submit</Button>
+          <Col xs={6}>
+            <Group key="displayOptionSettings">
+              <Check type="checkbox" label="Display Chart JSON" onChange={(event) => handleDisplayOptions(event, "settings")} defaultChecked={true} />
             </Group>
-          ) : (
-            <p> No {chartType} charts found for this user </p>
-          )}
+            <Group key="displayOptionFormFields">
+              <Check type="checkbox" label="Chart Form" onChange={(event) => handleDisplayOptions(event, "form_fields")} defaultChecked={true} />
+            </Group>
+            <Group key="displayOptionFields">
+              <Check type="checkbox" label="Select Chart Fields" onChange={(event) => handleDisplayOptions(event, "fields")} defaultChecked={true} />
+            </Group>
+            {data && functions.hasChartType(data.getChartsByUser, chartType) ? (
+              <>
+                <Col className="chart-selection" xs={12}>
+                  <Group key="loadChart" className="load-chart">
+                    <Dropdown title="Charts" id="basic-nav-dropdown">
+                      <Toggle variant="success" id="dropdown-basic">
+                        {selectedChart ? selectedChart.name : "Load Existing Chart"}
+                      </Toggle>
+                      <Menu>
+                        {data.getChartsByUser.map((chart) => {
+                          return (
+                            <Item key={chart.id} value={chart.id} onClick={() => pullChart(chart)}>
+                              {chart.name}
+                            </Item>
+                          );
+                        })}
+                      </Menu>
+                    </Dropdown>
+                  </Group>
+                </Col>
+                <Col className="chart-selection-options" xs={12}>
+                  <Button onClick={() => functions.loadChartJSONFromAccount(selectedChart)}>Load Selected JSON</Button>
+                  <Button onClick={() => functions.updateChartForAccount(selectedChart)}>Update Selected JSON</Button>
+                </Col>
+              </>
+            ) : (
+              <p className="no-user-charts"> No {chartType} charts found for this user </p>
+            )}
+          </Col>
+          <Col xs={6}>
+            <Group key="addChartToAccount">
+              <Label>Add Chart to Account</Label>
+              <Control placeholder="Chart Name" name="chartName" onChange={handleSaveChartName} />
+            </Group>
+            <Button variant="primary" type="submit" className="save-chart-json" onClick={() => functions.saveChartJSON(saveChartName)}>
+              Save Chart JSON
+            </Button>
+          </Col>
 
           <Container className="chartSettingsError">
             <p className="error"></p>
@@ -134,10 +158,7 @@ const ChartForm = (props) => {
               <Control as="textarea" rows="10" placeholder="Chart progress" onChange={functions.updateChartJSON} name="chartJSON" />
             </Group>
             <Button variant="primary" type="submit" onClick={functions.loadChartJSON}>
-              Load Chart
-            </Button>
-            <Button variant="primary" type="submit" onClick={functions.saveChartJSON}>
-              Save Chart
+              Load Chart From JSON
             </Button>
             <Button variant="primary" type="submit" onClick={functions.loadChartJSONTemplate}>
               Load Template
@@ -162,7 +183,7 @@ const ChartForm = (props) => {
               }
             })}
             <Button variant="primary" type="submit">
-              Update
+              Load Chart From Form
             </Button>
           </Form>
         </Row>

@@ -48,6 +48,20 @@ const DELETE_CHART_BY_USER = gql`
   }
 `;
 
+const CREATE_CHART_BY_USER = gql`
+  mutation CreateChart($createChartInput: CreateChartInput) {
+    createChart(createChartInput: $createChartInput) {
+      id
+      json
+      name
+      type
+      user {
+        id
+      }
+    }
+  }
+`;
+
 // Misc queries
 const GET_USERS = gql`
   query getUsers($amount: Int!) {
@@ -74,4 +88,4 @@ const GET_USER = gql`
   }
 `;
 
-export { GET_USERS, GET_USER, LOGIN_USER, GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, DELETE_CHART_BY_USER };
+export { GET_USERS, GET_USER, LOGIN_USER, GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, DELETE_CHART_BY_USER, CREATE_CHART_BY_USER };
