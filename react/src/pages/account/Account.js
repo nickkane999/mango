@@ -3,74 +3,113 @@ import { Form, Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Account.css";
 //import { useQuery, useMutation } from "react-query";
-import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, DELETE_CHART_BY_USER } from "../../graphQL/queries";
-import { getCookie } from "../../util/cookies";
+import { user, formattedDate } from "../../util/general";
 
 function Account() {
-  const [getChartsByUser, { data, error }] = useLazyQuery(GET_CHARTS_BY_USER);
-  const [updateChartByUser] = useMutation(UPDATE_CHART_BY_USER);
-  const [deleteChartByUser] = useMutation(DELETE_CHART_BY_USER);
+  const userId = user.id;
+  const [loadChartsQuery, { data }] = useLazyQuery(GET_CHARTS_BY_USER);
+  const [updateChartQuery] = useMutation(UPDATE_CHART_BY_USER);
+  const [deleteChartQuery] = useMutation(DELETE_CHART_BY_USER, {
+    refetchQueries: [{ query: GET_CHARTS_BY_USER, variables: { userId: userId } }],
+  });
+
+  const renderMaps = () => {
+    if (data && data.getChartsByUser.length > 0) {
+      console.log(data);
+      return (
+        <>
+          {data.getChartsByUser.map((chart, i) => (
+            <Col className="chart" key={chart.id} xs={6}>
+              <p>Name: {chart.name}</p>
+              <p>Type: {chart.type}</p>
+              <p>Created Date: {formattedDate(chart.createdDate)}</p>
+              <p>Updated Date: {formattedDate(chart.updatedDate)}</p>
+              <p>JSON: </p>
+              <Group>
+                <Label>Update JSON here</Label>
+                <Control className={"chart-json-" + i} as="textarea" rows="10" placeholder="Chart progress" name={"chart-json-" + i} defaultValue={chart.json} />
+                <Button onClick={() => updateChart(chart.id, i)}>Update JSON</Button>
+                <Button onClick={() => deleteChart(chart.id)}>Delete Chart</Button>
+              </Group>
+            </Col>
+          ))}
+        </>
+      );
+    } else {
+      return <p>No charts found</p>;
+    }
+  };
 
   const loadCharts = () => {
-    getChartsByUser({
-      variables: { userId: "63c8b3577b35c6af83c0aafb" },
-      onCompleted: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    });
+    if (user.id) {
+      loadChartsQuery({
+        variables: { userId: user.id },
+        onCompleted: (data) => {
+          console.log("charts loaded");
+          console.log(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    }
   };
 
-  // Need to fix issue where these functions are called on page load
-  // ask chatGPT for help
-  const updateJSON = (chartID) => {
-    console.log("would update");
-    console.log(chartID);
+  const updateChart = (chartid, index) => {
+    console.log("update chart");
+    if (chartid && user.id) {
+      const chartJSON = document.querySelector(".chart-json-" + index).value;
+      updateChartQuery({
+        variables: {
+          updateChartId: chartid,
+          updateChartInput: {
+            json: chartJSON,
+          },
+        },
+        onCompleted: (data) => {
+          console.log(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    }
   };
 
-  const deleteRecord = (chartID) => {
-    console.log("would delete");
-    console.log(chartID);
+  const deleteChart = async (chartid) => {
+    console.log("delete chart");
+    if (chartid && user.id) {
+      deleteChartQuery({
+        variables: { deleteChartId: chartid },
+        onCompleted: (data) => {
+          console.log(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    }
   };
 
   // Updating form logic on input / variable changes
   // Redirect to homepage after successful login
   const { Control, Label, Group } = Form;
   return (
-    <div>
-      <h1>Account</h1>
+    <Container>
+      <h1>Account: {user.username}</h1>
       <Button onClick={loadCharts}>Load Charts</Button>
       {data == null ? (
-        <p>no data</p>
+        <></>
       ) : (
-        <Container>
+        <div className="chart-view">
           <h2>My Charts</h2>
-          <Row>
-            {data.getChartsByUser.map((chart) => (
-              <Col>
-                <div key={chart.id}>
-                  <p>Name: {chart.name}</p>
-                  <p>Type: {chart.type}</p>
-                  <p>Created Date: {chart.createdDate}</p>
-                  <p>Updated Date: {chart.updatedDate}</p>
-                  <p>JSON: </p>
-                  <Group key="chartJSON" className="chartJSON">
-                    <Label>Update JSON here</Label>
-                    <Control as="textarea" rows="10" placeholder="Chart progress" name="chartJSON" />
-                    <Button onClick={updateJSON(chart.id)}>Update</Button>
-                    <Button onClick={deleteRecord(chart.id)}>Delete</Button>
-                  </Group>
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </Container>
+          <Row>{renderMaps()}</Row>
+        </div>
       )}
-    </div>
+    </Container>
   );
 }
 
-export default memo(Account);
+export default Account;

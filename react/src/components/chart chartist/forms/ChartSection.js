@@ -79,11 +79,38 @@ const ChartSection = (props) => {
     console.log(template);
   };
 
-  const functions = { updateFormInput, updateFormCheckbox, handleSubmit, updateChartJSON, loadChartJSON, saveChartJSON, loadChartJSONTemplate };
+  const hasChartType = (charts, type) => {
+    let chartCount = 0;
+    charts.some((chart) => {
+      // Alternative to forEach, will stop looping when true
+      if (chart.type === type) {
+        chartCount++;
+        return true;
+      }
+    });
+    return chartCount > 0;
+  };
+
+  const loadChartJSONFromAccount = (chart) => {
+    //console.log("Loading chart JSON");
+    //console.log(chart);
+    if (chart.id) {
+      document.querySelector(".chartJSON textarea").value = chart.json;
+      let chartData = JSON.parse(chart.json);
+      setFormData(chartData);
+      createChart(chartContainer, chartData);
+      updateFormData(chartData);
+      //console.log("New chart data");
+      //console.log(chartData);
+      //functions.saveChartJSON();
+    }
+  };
+
+  const functions = { updateFormInput, updateFormCheckbox, handleSubmit, updateChartJSON, loadChartJSON, saveChartJSON, loadChartJSONTemplate, loadChartJSONFromAccount, hasChartType };
 
   return (
     <>
-      <ChartForm fields={fields} functions={functions} />
+      <ChartForm fields={fields} functions={functions} chartType={props.chartType} />
       <Container>
         <div id="chart" ref={chartContainer}></div>
       </Container>

@@ -18,6 +18,10 @@ function NavMenu() {
   const logOff = () => {
     clearLogin();
     setIsLoggedIn(false);
+    if (window.location.href.includes("/account")) {
+      document.body.style.cursor = "wait";
+      window.location.href = "/";
+    }
   };
 
   return (
@@ -32,7 +36,7 @@ function NavMenu() {
               <NavDropdown.Item href="/chart/d3">Chart D3</NavDropdown.Item>
               <NavDropdown.Item href="/chart/chartist">Chart Chartist</NavDropdown.Item>
             </NavDropdown>
-            <Link href="/contact">Contact</Link>
+            {/* <Link href="/chart/d3">Chart D3</Link> */}
             {isLoggedIn ? (
               <>
                 <Link onClick={logOff}>Logout</Link>

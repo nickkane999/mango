@@ -1,15 +1,38 @@
-import React, { useState } from "react";
-import { Form, Container, Button, Row, Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
+import { GET_CHARTS_BY_USER } from "../../../graphQL/queries";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { user } from "../../../util/general";
 import "./ChartForm.css";
 
 const ChartForm = (props) => {
+  const chartType = props.chartType;
+  const [loadChartsQuery, { data }] = useLazyQuery(GET_CHARTS_BY_USER);
   const { fields, functions } = props;
   const [settings, setText] = useState("");
+  const [selectedChart, setSelectedChart] = useState({ name: "Load Existing Chart" });
   const formSections = {
     fields: ".displayOptions",
     settings: ".chartSettings",
     form_fields: ".formFields",
   };
+
+  // GraphQL queries and variables
+  // Run only if user is logged in
+  useEffect(() => {
+    if (user.id) {
+      loadChartsQuery({
+        variables: { userId: user.id },
+        onCompleted: (data) => {
+          console.log(data);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    }
+  }, []);
+
   // Form Logic
   const handleDisplayOptions = (event, type) => {
     if (formSections[type]) {
@@ -27,9 +50,13 @@ const ChartForm = (props) => {
       document.querySelector("." + className).style.display = "none";
     }
   };
+  const pullChart = (chart) => {
+    setSelectedChart(chart);
+  };
 
   // Form HTML components
   const { Control, Label, Group, Check } = Form;
+  const { Menu, Toggle, Item } = Dropdown;
   const createCheckbox = (field) => {
     return (
       <Col className="form-group" xs={4}>
@@ -76,6 +103,28 @@ const ChartForm = (props) => {
           <Group key="displayOptionFields">
             <Check type="checkbox" label="Select Chart Fields" onChange={(event) => handleDisplayOptions(event, "fields")} defaultChecked={true} />
           </Group>
+          {data && functions.hasChartType(data.getChartsByUser, chartType) ? (
+            <Group key="loadChart">
+              <Dropdown title="Charts" id="basic-nav-dropdown">
+                <Toggle variant="success" id="dropdown-basic">
+                  {selectedChart ? selectedChart.name : "Load Existing Chart"}
+                </Toggle>
+                <Menu>
+                  {data.getChartsByUser.map((chart) => {
+                    return (
+                      <Item key={chart.id} value={chart.id} onClick={() => pullChart(chart)}>
+                        {chart.name}
+                      </Item>
+                    );
+                  })}
+                </Menu>
+              </Dropdown>
+              <Button onClick={() => functions.loadChartJSONFromAccount(selectedChart)}>Submit</Button>
+            </Group>
+          ) : (
+            <p> No {chartType} charts found for this user </p>
+          )}
+
           <Container className="chartSettingsError">
             <p className="error"></p>
           </Container>

@@ -10,16 +10,15 @@ function ChartMenu() {
   const [currentComponent, setCurrentComponent] = useState(null);
 
   const selectChartType = (key) => {
-    console.log(key);
     let data = chartLayouts[key];
     //setSelectedOption(data);
-    setCurrentComponent(<ChartSection settings={data.settings} />);
+    setCurrentComponent(<ChartSection settings={data.settings} chartType={key} />);
   };
 
   const displayChartOptions = () => {
     // loop through the chartLayouts object and return a dropdown item for each
     return Object.keys(chartLayouts).map((chart) => {
-      console.log(chartLayouts[chart].title);
+      //console.log(chartLayouts[chart].title);
       return <Dropdown.Item eventKey={chartLayouts[chart].key}>{chartLayouts[chart].title}</Dropdown.Item>;
     });
   };
