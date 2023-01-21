@@ -15,7 +15,7 @@ const queryClient = new QueryClient({
 });
 
 const client = new ApolloClient({
-  uri: "http://localhost:5000/graphql",
+  uri: "https://mango-server-3ndt4x3vaa-uc.a.run.app/",
   cache: new InMemoryCache(),
 });
 
