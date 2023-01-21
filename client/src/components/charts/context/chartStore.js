@@ -1,7 +1,6 @@
 import React, { useState, useContext, createContext, useRef } from "react";
-import { updateChartJSON, loadChartJSON, saveChartJSON, updateChartForAccount, hasChartType, loadChartJSONTemplate, loadChartJSONFromAccount } from "../functions/chartSettings";
-import { updateFormInput, updateFormCheckbox, updateFormData } from "../functions/formFields";
-import { handleSubmit } from "../functions/handleSubmit";
+import { updateChartJSON, loadChartJSON, saveChartJSON, updateChartForAccount, hasChartType, loadChartJSONTemplate, loadChartJSONFromAccount } from "../util/chartSettings";
+import { updateFormInput, updateFormCheckbox, updateFormData, handleSubmit } from "../util/formFields";
 
 export const initialState = {
   misc: {

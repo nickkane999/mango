@@ -1,5 +1,5 @@
-import { fields as barFields, createChart as barCreateChart, template as barChartTemplate } from "./form-data/BarChartFormData";
-import { fields as lineFields, createChart as lineCreateChart, template as lineChartTemplate } from "./form-data/LineChartFormData";
+import { fields as barFields, createChart as barCreateChart, template as barChartTemplate } from "./BarChartFormData";
+import { fields as lineFields, createChart as lineCreateChart, template as lineChartTemplate } from "./LineChartFormData";
 
 export const chartLayouts = {
   bar: {

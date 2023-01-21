@@ -32,11 +32,7 @@ function NavMenu() {
         <Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Link href="/">Home</Link>
-            <NavDropdown title="Charts" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/chart/d3">Chart D3</NavDropdown.Item>
-              <NavDropdown.Item href="/chart/chartist">Chart Chartist</NavDropdown.Item>
-            </NavDropdown>
-            {/* <Link href="/chart/d3">Chart D3</Link> */}
+            <Link href="/chart">Charts</Link>
             {isLoggedIn ? (
               <>
                 <Link onClick={logOff}>Logout</Link>

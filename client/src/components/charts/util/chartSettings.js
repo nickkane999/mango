@@ -1,4 +1,4 @@
-import { setSettings } from "../../../../util/general";
+import { setSettings } from "../../../util/general";
 
 // Chart Setting functions
 const updateChartJSON = (event, settings) => {

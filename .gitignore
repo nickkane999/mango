@@ -21,7 +21,7 @@
 .env.production.local
 
 # old files (keeping in case I need them later)
-/client/src/zOldFiles
+/client/src/zOldFilesPreAcheivedBranch
 
 
 npm-debug.log*

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import "./ChartMenu.css";
-import { chartLayouts } from "./ChartData";
-import ChartSection from "./forms/ChartSection";
+import { chartLayouts } from "../data/layouts";
+import ChartSection from "./ChartSection";
 //import PieChartArea from "./PieChart";
 
 function ChartMenu() {

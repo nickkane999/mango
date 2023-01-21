@@ -1,15 +1,12 @@
 import React, { useState, useRef, useEffect, memo, useContext } from "react";
 import { Container } from "react-bootstrap";
 import ChartForm from "./ChartForm";
-import { handleSubmit } from "./functions/handleSubmit";
-import { updateChartJSON, loadChartJSON, saveChartJSON, updateChartForAccount, hasChartType, loadChartJSONTemplate, loadChartJSONFromAccount } from "./functions/chartSettings";
-import { updateFormInput, updateFormCheckbox, updateFormData } from "./functions/formFields";
 
 import { useMutation } from "@apollo/client";
 import { UPDATE_CHART_BY_USER, CREATE_CHART_BY_USER } from "../../../graphQL/queries";
 
 //import ChartSettings from "./ChartSettings";
-import SessionContext from "./temp/store";
+import SessionContext from "../context/chartStore";
 
 const ChartSection = (props) => {
   const { fields, createChart, template } = props.settings;

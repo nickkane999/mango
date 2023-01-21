@@ -3,17 +3,30 @@ import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
 import { GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER } from "../../../graphQL/queries";
 import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { user } from "../../../util/general";
-import { createCheckbox, createInputField, createCheckboxDisplayOptions, handleDisplayOptions } from "./functions/formLayout";
-import { updateFormInput, updateFormCheckbox, updateFormData } from "./functions/formFields";
+import { createCheckbox, createInputField, createCheckboxDisplayOptions, handleDisplayOptions } from "../util/formLayout";
+import { updateFormInput, updateFormCheckbox, updateFormData } from "../util/formFields";
 import "./ChartForm.css";
 
-import SessionContext from "./temp/store";
+import SessionContext from "../context/chartStore";
 
 const ChartForm = (props) => {
   const { chartInfo, setChartInfo } = useContext(SessionContext);
-  const settings = chartInfo;
-  const functions = settings.functions;
+  let settings = chartInfo;
+  let functions = settings.functions;
   const { chartType, fields } = settings.misc;
+
+  const [formData, setFormData] = useState({});
+  const [chartJSON, setChartJSON] = useState();
+  const getUpdatedFormData = () => {
+    return formData;
+  };
+  const getUpdatedChartJSON = () => {
+    return chartJSON;
+  };
+  functions.getUpdatedFormData = getUpdatedFormData;
+  functions.getUpdatedChartJSON = getUpdatedChartJSON;
+  settings.sessionStorage.setChartJSON = setChartJSON;
+  settings.sessionStorage.setFormData = setFormData;
 
   /*
   const settings = props.settings;
@@ -52,6 +65,13 @@ const ChartForm = (props) => {
 
   const handleSaveChartName = (event) => {
     setSaveChartName(event.target.value);
+  };
+
+  const personalTest = () => {
+    console.log("personalTest");
+    console.log("settings:");
+    console.log(settings);
+    functions.loadChartJSONTemplate(settings);
   };
 
   // Form HTML sections
@@ -99,16 +119,17 @@ const ChartForm = (props) => {
               <p className="no-user-charts"> No {chartType} charts found for this user </p>
             )}
           </Col>
-          <Col xs={6}>
-            <Group key="addChartToAccount">
-              <Label>Add Chart to Account</Label>
-              <Control placeholder="Chart Name" name="chartName" onChange={handleSaveChartName} />
-            </Group>
-            <Button variant="primary" type="submit" className="save-chart-json" onClick={() => functions.saveChartJSON(saveChartName, user, settings)}>
-              Save Chart JSON
-            </Button>
-          </Col>
-
+          {user && user.id ? (
+            <Col xs={6}>
+              <Group key="addChartToAccount">
+                <Label>Add Chart to Account</Label>
+                <Control placeholder="Chart Name" name="chartName" onChange={handleSaveChartName} />
+              </Group>
+              <Button variant="primary" type="submit" className="save-chart-json" onClick={() => functions.saveChartJSON(saveChartName, user, settings)}>
+                Save Chart JSON
+              </Button>
+            </Col>
+          ) : null}
           <Container className="chartSettingsError">
             <p className="error"></p>
           </Container>
@@ -120,7 +141,7 @@ const ChartForm = (props) => {
             <Button variant="primary" type="submit" onClick={() => functions.loadChartJSON(settings)}>
               Load Chart From JSON
             </Button>
-            <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings)}>
+            <Button variant="primary" type="submit" onClick={() => personalTest()}>
               Load Template
             </Button>
           </Container>
@@ -146,9 +167,6 @@ const ChartForm = (props) => {
               Load Chart From Form
             </Button>
           </Form>
-          <Button variant="primary" type="submit" onClick={functions.testingFunction}>
-            Testing Function
-          </Button>
         </Row>
       </Container>
     );
@@ -171,9 +189,12 @@ const ChartForm = (props) => {
 
   if (chartInfo) {
     console.log("made it down to here, what will happen?");
+    console.log(settings);
     return (
       <>
-        <p>test</p>
+        {createChartSettings()}
+        {createFormFields()}
+        {createDisplayOptions()}
       </>
     );
   } else {
