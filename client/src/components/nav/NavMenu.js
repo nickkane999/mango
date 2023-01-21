@@ -8,13 +8,6 @@ const { Brand, Toggle, Collapse } = Navbar;
 function NavMenu() {
   const [isLoggedIn, setIsLoggedIn] = useState(getCookie("loginInfo") ? true : false);
 
-  /*
-  useEffect(() => {
-    console.log("My login status is here");
-    console.log(isLoggedIn);
-  }, [isLoggedIn]);
-  */
-
   const logOff = () => {
     clearLogin();
     setIsLoggedIn(false);

@@ -8,15 +8,9 @@ export const initialState = {
     chartType: null,
     fields: null,
     template: null,
-    /*
-    chartType: props.chartType,
-    fields: fields,
-    template: template,
-    */
   },
   functions: {
     createChart: null,
-    /* createChart: createChart, */
     updateFormInput: updateFormInput,
     updateFormCheckbox: updateFormCheckbox,
     updateFormData: updateFormData,
@@ -32,22 +26,12 @@ export const initialState = {
     getUpdatedChartJSON: null,
     updateChartQuery: null,
     createChartQuery: null,
-    /*    
-    getUpdatedFormData: getUpdatedFormData,
-    getUpdatedChartJSON: getUpdatedChartJSON,
-    updateChartQuery: updateChartQuery,
-    createChartQuery: createChartQuery,
-    */
   },
   sessionStorage: {
     setChartJSON: null,
     setFormData: null,
     chartJSON: null,
     formData: null,
-    /*
-    setChartJSON: setChartJSON,
-    setFormData: setFormData,
-    */
   },
 };
 
@@ -59,9 +43,6 @@ const ChartContext = createContext(initialState);
 
 export const ChartProvider = ({ children }) => {
   const [chartInfo, setChartInfo] = useState(initialState);
-  console.log("ChartProvider");
-  console.log(chartInfo);
-
   return <ChartContext.Provider value={{ chartInfo, setChartInfo }}>{children}</ChartContext.Provider>;
 };
 

@@ -1,9 +1,6 @@
 import { useState } from "react";
 
 const updateFormInput = (event, settings) => {
-  console.log("updateFormInput settings");
-  console.log(settings);
-
   const { setFormData } = settings.sessionStorage;
   let { name, value } = event.target;
   if (value.indexOf(",") !== -1) {
@@ -23,12 +20,8 @@ const updateFormInput = (event, settings) => {
 
 const updateFormCheckbox = (event, settings) => {
   const setFormData = settings.functions.setFormData;
-  console.log("updateFormCheckbox settings");
-  console.log(settings);
-
   const { name } = event.target;
   setFormData((formData) => ({ ...formData, [name]: event.target.checked }));
-  //console.log(formData);
 };
 
 const updateFormData = (chartData) => {
@@ -48,15 +41,11 @@ const updateFormData = (chartData) => {
 };
 
 const handleSubmit = (event, settings) => {
-  console.log("giggity");
   event.preventDefault();
   const { chartContainer } = settings.misc;
   const { createChart } = settings.functions;
   const formData = settings.functions.getUpdatedFormData();
-  console.log(formData);
   createChart(chartContainer, formData);
-  console.log("My form data from external function");
-  console.log(formData);
 };
 
 export { updateFormInput, updateFormCheckbox, updateFormData, handleSubmit };

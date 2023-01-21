@@ -141,7 +141,7 @@ export const createChart = (chartRef, formData) => {
       // If the line chart should add a background fill to the .ct-grids group.
       showGridBackground: formData.showGridBackground !== undefined ? formData.showGridBackground : false,
       // Overriding the natural low of the chart allows you to zoom in or limit the charts lowest displayed value
-      low: formData.low ? formData.low : undefined,
+      low: formData.low !== null ? formData.low : undefined,
       // Overriding the natural high of the chart allows you to zoom in or limit the charts highest displayed value
       high: formData.high ? formData.high : undefined,
       // Padding of the chart drawing area to the container element and labels as a number or padding object {top: 5, right: 5, bottom: 5, left: 5}
@@ -180,7 +180,7 @@ export const template = {
   labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
   series: [[50, 20, 40, 20, 10]],
   offset_axisx: 30,
-  position_axisx: "start",
+  position_axisx: "end",
   labelOffsetX_axisx: 0,
   labelOffsetY_axisx: 0,
   showLabel_axisx: true,
@@ -188,7 +188,7 @@ export const template = {
   labelInterpolationFnc_axisx: function (value) {
     return value;
   },
-  type_axisx: undefined,
+  type_axisx: null,
   offset_axisy: 30,
   position_axisy: "start",
   labelOffsetX_axisy: 0,
@@ -198,19 +198,19 @@ export const template = {
   labelInterpolationFnc_axisy: function (value) {
     return value;
   },
-  type_axisy: undefined,
+  type_axisy: null,
   scaleMinSpace_axisy: 30,
   onlyInteger_axisy: false,
-  width: undefined,
-  height: undefined,
+  width: 0,
+  height: 300,
   showLine: true,
   showPoint: true,
   showArea: false,
   areaBase: 0,
   lineSmooth: true,
   showGridBackground: false,
-  low: undefined,
-  high: undefined,
+  low: 0,
+  high: null,
   chartPaddingTop: 15,
   chartPaddingRight: 5,
   chartPaddingBottom: 5,

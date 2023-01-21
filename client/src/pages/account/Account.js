@@ -16,7 +16,6 @@ function Account() {
 
   const renderMaps = () => {
     if (data && data.getChartsByUser.length > 0) {
-      console.log(data);
       return (
         <>
           {data.getChartsByUser.map((chart, i) => (
@@ -45,10 +44,6 @@ function Account() {
     if (user.id) {
       loadChartsQuery({
         variables: { userId: user.id },
-        onCompleted: (data) => {
-          console.log("charts loaded");
-          console.log(data);
-        },
         onError: (error) => {
           console.log(error);
         },
@@ -57,7 +52,6 @@ function Account() {
   };
 
   const updateChart = (chartid, index) => {
-    console.log("update chart");
     if (chartid && user.id) {
       const chartJSON = document.querySelector(".chart-json-" + index).value;
       updateChartQuery({
@@ -67,9 +61,6 @@ function Account() {
             json: chartJSON,
           },
         },
-        onCompleted: (data) => {
-          console.log(data);
-        },
         onError: (error) => {
           console.log(error);
         },
@@ -78,13 +69,9 @@ function Account() {
   };
 
   const deleteChart = async (chartid) => {
-    console.log("delete chart");
     if (chartid && user.id) {
       deleteChartQuery({
         variables: { deleteChartId: chartid },
-        onCompleted: (data) => {
-          console.log(data);
-        },
         onError: (error) => {
           console.log(error);
         },

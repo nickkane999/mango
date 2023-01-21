@@ -59,11 +59,7 @@ export const fields = [
 ];
 
 export const createChart = (chartRef, formData) => {
-  console.log("creating chart");
-  console.log(formData);
   let offset_axisx = formData.offset_axisx ? formData.offset_axisx : 10;
-  console.log("creating chart");
-  console.log(formData);
   new BarChart(
     chartRef.current,
     {
@@ -199,10 +195,10 @@ export const template = {
   labelInterpolationFnc_axisy: "function (value) { return '$' + value; }",
   scaleMinSpace_axisy: 20,
   onlyInteger_axisy: false,
-  width: undefined,
-  height: undefined,
-  high: undefined,
-  low: undefined,
+  width: null,
+  height: null,
+  high: null,
+  low: null,
   referenceValue: 0,
   chartPaddingTop: 30,
   chartPaddingRight: 5,

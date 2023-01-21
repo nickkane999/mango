@@ -28,18 +28,9 @@ const ChartForm = (props) => {
   settings.sessionStorage.setChartJSON = setChartJSON;
   settings.sessionStorage.setFormData = setFormData;
 
-  /*
-  const settings = props.settings;
-  const functions = settings.functions;
-  console.log("settings:");
-  console.log(settings);
-
-  */
   const [loadChartsQuery, { data }] = useLazyQuery(GET_CHARTS_BY_USER);
-  const [updateChartQuery] = useMutation(UPDATE_CHART_BY_USER);
   const [selectedChart, setSelectedChart] = useState({ name: "Load Existing Chart" });
   const [saveChartName, setSaveChartName] = useState("");
-
   const { Control, Label, Group, Check } = Form;
   const { Menu, Toggle, Item } = Dropdown;
 
@@ -49,9 +40,6 @@ const ChartForm = (props) => {
     if (user && user.id) {
       loadChartsQuery({
         variables: { userId: user.id },
-        onCompleted: (data) => {
-          console.log(data);
-        },
         onError: (error) => {
           console.log(error);
         },
@@ -65,13 +53,6 @@ const ChartForm = (props) => {
 
   const handleSaveChartName = (event) => {
     setSaveChartName(event.target.value);
-  };
-
-  const personalTest = () => {
-    console.log("personalTest");
-    console.log("settings:");
-    console.log(settings);
-    functions.loadChartJSONTemplate(settings);
   };
 
   // Form HTML sections
@@ -141,7 +122,7 @@ const ChartForm = (props) => {
             <Button variant="primary" type="submit" onClick={() => functions.loadChartJSON(settings)}>
               Load Chart From JSON
             </Button>
-            <Button variant="primary" type="submit" onClick={() => personalTest()}>
+            <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings)}>
               Load Template
             </Button>
           </Container>
@@ -187,9 +168,8 @@ const ChartForm = (props) => {
     );
   };
 
+  // Wait for chartInfo (context containing all functions / variables needed for this chart form) to be loaded before rendering
   if (chartInfo) {
-    console.log("made it down to here, what will happen?");
-    console.log(settings);
     return (
       <>
         {createChartSettings()}
@@ -198,14 +178,8 @@ const ChartForm = (props) => {
       </>
     );
   } else {
-    console.log("made it down to here, what will happen?");
     return <p> Loading... </p>;
   }
 };
 
 export default memo(ChartForm);
-/*
-        {//createChartSettings()}
-        {//createFormFields()}
-        {//createDisplayOptions()}
-*/
