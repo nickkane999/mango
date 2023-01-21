@@ -47,6 +47,11 @@ module.exports = {
   },
   Mutation: {
     async createUser(_, { createUserInput: { username, password, confirmPassword, email } }) {
+      // see if a user exists with the same username
+      const user = await User.findOne({ username });
+      if (user) {
+        throw new Error("User already exists");
+      }
       if (password === confirmPassword) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newDate = new Date().toISOString();

@@ -22,10 +22,15 @@
   border-color: white;
 }
 
-.navbar-brand:hover, .navbar-brand:focus {
+.navbar-brand:hover,
+.navbar-brand:focus {
   color: white !important;
 }
 
 header {
   margin-bottom: 20px;
+}
+
+.navbar-brand {
+  margin-left: 20px;
 }

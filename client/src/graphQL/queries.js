@@ -16,6 +16,16 @@ const LOGIN_USER = gql`
   }
 `;
 
+const CREATE_USER = gql`
+  mutation CreateUser($createUserInput: CreateUserInput) {
+    createUser(createUserInput: $createUserInput) {
+      id
+      username
+      password
+    }
+  }
+`;
+
 // Chart queries
 const GET_CHARTS_BY_USER = gql`
   query getChartsByUser($userId: ID!) {
@@ -88,4 +98,4 @@ const GET_USER = gql`
   }
 `;
 
-export { GET_USERS, GET_USER, LOGIN_USER, GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, DELETE_CHART_BY_USER, CREATE_CHART_BY_USER };
+export { GET_USERS, GET_USER, LOGIN_USER, CREATE_USER, GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, DELETE_CHART_BY_USER, CREATE_CHART_BY_USER };
