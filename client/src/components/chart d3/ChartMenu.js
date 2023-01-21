@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Dropdown, DropdownButton } from "react-bootstrap";
-import * as chartUtil from "./BarChart";
 import "./ChartMenu.css";
 import BarChartForm from "./forms/BarChartForm";
 import GroupedBarChartForm from "./forms/GroupedBarChartForm";
@@ -9,15 +8,6 @@ function ChartMenu() {
   const [data, setData] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [currentComponent, setCurrentComponent] = useState(null);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    let nums = data.split(",");
-    nums.forEach((ele, i) => {
-      nums[i] = parseInt(ele.trim());
-    });
-    chartUtil.loadNumbers(nums);
-  };
 
   const selectChartType = (value) => {
     let chartType = value;
