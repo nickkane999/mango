@@ -6,7 +6,6 @@ import ChartSection from "./forms/ChartSection";
 //import PieChartArea from "./PieChart";
 
 function ChartMenu() {
-  //const [selectedOption, setSelectedOption] = useState("");
   const [selectedChartName, setSelectedChartName] = useState("Select a Chart Type");
   const [currentComponent, setCurrentComponent] = useState(null);
 

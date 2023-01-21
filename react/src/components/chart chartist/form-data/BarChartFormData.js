@@ -59,6 +59,8 @@ export const fields = [
 ];
 
 export const createChart = (chartRef, formData) => {
+  console.log("creating chart");
+  console.log(formData);
   let offset_axisx = formData.offset_axisx ? formData.offset_axisx : 10;
   console.log("creating chart");
   console.log(formData);

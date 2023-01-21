@@ -8,6 +8,8 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { AuthProvider } from "./context/AuthProvider";
 
+import { ChartProvider } from "./components/chart chartist/forms/temp/store";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -24,12 +26,14 @@ const client = new ApolloClient({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-    </ApolloProvider>
+    <ChartProvider>
+      <ApolloProvider client={client}>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <ReactQueryDevtools />
+        </QueryClientProvider>
+      </ApolloProvider>
+    </ChartProvider>
   </React.StrictMode>
 );
 

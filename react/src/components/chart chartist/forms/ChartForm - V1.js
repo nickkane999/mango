@@ -11,22 +11,9 @@ import SessionContext from "./temp/store";
 
 const ChartForm = (props) => {
   const { chartInfo, setChartInfo } = useContext(SessionContext);
-  let settings = chartInfo;
-  let functions = settings.functions;
+  const settings = chartInfo;
+  const functions = settings.functions;
   const { chartType, fields } = settings.misc;
-
-  const [formData, setFormData] = useState({});
-  const [chartJSON, setChartJSON] = useState();
-  const getUpdatedFormData = () => {
-    return formData;
-  };
-  const getUpdatedChartJSON = () => {
-    return chartJSON;
-  };
-  functions.getUpdatedFormData = getUpdatedFormData;
-  functions.getUpdatedChartJSON = getUpdatedChartJSON;
-  settings.sessionStorage.setChartJSON = setChartJSON;
-  settings.sessionStorage.setFormData = setFormData;
 
   /*
   const settings = props.settings;
@@ -65,13 +52,6 @@ const ChartForm = (props) => {
 
   const handleSaveChartName = (event) => {
     setSaveChartName(event.target.value);
-  };
-
-  const personalTest = () => {
-    console.log("personalTest");
-    console.log("settings:");
-    console.log(settings);
-    functions.loadChartJSONTemplate(settings);
   };
 
   // Form HTML sections
@@ -119,17 +99,16 @@ const ChartForm = (props) => {
               <p className="no-user-charts"> No {chartType} charts found for this user </p>
             )}
           </Col>
-          {data && functions.hasChartType(data.getChartsByUser, chartType) ? (
-            <Col xs={6}>
-              <Group key="addChartToAccount">
-                <Label>Add Chart to Account</Label>
-                <Control placeholder="Chart Name" name="chartName" onChange={handleSaveChartName} />
-              </Group>
-              <Button variant="primary" type="submit" className="save-chart-json" onClick={() => functions.saveChartJSON(saveChartName, user, settings)}>
-                Save Chart JSON
-              </Button>
-            </Col>
-          ) : null}
+          <Col xs={6}>
+            <Group key="addChartToAccount">
+              <Label>Add Chart to Account</Label>
+              <Control placeholder="Chart Name" name="chartName" onChange={handleSaveChartName} />
+            </Group>
+            <Button variant="primary" type="submit" className="save-chart-json" onClick={() => functions.saveChartJSON(saveChartName, user, settings)}>
+              Save Chart JSON
+            </Button>
+          </Col>
+
           <Container className="chartSettingsError">
             <p className="error"></p>
           </Container>
@@ -141,7 +120,7 @@ const ChartForm = (props) => {
             <Button variant="primary" type="submit" onClick={() => functions.loadChartJSON(settings)}>
               Load Chart From JSON
             </Button>
-            <Button variant="primary" type="submit" onClick={() => personalTest()}>
+            <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings)}>
               Load Template
             </Button>
           </Container>
@@ -192,12 +171,9 @@ const ChartForm = (props) => {
 
   if (chartInfo) {
     console.log("made it down to here, what will happen?");
-    console.log(settings);
     return (
       <>
-        {createChartSettings()}
-        {createFormFields()}
-        {createDisplayOptions()}
+        <p>test</p>
       </>
     );
   } else {

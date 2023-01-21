@@ -1,182 +1,166 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, memo, useContext } from "react";
 import { Container } from "react-bootstrap";
 import ChartForm from "./ChartForm";
+import { handleSubmit } from "./functions/handleSubmit";
+import { updateChartJSON, loadChartJSON, saveChartJSON, updateChartForAccount, hasChartType, loadChartJSONTemplate, loadChartJSONFromAccount } from "./functions/chartSettings";
+import { updateFormInput, updateFormCheckbox, updateFormData } from "./functions/formFields";
+
 import { useMutation } from "@apollo/client";
 import { UPDATE_CHART_BY_USER, CREATE_CHART_BY_USER } from "../../../graphQL/queries";
-import { user } from "../../../util/general";
 
 //import ChartSettings from "./ChartSettings";
+import SessionContext from "./temp/store";
 
 const ChartSection = (props) => {
-  const [formData, setFormData] = useState({});
-  const [chartJSON, setChartJSON] = useState();
   const { fields, createChart, template } = props.settings;
+  const chartContainer = useRef(null);
+
+  const [hasSessionLoaded, setHasSessionLoaded] = useState(false);
   const [updateChartQuery] = useMutation(UPDATE_CHART_BY_USER);
   const [createChartQuery] = useMutation(CREATE_CHART_BY_USER);
-  const chartContainer = useRef(null);
-  const chartType = props.chartType;
 
-  // Form field / submission functions
-  const updateFormInput = (event) => {
-    let { name, value } = event.target;
-    if (value.indexOf(",") !== -1) {
-      value = value.split(",");
-      if (name === "series") {
-        value = value.map((item) => {
-          return parseInt(item);
-        });
-        let seriesArray = [];
-        seriesArray.push(value);
-        setFormData((formData) => ({ ...formData, [name]: seriesArray }));
-        return;
-      }
-    }
-    setFormData((formData) => ({ ...formData, [name]: value }));
-    //console.log(formData);
+  const { chartInfo, setChartInfo } = useContext(SessionContext);
+  const { misc } = chartInfo;
+
+  /*
+  const newAttributes = {
+    sessionStorage: {
+      setChartJSON: setChartJSON,
+      setFormData: setFormData,
+    },
+    functions: {
+      getUpdatedFormData: getUpdatedFormData,
+      getUpdatedChartJSON: getUpdatedChartJSON,
+      updateChartQuery: updateChartQuery,
+      createChartQuery: createChartQuery,
+    },
+    misc: {
+      chartType: props.chartType,
+      fields: fields,
+      template: template,
+      chartContainer: chartContainer,
+    },
   };
+  console.log("ChartSection: before");
+  console.log(chartInfo);
+  setChartInfo({ ...chartInfo, ...newAttributes });
+  console.log("ChartSection: after");
+  console.log(chartInfo);
+  */
 
-  const updateFormCheckbox = (event) => {
-    const { name } = event.target;
-    setFormData((formData) => ({ ...formData, [name]: event.target.checked }));
-    //console.log(formData);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    createChart(chartContainer, formData);
-  };
-
-  const updateFormData = (chartData) => {
-    // Console log statements help determine if saved json data has same (no extra)
-    // fields compared to the fields defined in the respective form-data file
-    Object.entries(chartData).forEach(([key, value]) => {
-      //console.log(`${key}: ${value}`);
-      if (typeof value === "boolean") {
-        //console.log(`${key}: ${value}`);
-        document.querySelector(`.${key} input`).checked = value;
-      } else {
-        //console.log("could be funny data type");
-        //console.log(`${key}: ${value}`);
-        document.querySelector(`.${key} input`).value = value;
-      }
-    });
-  };
-
-  // Chart Setting functions
-  const updateChartJSON = (event) => {
-    setChartJSON(event.target.value);
-  };
-
-  const loadChartJSON = () => {
-    try {
-      let chartData = JSON.parse(chartJSON);
-      setFormData(chartData);
-      createChart(chartContainer, chartData);
-      updateFormData(chartData);
-      console.log(chartData);
-    } catch (error) {
-      //document.querySelector(".chartSettingsError .error").innerHTML = "Invalid JSON";
-    }
-  };
-
-  const saveChartJSON = (saveChartName) => {
-    let chartJSON = document.querySelector(".chartJSON textarea").value;
-    let createChartInput = {
-      json: chartJSON,
-      name: saveChartName,
-      type: chartType,
-      userId: user.id,
+  /*
+  useEffect(() => {
+    const { functions, sessionStorage, misc } = chartInfo;
+    const newAttributes = {
+      sessionStorage: {
+        ...sessionStorage,
+        setChartJSON: setChartJSON,
+        setFormData: setFormData,
+      },
+      functions: {
+        ...functions,
+        createChart: createChart,
+        getUpdatedFormData: getUpdatedFormData,
+        getUpdatedChartJSON: getUpdatedChartJSON,
+        updateChartQuery: updateChartQuery,
+        createChartQuery: createChartQuery,
+      },
+      misc: {
+        ...misc,
+        chartType: props.chartType,
+        fields: fields,
+        template: template,
+        chartContainer: chartContainer,
+      },
     };
-    //console.log(createChartInput);
-    //console.log("Saving chart to user");
-    //console.log(chartJSON);
+    //console.log("ChartSection: before");
+    //console.log(chartInfo);
+    //setChartInfo({ chartInfo, c: "My test" });
+    //setChartInfo({ chartInfo, ...newAttributes });
+    setChartInfo({ ...newAttributes });
+    //console.log("ChartSection: after");
+    //console.log(chartInfo);
+    setHasSessionLoaded(true);
 
-    if (user && user.id) {
-      createChartQuery({
-        variables: {
-          createChartInput,
-        },
+    // Can add this to the useEffect hook to make sure data works, but probably overkill
+    // Guessing that data will be updated without this
+    // [formData, chartJSON, props.chartType, fields, template, chartContainer, setChartJSON, setFormData, updateChartQuery, createChartQuery]
+  }, []);
+  */
 
-        onCompleted: (data) => {
-          console.log(data);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-    }
+  useEffect(() => {
+    const { functions, sessionStorage, misc } = chartInfo;
+    const newAttributes = {
+      sessionStorage: {
+        ...sessionStorage,
+      },
+      functions: {
+        ...functions,
+        createChart: createChart,
+        updateChartQuery: updateChartQuery,
+        createChartQuery: createChartQuery,
+      },
+      misc: {
+        ...misc,
+        chartType: props.chartType,
+        fields: fields,
+        template: template,
+        chartContainer: chartContainer,
+      },
+    };
+    //console.log("ChartSection: before");
+    //console.log(chartInfo);
+    //setChartInfo({ chartInfo, c: "My test" });
+    //setChartInfo({ chartInfo, ...newAttributes });
+    setChartInfo({ ...newAttributes });
+    //console.log("ChartSection: after");
+    //console.log(chartInfo);
+    setHasSessionLoaded(true);
+
+    // Can add this to the useEffect hook to make sure data works, but probably overkill
+    // Guessing that data will be updated without this
+    // [formData, chartJSON, props.chartType, fields, template, chartContainer, setChartJSON, setFormData, updateChartQuery, createChartQuery]
+  }, []);
+
+  // Experiement with Storage contained with 1 object variable
+  /*
+  const settings = {
+    misc: {
+      chartContainer: chartContainer,
+      chartType: props.chartType,
+      fields: fields,
+      template: template,
+    },
+    functions: {
+      createChart: createChart,
+      updateFormInput: updateFormInput,
+      updateFormCheckbox: updateFormCheckbox,
+      updateFormData: updateFormData,
+      updateChartJSON: updateChartJSON,
+      loadChartJSON: loadChartJSON,
+      saveChartJSON: saveChartJSON,
+      updateChartForAccount: updateChartForAccount,
+      hasChartType: hasChartType,
+      loadChartJSONTemplate: loadChartJSONTemplate,
+      loadChartJSONFromAccount: loadChartJSONFromAccount,
+      handleSubmit: handleSubmit,
+      getUpdatedFormData: getUpdatedFormData,
+      getUpdatedChartJSON: getUpdatedChartJSON,
+      updateChartQuery: updateChartQuery,
+      createChartQuery: createChartQuery,
+    },
+    sessionStorage: {
+      setChartJSON: setChartJSON,
+      setFormData: setFormData,
+    },
   };
+  */
 
-  const updateChartForAccount = (chart) => {
-    let chartJSON = document.querySelector(".chartJSON textarea").value;
-    if (chart.id) {
-      updateChartQuery({
-        variables: {
-          updateChartId: chart.id,
-          updateChartInput: {
-            json: chartJSON,
-          },
-        },
-        onCompleted: (data) => {
-          console.log(data);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-    }
-  };
-
-  const loadChartJSONTemplate = () => {
-    setChartJSON(template);
-    document.querySelector(".chartJSON textarea").value = JSON.stringify(template, null, "\t");
-    createChart(chartContainer, template);
-    updateFormData(template);
-  };
-
-  const hasChartType = (charts, type) => {
-    let chartCount = 0;
-    charts.some((chart) => {
-      // Alternative to forEach, will stop looping when true
-      if (chart.type === type) {
-        chartCount++;
-        return true;
-      }
-    });
-    return chartCount > 0;
-  };
-
-  const loadChartJSONFromAccount = (chart) => {
-    //console.log("Loading chart JSON");
-    //console.log(chart);
-    if (chart.id) {
-      document.querySelector(".chartJSON textarea").value = chart.json;
-      let chartData = JSON.parse(chart.json);
-      setFormData(chartData);
-      createChart(chartContainer, chartData);
-      updateFormData(chartData);
-      //console.log("New chart data");
-      //console.log(chartData);
-      //functions.saveChartJSON();
-    }
-  };
-
-  const functions = {
-    updateFormInput,
-    updateFormCheckbox,
-    handleSubmit,
-    updateChartJSON,
-    loadChartJSON,
-    saveChartJSON,
-    loadChartJSONTemplate,
-    loadChartJSONFromAccount,
-    updateChartForAccount,
-    hasChartType,
-  };
-
+  console.log("ChartSection: render");
+  console.log(chartInfo);
   return (
     <>
-      <ChartForm fields={fields} functions={functions} chartType={props.chartType} />
+      {hasSessionLoaded && chartInfo.functions.handleSubmit ? <ChartForm /> : null}
       <Container>
         <div id="chart" ref={chartContainer}></div>
       </Container>
@@ -184,4 +168,4 @@ const ChartSection = (props) => {
   );
 };
 
-export default ChartSection;
+export default memo(ChartSection);
