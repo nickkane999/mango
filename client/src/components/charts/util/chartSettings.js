@@ -17,6 +17,7 @@ const loadChartJSON = (settings) => {
     updateFormData(chartData);
   } catch (error) {
     console.log(error);
+    console.log("My Chart JSON: " + chartJSON);
   }
 };
 

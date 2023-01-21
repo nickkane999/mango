@@ -90,9 +90,11 @@ export const createChart = (chartRef, formData) => {
         // If the axis grid should be drawn or not
         showGrid: formData.showGrid_axisx !== undefined ? formData.showGrid_axisx : true,
         // Interpolation function that allows you to intercept the value from the axis label
-        labelInterpolationFnc: function (value) {
-          return value + " time";
-        },
+        labelInterpolationFnc: formData.labelInterpolationFnc_axisx
+          ? new Function("return " + formData.labelInterpolationFnc_axisx)()
+          : function (value) {
+              return "$" + value;
+            },
         // This value specifies the minimum width in pixel of the scale steps
         scaleMinSpace: formData.scaleMinSpace_axisx ? Number(formData.scaleMinSpace_axisx) : 30,
         // Use only integer values (whole numbers) for the scale steps
@@ -114,9 +116,11 @@ export const createChart = (chartRef, formData) => {
         // If the axis grid should be drawn or not
         showGrid: formData.showGrid_axisy !== undefined ? formData.showGrid_axisy : false,
         // Interpolation function that allows you to intercept the value from the axis label
-        labelInterpolationFnc: function (value) {
-          return "$" + value;
-        },
+        labelInterpolationFnc: formData.labelInterpolationFnc_axisy
+          ? new Function("return " + formData.labelInterpolationFnc_axisy)()
+          : function (value) {
+              return "$" + value;
+            },
         // This value specifies the minimum height in pixel of the scale steps
         scaleMinSpace: formData.scaleMinSpace_axisy ? Number(formData.scaleMinSpace_axisy) : 20,
         // Use only integer values (whole numbers) for the scale steps
