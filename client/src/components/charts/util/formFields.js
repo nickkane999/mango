@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const updateFormInput = (event, settings) => {
   const { setFormData } = settings.sessionStorage;
   let { name, value } = event.target;

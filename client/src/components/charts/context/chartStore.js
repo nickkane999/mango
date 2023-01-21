@@ -1,5 +1,14 @@
 import React, { useState, useContext, createContext, useRef } from "react";
-import { updateChartJSON, loadChartJSON, saveChartJSON, updateChartForAccount, hasChartType, loadChartJSONTemplate, loadChartJSONFromAccount } from "../util/chartSettings";
+import {
+  updateChartJSON,
+  loadChartJSON,
+  saveChartJSON,
+  updateChartForAccount,
+  hasChartType,
+  loadChartJSONTemplate,
+  loadChartJSONFromAccount,
+  updateChartJSONWithFormData,
+} from "../util/chartSettings";
 import { updateFormInput, updateFormCheckbox, updateFormData, handleSubmit } from "../util/formFields";
 
 export const initialState = {
@@ -21,6 +30,7 @@ export const initialState = {
     hasChartType: hasChartType,
     loadChartJSONTemplate: loadChartJSONTemplate,
     loadChartJSONFromAccount: loadChartJSONFromAccount,
+    updateChartJSONWithFormData: updateChartJSONWithFormData,
     handleSubmit: handleSubmit,
     getUpdatedFormData: null,
     getUpdatedChartJSON: null,

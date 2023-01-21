@@ -99,4 +99,13 @@ const loadChartJSONFromAccount = (chart, settings) => {
   }
 };
 
-export { loadChartJSON, saveChartJSON, updateChartJSON, loadChartJSONTemplate, hasChartType, loadChartJSONFromAccount, updateChartForAccount };
+const updateChartJSONWithFormData = (settings) => {
+  const { getUpdatedFormData } = settings.functions;
+  const { setChartJSON } = settings.sessionStorage;
+  let formData = getUpdatedFormData();
+  let formDataString = JSON.stringify(formData, null, "\t");
+  setChartJSON(formDataString);
+  document.querySelector(".chartJSON textarea").value = formDataString;
+};
+
+export { loadChartJSON, saveChartJSON, updateChartJSON, loadChartJSONTemplate, hasChartType, loadChartJSONFromAccount, updateChartForAccount, updateChartJSONWithFormData };
