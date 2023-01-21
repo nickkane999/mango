@@ -119,7 +119,7 @@ const ChartForm = (props) => {
               <p className="no-user-charts"> No {chartType} charts found for this user </p>
             )}
           </Col>
-          {data && functions.hasChartType(data.getChartsByUser, chartType) ? (
+          {user && user.id ? (
             <Col xs={6}>
               <Group key="addChartToAccount">
                 <Label>Add Chart to Account</Label>
