@@ -24,10 +24,5 @@ function getCookie(name) {
 function clearLogin() {
   setCookie("loginInfo", "", -1);
 }
-/*
-function cheatLogin() {
-  setCookie("loginInfo", "admin", 1);
-}
-*/
 
 export { setCookie, getCookie, clearLogin };

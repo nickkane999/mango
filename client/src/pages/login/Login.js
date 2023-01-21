@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./Login.css";
-//import { useQuery, useMutation } from "react-query";
 import { useLazyQuery } from "@apollo/client";
 import { LOGIN_USER } from "../../graphQL/queries";
 import { setCookie } from "../../util/cookies";
@@ -59,8 +58,6 @@ function Login() {
 
   const processUserData = (data) => {
     if (data) {
-      console.log("my login data is here");
-      console.log(data);
       const accessToken = data.login.token;
       const userData = data.login.user;
       setCookie("loginInfo", JSON.stringify({ accessToken, userData }), 1);

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, memo } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Account.css";
-//import { useQuery, useMutation } from "react-query";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, DELETE_CHART_BY_USER } from "../../graphQL/queries";
 import { user, formattedDate } from "../../util/general";
