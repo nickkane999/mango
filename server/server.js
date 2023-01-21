@@ -14,8 +14,6 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req }),
 });
 
-//const app = server.createHandler({ cors: { origin: origin, credentials: true }
-
 mongoose
   .connect(MONGODB, { useNewUrlParser: true })
   .then(() => {
