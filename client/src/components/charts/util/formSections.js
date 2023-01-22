@@ -75,6 +75,9 @@ const createChartSettings = ({ data, selectedChart, functions, chartType, pullCh
           <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings)}>
             Load Template
           </Button>
+          <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTestFile(settings)}>
+            Load Test Chart
+          </Button>
         </Container>
       </Row>
     </Container>

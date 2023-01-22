@@ -11,7 +11,9 @@ const loadChartJSON = (settings) => {
   const chartJSON = settings.functions.getUpdatedChartJSON();
 
   try {
+    console.log("My Chart JSON : " + chartJSON);
     let chartData = JSON.parse(chartJSON);
+    console.log("My Chart Data: " + chartData);
     setFormData(chartData);
     createChart(chartContainer, chartData);
     updateFormData(chartData);
@@ -74,6 +76,18 @@ const loadChartJSONTemplate = (settings) => {
   setFormData(template); // WARNING: This is an Update to get the form data to work with external functions. MIGHT HAVE TO BE REMOVED
 };
 
+const loadChartJSONTestFile = (settings) => {
+  const { testCreateChart, updateFormData } = settings.functions;
+  const { chartContainer, testTemplate } = settings.misc;
+  const { setFormData } = settings.sessionStorage;
+
+  setFormData(testTemplate);
+  document.querySelector(".chartJSON textarea").value = JSON.stringify(testTemplate, null, "\t");
+  testCreateChart(chartContainer, testTemplate);
+  updateFormData(testTemplate);
+  setFormData(testTemplate); // WARNING: This is an Update to get the form data to work with external functions. MIGHT HAVE TO BE REMOVED
+};
+
 const hasChartType = (charts, type) => {
   let chartCount = 0;
   charts.some((chart) => {
@@ -109,4 +123,4 @@ const updateChartJSONWithFormData = (settings) => {
   document.querySelector(".chartJSON textarea").value = formDataString;
 };
 
-export { loadChartJSON, saveChartJSON, updateChartJSON, loadChartJSONTemplate, hasChartType, loadChartJSONFromAccount, updateChartForAccount, updateChartJSONWithFormData };
+export { loadChartJSON, saveChartJSON, updateChartJSON, loadChartJSONTemplate, hasChartType, loadChartJSONFromAccount, updateChartForAccount, updateChartJSONWithFormData, loadChartJSONTestFile };

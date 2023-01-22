@@ -25,7 +25,6 @@ root.render(
     <ApolloProvider client={client}>
       <QueryClientProvider client={queryClient}>
         <App />
-        <ReactQueryDevtools />
       </QueryClientProvider>
     </ApolloProvider>
   </React.StrictMode>

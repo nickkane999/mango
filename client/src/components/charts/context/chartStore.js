@@ -8,6 +8,7 @@ import {
   loadChartJSONTemplate,
   loadChartJSONFromAccount,
   updateChartJSONWithFormData,
+  loadChartJSONTestFile,
 } from "../util/chartSettings";
 import { updateFormInput, updateFormCheckbox, updateFormData, handleSubmit } from "../util/formFields";
 
@@ -29,6 +30,7 @@ export const initialState = {
     updateChartForAccount: updateChartForAccount,
     hasChartType: hasChartType,
     loadChartJSONTemplate: loadChartJSONTemplate,
+    loadChartJSONTestFile: loadChartJSONTestFile,
     loadChartJSONFromAccount: loadChartJSONFromAccount,
     updateChartJSONWithFormData: updateChartJSONWithFormData,
     handleSubmit: handleSubmit,
