@@ -22,7 +22,7 @@
 
 # old files (keeping in case I need them later)
 /client/src/zOldFilesPreAcheivedBranch
-
+/zTesting
 
 npm-debug.log*
 yarn-debug.log*

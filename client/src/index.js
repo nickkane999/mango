@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./assets/css/index.css";
 import App from "./App";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -19,8 +19,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+const root = document.getElementById("root");
+ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <QueryClientProvider client={queryClient}>
@@ -28,5 +28,6 @@ root.render(
         <ReactQueryDevtools />
       </QueryClientProvider>
     </ApolloProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  root
 );
