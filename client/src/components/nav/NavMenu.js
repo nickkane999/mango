@@ -35,6 +35,7 @@ function NavMenu() {
               <Link href="/login">Login</Link>
             )}
           </Nav>
+          <Link href="/test">Test</Link>
         </Collapse>
       </Navbar>
     </header>
