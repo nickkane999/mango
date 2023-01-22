@@ -1,13 +1,3 @@
-//console.log("booty");
-/*
-const data = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-  series: [
-    { meta: "Sales", data: [5, 4, 3, 7, 5, 10, 3] },
-    { meta: "Expenses", data: [2, 5, 3, 2, 4, 6, 3] },
-  ],
-};
-*/
 const data = {
   labels: [1, 2, 3, 4, 5, 6, 7],
   series: [
@@ -15,7 +5,6 @@ const data = {
     [2, 4, 2, 5, 4, 3, 6],
   ],
 };
-// Options for the chart
 const options = {};
 
 const scriptData = document.createElement("script");
@@ -29,11 +18,25 @@ scriptOptions.type = "application/json";
 scriptOptions.innerHTML = JSON.stringify(options);
 
 const div = document.querySelector("#chartist-info");
+if (document.querySelector('script[data-json="data"]')) {
+  document.querySelector('script[data-json="data"]').remove();
+}
 div.appendChild(scriptData);
+if (document.querySelector('script[options-json="data"]')) {
+  document.querySelector('script[options-json="data"]').remove();
+}
 div.appendChild(scriptOptions);
+/*
+let plugins = ctPointLabels({
+  textAnchor: "middle",
+  labelInterpolationFnc: function (value) {
+    return "$" + value.toFixed(2);
+  },
+});
+*/
 
+/*
 const scriptPlugin = document.createElement("script");
-
 scriptPlugin.innerHTML = `
 function ctPointLabels(options) {
   return function ctPointLabels(chart) {
@@ -66,6 +69,7 @@ function ctPointLabels(options) {
 }`;
 
 div.appendChild(scriptPlugin);
+*/
 
 //var chart = new Chartist.Line("#chart", data, options);
 
@@ -74,6 +78,18 @@ const dataScript = document.querySelector('script[data-json="data"]');
 const data = JSON.parse(dataScript.innerHTML);
 const optionsScript = document.querySelector('script[options-json="data"]');
 const options = JSON.parse(optionsScript.innerHTML);
+
+const data = JSON.parse(document.querySelector('script[data-json="data"]'));
+const options = JSON.parse(document.querySelector('script[options-json="data"]'));
+const plugin = [
+    ctPointLabels({
+      textAnchor: 'middle',
+      //labelInterpolationFnc: {return '$' + value.toFixed(2)}
+      labelInterpolationFnc: {console.log(value)}
+    })
+  ];
+
+
 //var chart = new Chartist.Line("#chart", data, options);
 
 
