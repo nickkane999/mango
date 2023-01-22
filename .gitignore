@@ -23,6 +23,7 @@
 # old files (keeping in case I need them later)
 /client/src/zOldFilesPreAcheivedBranch
 /zTesting
+/client/bower_components
 
 npm-debug.log*
 yarn-debug.log*

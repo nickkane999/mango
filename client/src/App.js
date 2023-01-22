@@ -5,6 +5,7 @@ import Chart from "./pages/chart/Chart";
 import Login from "./pages/login/Login";
 import NavMenu from "./components/nav/NavMenu";
 import Account from "./pages/account/Account";
+import PluginTesting from "./pages/PluginTesting/Test";
 
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "./assets/css/chartist.min.css";
@@ -20,7 +21,10 @@ function App() {
             <Route path="/chart" element={<Chart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/account" element={<Account />} />
-            <Route path="*" element={<Home />} />
+            <Route path="/test" element={<PluginTesting />} />
+            {
+              //<Route path="*" element={<Home />} />
+            }
           </Routes>
         </div>
       </div>
