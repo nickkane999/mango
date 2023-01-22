@@ -9,8 +9,10 @@ import { UPDATE_CHART_BY_USER, CREATE_CHART_BY_USER } from "../../../graphQL/que
 import SessionContext from "../context/chartStore";
 
 const ChartSection = (props) => {
-  const { fields, createChart, template } = props.settings;
-  const chartContainer = useRef(null);
+  const { fields, createChart, template, createChartData, createChartOptions } = props.settings;
+
+  //console.log(createChartData(template));
+  //console.log(createChartOptions(template));
 
   const [hasSessionLoaded, setHasSessionLoaded] = useState(false);
   const [updateChartQuery] = useMutation(UPDATE_CHART_BY_USER);
@@ -35,21 +37,15 @@ const ChartSection = (props) => {
         chartType: props.chartType,
         fields: fields,
         template: template,
-        chartContainer: chartContainer,
+        createChartData: createChartData,
+        createChartOptions: createChartOptions,
       },
     };
     setChartInfo({ ...newAttributes });
     setHasSessionLoaded(true);
   }, [props.chartType]);
 
-  return (
-    <>
-      {hasSessionLoaded && chartInfo.functions.handleSubmit ? <ChartForm /> : null}
-      <Container>
-        <div id="chart" ref={chartContainer}></div>
-      </Container>
-    </>
-  );
+  return <>{hasSessionLoaded && chartInfo.functions.handleSubmit ? <ChartForm /> : null}</>;
 };
 
 export default memo(ChartSection);

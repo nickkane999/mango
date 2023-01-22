@@ -5,6 +5,8 @@ import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 import { user } from "../../../util/general";
 import "./ChartForm.css";
 import { createChartSettings, createFormFields, createDisplayOptions } from "../util/formSections";
+import ChartistGraph from "react-chartist";
+import ChartistTooltip from "chartist-plugin-tooltips-updated";
 
 import SessionContext from "../context/chartStore";
 
@@ -12,6 +14,10 @@ const ChartForm = (props) => {
   const { chartInfo, setChartInfo } = useContext(SessionContext);
   let settings = chartInfo;
   let functions = settings.functions;
+  let { createChartData, createChartOptions } = settings.misc;
+  let chartData = createChartData(settings.misc.template);
+  let chartOptions = createChartOptions(settings.misc.template);
+
   const { chartType, fields } = settings.misc;
 
   // Defining state variables and functions to use for create page's HTML (defined in formSections file)
@@ -64,6 +70,7 @@ const ChartForm = (props) => {
         {createChartSettings(chartSettingsInfo)}
         {createFormFields(formFieldInfo)}
         {createDisplayOptions(displayOptionsInfo)}
+        {true ? <ChartistGraph data={chartData} options={chartOptions} type={"Bar"} /> : <p> Loading... </p>}
       </>
     );
   } else {
