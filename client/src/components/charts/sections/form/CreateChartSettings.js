@@ -69,7 +69,7 @@ const CreateChartSettings = (props) => {
             <Label>Enter JSON here</Label>
             <Control as="textarea" rows="10" placeholder="Chart progress" onChange={(event) => functions.updateChartJSON(event, settings)} name="chartJSON" />
           </Group>
-          <Button variant="primary" type="submit" onClick={() => functions.loadChartJSON(settings)}>
+          <Button variant="primary" type="submit" onClick={() => functions.loadChartJSON(settings, pluginID)}>
             Load Chart From JSON
           </Button>
           <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings, pluginID)}>

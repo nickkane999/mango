@@ -54,7 +54,7 @@ export const ChartProvider = ({ children }) => {
 
 export const updateSessionInfo = (info) => {
   const { settings } = info;
-  const { getUpdatedFormData, getUpdatedChartJSON, setChartJSON, setFormData, updateChartQuery, createChartQuery, createChart, createChartVanillaJS, template, fields, chartType } = info;
+  const { getUpdatedFormData, getUpdatedChartJSON, setChartJSON, setFormData, updateChartQuery, createChartQuery, createChart, createChartVanillaJS, template, fields, chartType, pluginID } = info;
   settings.functions.getUpdatedFormData = getUpdatedFormData;
   settings.functions.getUpdatedChartJSON = getUpdatedChartJSON;
   settings.sessionStorage.setChartJSON = setChartJSON;
@@ -66,6 +66,7 @@ export const updateSessionInfo = (info) => {
   settings.misc.template = template;
   settings.misc.fields = fields;
   settings.misc.chartType = chartType;
+  settings.misc.pluginID = pluginID;
 
   return settings;
 };

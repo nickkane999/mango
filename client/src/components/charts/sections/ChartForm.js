@@ -19,6 +19,10 @@ const ChartForm = (props) => {
   const [hasSessionLoaded, setHasSessionLoaded] = useState(false);
   const { chartInfo, setChartInfo } = useContext(SessionContext);
 
+  console.log("ChartForm props: ", props);
+  let pluginID = "addPointLabels1";
+  addPlugin(CT_POINT_LABELS, pluginID);
+
   /*
   useEffect(() => {
     const { functions, sessionStorage, misc } = chartInfo;
@@ -42,9 +46,6 @@ const ChartForm = (props) => {
     setHasSessionLoaded(true);
   }, [props.chartType]);
   */
-
-  let pluginID = "addPointLabels1";
-  addPlugin(CT_POINT_LABELS, pluginID);
 
   // Defining state variables and functions to use for create page's HTML (defined in formSections file)
   const [formData, setFormData] = useState({});
@@ -97,6 +98,7 @@ const ChartForm = (props) => {
     template,
     fields,
     chartType,
+    pluginID,
   };
   settings = updateSessionInfo(info);
   setChartInfo(settings);

@@ -1,3 +1,5 @@
+import { createChartVanillaJS } from "../data/LineChartFormData";
+
 // Chart Setting functions
 const updateChartJSON = (event, settings) => {
   const { setChartJSON } = settings.sessionStorage;
@@ -5,15 +7,15 @@ const updateChartJSON = (event, settings) => {
 };
 
 const loadChartJSON = (settings) => {
-  const { createChart, updateFormData } = settings.functions;
-  const { chartContainer } = settings.misc;
+  const { createChartVanillaJS, updateFormData } = settings.functions;
   const { setFormData } = settings.sessionStorage;
+  const { pluginID } = settings.misc;
   const chartJSON = settings.functions.getUpdatedChartJSON();
 
   try {
     let chartData = JSON.parse(chartJSON);
     setFormData(chartData);
-    createChart(chartContainer, chartData);
+    createChartVanillaJS(chartData, pluginID);
     updateFormData(chartData);
   } catch (error) {
     console.log(error);
@@ -62,10 +64,11 @@ const updateChartForAccount = (chart, settings) => {
   }
 };
 
-const loadChartJSONTemplate = (settings, pluginID) => {
+const loadChartJSONTemplate = (settings) => {
   const { createChartVanillaJS, updateFormData } = settings.functions;
   const { chartContainer, template } = settings.misc;
   const { setFormData } = settings.sessionStorage;
+  const { pluginID } = settings.misc;
 
   setFormData(template);
   document.querySelector(".chartJSON textarea").value = JSON.stringify(template, null, "\t");
@@ -75,6 +78,7 @@ const loadChartJSONTemplate = (settings, pluginID) => {
 };
 
 const hasChartType = (charts, type) => {
+  console.log(charts);
   let chartCount = 0;
   charts.some((chart) => {
     // Alternative to forEach, will stop looping when true
@@ -87,15 +91,15 @@ const hasChartType = (charts, type) => {
 };
 
 const loadChartJSONFromAccount = (chart, settings) => {
-  const { createChart, updateFormData } = settings.functions;
-  const { chartContainer } = settings.misc;
+  const { createChartVanillaJS, updateFormData } = settings.functions;
+  const { pluginID } = settings.misc;
   const { setFormData } = settings.sessionStorage;
 
   if (chart.id) {
     document.querySelector(".chartJSON textarea").value = chart.json;
     let chartData = JSON.parse(chart.json);
     setFormData(chartData);
-    createChart(chartContainer, chartData);
+    createChartVanillaJS(chartData, pluginID);
     updateFormData(chartData);
   }
 };

@@ -12,10 +12,11 @@ function ChartMenu() {
 
   const selectChartType = (key) => {
     let data = chartLayouts[key];
+    data.settings.chartType = key;
     setSelectedChartName(data.title);
     //setSelectedOption(data);
     //setCurrentComponent(<ChartSection settings={data.settings} chartType={key} />);
-    setCurrentComponent(<ChartForm settings={data.settings} chartType={key} />);
+    setCurrentComponent(<ChartForm settings={data.settings} />);
   };
 
   const displayChartOptions = () => {
