@@ -9,7 +9,7 @@ import { UPDATE_CHART_BY_USER, CREATE_CHART_BY_USER } from "../../../graphQL/que
 import SessionContext from "../context/chartStore";
 
 const ChartSection = (props) => {
-  const { fields, createChart, template } = props.settings;
+  const { fields, createChart, createChartVanillaJS, template } = props.settings;
   const chartContainer = useRef(null);
 
   const [hasSessionLoaded, setHasSessionLoaded] = useState(false);
@@ -27,6 +27,7 @@ const ChartSection = (props) => {
       functions: {
         ...functions,
         createChart: createChart,
+        createChartVanillaJS: createChartVanillaJS,
         updateChartQuery: updateChartQuery,
         createChartQuery: createChartQuery,
       },

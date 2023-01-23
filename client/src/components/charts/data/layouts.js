@@ -1,5 +1,5 @@
-import { fields as barFields, createChart as barCreateChart, template as barChartTemplate } from "./BarChartFormData";
-import { fields as lineFields, createChart as lineCreateChart, template as lineChartTemplate } from "./LineChartFormData";
+import { fields as barFields, createChart as barCreateChart, createChart as barCreateChartVanillaJS, template as barChartTemplate } from "./BarChartFormData";
+import { fields as lineFields, createChart as lineCreateChart, createChartVanillaJS as lineCreateChartVanillaJS, template as lineChartTemplate } from "./LineChartFormData";
 
 export const chartLayouts = {
   bar: {
@@ -8,6 +8,7 @@ export const chartLayouts = {
     settings: {
       fields: barFields,
       createChart: barCreateChart,
+      createChartVanillaJS: barCreateChartVanillaJS,
       template: barChartTemplate,
     },
   },
@@ -17,6 +18,7 @@ export const chartLayouts = {
     settings: {
       fields: lineFields,
       createChart: lineCreateChart,
+      createChartVanillaJS: lineCreateChartVanillaJS,
       template: lineChartTemplate,
     },
   },

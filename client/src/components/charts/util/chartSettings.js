@@ -62,14 +62,14 @@ const updateChartForAccount = (chart, settings) => {
   }
 };
 
-const loadChartJSONTemplate = (settings) => {
-  const { createChart, updateFormData } = settings.functions;
+const loadChartJSONTemplate = (settings, pluginID) => {
+  const { createChartVanillaJS, updateFormData } = settings.functions;
   const { chartContainer, template } = settings.misc;
   const { setFormData } = settings.sessionStorage;
 
   setFormData(template);
   document.querySelector(".chartJSON textarea").value = JSON.stringify(template, null, "\t");
-  createChart(chartContainer, template);
+  createChartVanillaJS(template, pluginID);
   updateFormData(template);
   setFormData(template); // WARNING: This is an Update to get the form data to work with external functions. MIGHT HAVE TO BE REMOVED
 };

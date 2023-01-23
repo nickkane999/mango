@@ -4,7 +4,7 @@ const { Control, Label, Group, Check } = Form;
 const { Menu, Toggle, Item } = Dropdown;
 
 // Form HTML sections
-const createChartSettings = ({ data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user }) => {
+const createChartSettings = ({ data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID }) => {
   return (
     <Container className="section">
       <Row>
@@ -72,7 +72,7 @@ const createChartSettings = ({ data, selectedChart, functions, chartType, pullCh
           <Button variant="primary" type="submit" onClick={() => functions.loadChartJSON(settings)}>
             Load Chart From JSON
           </Button>
-          <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings)}>
+          <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings, pluginID)}>
             Load Template
           </Button>
         </Container>

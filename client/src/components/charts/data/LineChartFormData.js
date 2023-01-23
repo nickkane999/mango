@@ -1,4 +1,5 @@
 import { LineChart } from "chartist";
+import { pullChartistInfo, updateChartistInfo, generateChart } from "../util/charts";
 
 export const fields = [
   { name: "Labels", key: "labels", type: "input", default: true },
@@ -174,6 +175,87 @@ export const createChart = (chartRef, formData) => {
       },
     }
   );
+};
+
+export const createChartVanillaJS = (formData, pluginID) => {
+  const { plugin } = pullChartistInfo(pluginID);
+  const data = {
+    labels: formData.labels ? formData.labels : ["Mon", "Tue", "Wed", "Thu", "Fri"],
+    series: formData.series ? formData.series : [[50, 20, 40, 20, 10]],
+  };
+  const options = {
+    axisX: {
+      offset: formData.offset_axisx ? Number(formData.offset_axisx) : 30,
+      position: formData.position_axisx ? formData.position_axisx : "end",
+      labelOffset: {
+        x: formData.labelOffsetX_axisx ? Number(formData.labelOffsetX_axisx) : 0,
+        y: formData.labelOffsetY_axisx ? Number(formData.labelOffsetY_axisx) : 0,
+      },
+      showLabel: formData.showLabel_axisx !== undefined ? formData.showLabel_axisx : true,
+      showGrid: formData.showGrid_axisx !== undefined ? formData.showGrid_axisx : true,
+      labelInterpolationFnc: formData.labelInterpolationFnc_axisx
+        ? formData.labelInterpolationFnc_axisx
+        : function (value) {
+            return value;
+          },
+      type: formData.type_axisx ? formData.type_axisx : undefined,
+    },
+    axisY: {
+      offset: formData.offset_axisy ? Number(formData.offset_axisy) : 30,
+      position: formData.position_axisy ? formData.position_axisy : "start",
+      labelOffset: {
+        x: formData.labelOffsetX_axisy ? Number(formData.labelOffsetX_axisy) : 0,
+        y: formData.labelOffsetY_axisy ? Number(formData.labelOffsetY_axisy) : 0,
+      },
+      showLabel: formData.showLabel_axisy !== undefined ? formData.showLabel_axisy : true,
+      showGrid: formData.showGrid_axisy !== undefined ? formData.showGrid_axisy : true,
+      labelInterpolationFnc: formData.labelInterpolationFnc_axisy
+        ? formData.labelInterpolationFnc_axisy
+        : function (value) {
+            return value;
+          },
+      type: formData.type_axisy ? formData.type_axisy : undefined,
+      scaleMinSpace: formData.scaleMinSpace_axisy ? Number(formData.scaleMinSpace_axisy) : 30,
+      onlyInteger: formData.onlyInteger_axisy !== undefined ? formData.onlyInteger_axisy : false,
+    },
+    width: formData.width ? formData.width : undefined,
+    height: formData.height ? formData.height : undefined,
+    showLine: formData.showLine !== undefined ? formData.showLine : true,
+    showPoint: formData.showPoint !== undefined ? formData.showPoint : true,
+    showArea: formData.showArea !== undefined ? formData.showArea : false,
+    areaBase: formData.areaBase ? Number(formData.areaBase) : 0,
+    lineSmooth: formData.lineSmooth !== undefined ? formData.lineSmooth : true,
+    showGridBackground: formData.showGridBackground !== undefined ? formData.showGridBackground : false,
+    low: formData.low !== null ? formData.low : undefined,
+    high: formData.high ? formData.high : undefined,
+    chartPadding: {
+      top: formData.chartPaddingTop ? Number(formData.chartPaddingTop) : 15,
+      right: formData.chartPaddingRight ? Number(formData.chartPaddingRight) : 5,
+      bottom: formData.chartPaddingBottom ? Number(formData.chartPaddingBottom) : 5,
+      left: formData.chartPaddingLeft ? Number(formData.chartPaddingLeft) : 10,
+    },
+    fullWidth: formData.fullWidth !== undefined ? formData.fullWidth : false,
+    reverseData: formData.reverseData !== undefined ? formData.reverseData : false,
+    classNames: {
+      chart: formData.chartClass ? formData.chartClass : "ct-chart-line",
+      label: formData.labelClass ? formData.labelClass : "ct-label",
+      labelGroup: formData.labelGroupClass ? formData.labelGroupClass : "ct-labels",
+      series: formData.seriesClass ? formData.seriesClass : "ct-series",
+      line: formData.lineClass ? formData.lineClass : "ct-line",
+      point: formData.pointClass ? formData.pointClass : "ct-point",
+      area: formData.areaClass ? formData.areaClass : "ct-area",
+      grid: formData.gridClass ? formData.gridClass : "ct-grid",
+      gridGroup: formData.gridGroupClass ? formData.gridGroupClass : "ct-grids",
+      gridBackground: formData.gridBackgroundClass ? formData.gridBackgroundClass : "ct-grid-background",
+      vertical: formData.verticalClass ? formData.verticalClass : "ct-vertical",
+      horizontal: formData.horizontalClass ? formData.horizontalClass : "ct-horizontal",
+      start: formData.startClass ? formData.startClass : "ct-start",
+      end: formData.endClass ? formData.endClass : "ct-end",
+    },
+  };
+
+  updateChartistInfo(data, options, plugin);
+  generateChart(pluginID);
 };
 
 export const template = {

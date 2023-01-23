@@ -6,6 +6,9 @@ import { user } from "../../../util/general";
 import "./ChartForm.css";
 import { createChartSettings, createFormFields, createDisplayOptions } from "../util/formSections";
 
+import { CT_POINT_LABELS } from "../plugins/labelLineChart";
+import { addPlugin, updateChartistInfo, generateChart } from "../util/charts";
+
 import SessionContext from "../context/chartStore";
 
 const ChartForm = (props) => {
@@ -13,6 +16,7 @@ const ChartForm = (props) => {
   let settings = chartInfo;
   let functions = settings.functions;
   const { chartType, fields } = settings.misc;
+  let pluginID = "addPointLabels1";
 
   // Defining state variables and functions to use for create page's HTML (defined in formSections file)
   const [formData, setFormData] = useState({});
@@ -27,6 +31,10 @@ const ChartForm = (props) => {
   functions.getUpdatedChartJSON = getUpdatedChartJSON;
   settings.sessionStorage.setChartJSON = setChartJSON;
   settings.sessionStorage.setFormData = setFormData;
+
+  addPlugin(CT_POINT_LABELS, "addPointLabels1");
+  //updateChartistInfo(template)
+  //generateChart("addPointLabels1");
 
   const [loadChartsQuery, { data }] = useLazyQuery(GET_CHARTS_BY_USER);
   const [selectedChart, setSelectedChart] = useState({ name: "Load Existing Chart" });
@@ -56,7 +64,7 @@ const ChartForm = (props) => {
   // Wait for chartInfo (context containing all functions / variables needed for this chart form) to be loaded before rendering
   if (chartInfo) {
     // Define parameters used in each HTML section, then pass into the functions to return HTML
-    let chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user };
+    let chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID };
     let formFieldInfo = { functions, fields, settings };
     let displayOptionsInfo = fields;
     return (
