@@ -45,15 +45,29 @@ export const initialState = {
   },
 };
 
-export const initialState2 = {
-  description: "session storage used to render sections of chart page and make it functional",
-};
-
 const ChartContext = createContext(initialState);
 
 export const ChartProvider = ({ children }) => {
   const [chartInfo, setChartInfo] = useState(initialState);
   return <ChartContext.Provider value={{ chartInfo, setChartInfo }}>{children}</ChartContext.Provider>;
+};
+
+export const updateSessionInfo = (info) => {
+  const { settings } = info;
+  const { getUpdatedFormData, getUpdatedChartJSON, setChartJSON, setFormData, updateChartQuery, createChartQuery, createChart, createChartVanillaJS, template, fields, chartType } = info;
+  settings.functions.getUpdatedFormData = getUpdatedFormData;
+  settings.functions.getUpdatedChartJSON = getUpdatedChartJSON;
+  settings.sessionStorage.setChartJSON = setChartJSON;
+  settings.sessionStorage.setFormData = setFormData;
+  settings.functions.updateChartQuery = updateChartQuery;
+  settings.functions.createChartQuery = createChartQuery;
+  settings.functions.createChart = createChart;
+  settings.functions.createChartVanillaJS = createChartVanillaJS;
+  settings.misc.template = template;
+  settings.misc.fields = fields;
+  settings.misc.chartType = chartType;
+
+  return settings;
 };
 
 export default ChartContext;
