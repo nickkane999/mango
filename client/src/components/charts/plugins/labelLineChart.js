@@ -15,8 +15,8 @@ function ctPointLabels(options) {
     if(chart instanceof Chartist.Line) {
       //console.log("I made it");
       chart.on('draw', function(data, i) {
-        console.log(options)
-        console.log(data);
+        //console.log(options)
+        //console.log(data);
         if(data.type === 'point') {
           data.group.elem('text', {
             x: data.x + options.labelOffset.x,
@@ -30,16 +30,3 @@ function ctPointLabels(options) {
 }`;
 
 export { CT_POINT_LABELS };
-
-/*
-let samplePlugin = `
-ctPointLabels({
-    textAnchor: 'middle',
-    //labelInterpolationFnc: {return '$' + value.toFixed(2)}
-    labelInterpolationFnc: {console.log(value)}
-  })
-`;
-const makeChart = new Function(`return new Chartist.Line("#chart", data, options, {$samplePlugin});`)();
-
-export { CT_POINT_LABELS, makeChart };
-*/

@@ -1,9 +1,10 @@
-import { ADD_POINT_LABELS1 } from "../data/pluginStrings";
+import { ADD_POINT_LABELS1, ADD_BAR_LABELS1 } from "../data/pluginStrings";
 
 const div = document.querySelector("#chartist-info");
 
 const plugins = {
   addPointLabels1: ADD_POINT_LABELS1,
+  addBarLabels1: ADD_BAR_LABELS1,
 };
 
 const addPlugin = (pluginString, id) => {
@@ -27,8 +28,8 @@ const updateChartistInfo = (data, options, plugin) => {
   options && scripts.push({ script: optionsScript, info: options, key: "options" });
   plugin && scripts.push({ script: pluginScript, info: plugin, key: "plugin" });
   scripts.forEach((script) => {
-    console.log("script loop");
-    console.log(JSON.stringify(script.info));
+    //console.log("script loop");
+    //console.log(JSON.stringify(script.info));
     if (script.script) {
       script.script.innerHTML = JSON.stringify(script.info);
     } else {
@@ -46,13 +47,28 @@ const pullChartistInfo = (pluginID) => {
   const optionsScript = document.querySelector('script[options-json="data"]');
   const options = optionsScript ? optionsScript.innerHTML : null;
   const plugin = plugins[pluginID] ? plugins[pluginID] : null;
+  console.log(pluginID);
+  console.log(plugins);
   return { data, options, plugin };
 };
 
-const generateChart = (pluginID) => {
-  let { data, options, plugin } = pullChartistInfo(pluginID);
-  if (data && plugin) {
-    const makeChart = new Function(`return new Chartist.Line("#chart", ${data}, ${plugin});`)();
+const generateChart = (pluginID, chartKey) => {
+  const keys = {
+    bar: "Bar",
+    line: "Line",
+  };
+  console.log("chart key:" + chartKey);
+  console.log("pluginID:" + pluginID);
+  const ChartType = Object.keys(keys).includes(chartKey) ? keys[chartKey] : null;
+  if (ChartType) {
+    let { data, options, plugin } = pullChartistInfo(pluginID);
+    console.log(`new Function(return new Chartist.${ChartType}("#chart", ${data}, ${options}, ${plugin});`);
+    if (data && plugin) {
+      console.log("Going to make u");
+      const makeChart = new Function(`return new Chartist.${ChartType}("#chart", ${data}, ${options}, ${plugin});`)();
+    }
+  } else {
+    console.log("Chart key not found:" + chartKey + ChartType);
   }
 };
 

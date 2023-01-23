@@ -8,6 +8,7 @@ import SessionContext, { updateSessionInfo } from "../context/chartStore";
 
 import { user } from "../../../util/general";
 import { CT_POINT_LABELS } from "../plugins/labelLineChart";
+import { CT_BAR_LABELS } from "../plugins/labelBarChart";
 import { addPlugin } from "../util/charts";
 
 import CreateChartSettings from "./form/CreateChartSettings";
@@ -19,33 +20,11 @@ const ChartForm = (props) => {
   const [hasSessionLoaded, setHasSessionLoaded] = useState(false);
   const { chartInfo, setChartInfo } = useContext(SessionContext);
 
-  console.log("ChartForm props: ", props);
+  //console.log("ChartForm props: ", props);
   let pluginID = "addPointLabels1";
+  let pluginID2 = "addBarLabels1";
   addPlugin(CT_POINT_LABELS, pluginID);
-
-  /*
-  useEffect(() => {
-    const { functions, sessionStorage, misc } = chartInfo;
-    const newAttributes = {
-      sessionStorage: {
-        ...sessionStorage,
-      },
-      functions: {
-        ...functions,
-        createChart: createChart,
-        createChartVanillaJS: createChartVanillaJS,
-      },
-      misc: {
-        ...misc,
-        chartType: props.chartType,
-        fields: fields,
-        template: template,
-      },
-    };
-    setChartInfo({ ...newAttributes });
-    setHasSessionLoaded(true);
-  }, [props.chartType]);
-  */
+  addPlugin(CT_BAR_LABELS, pluginID2);
 
   // Defining state variables and functions to use for create page's HTML (defined in formSections file)
   const [formData, setFormData] = useState({});
@@ -99,6 +78,7 @@ const ChartForm = (props) => {
     fields,
     chartType,
     pluginID,
+    pluginID2,
   };
   settings = updateSessionInfo(info);
   setChartInfo(settings);
@@ -106,7 +86,7 @@ const ChartForm = (props) => {
   // Wait for chartInfo (context containing all functions / variables needed for this chart form) to be loaded before rendering
   if (chartInfo) {
     // Define parameters used in each HTML section, then pass into the functions to return HTML
-    let chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID };
+    let chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID: pluginID2 };
     let formFieldInfo = { functions, fields, settings };
     let displayOptionsInfo = fields;
     return (

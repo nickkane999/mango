@@ -66,19 +66,20 @@ const updateChartForAccount = (chart, settings) => {
 
 const loadChartJSONTemplate = (settings) => {
   const { createChartVanillaJS, updateFormData } = settings.functions;
-  const { chartContainer, template } = settings.misc;
+  const { template, chartType } = settings.misc;
   const { setFormData } = settings.sessionStorage;
   const { pluginID } = settings.misc;
+  console.log(settings.misc);
+  const createChartInfo = { formData: template, chartType, pluginID };
 
   setFormData(template);
   document.querySelector(".chartJSON textarea").value = JSON.stringify(template, null, "\t");
-  createChartVanillaJS(template, pluginID);
+  createChartVanillaJS(createChartInfo);
   updateFormData(template);
   setFormData(template); // WARNING: This is an Update to get the form data to work with external functions. MIGHT HAVE TO BE REMOVED
 };
 
 const hasChartType = (charts, type) => {
-  console.log(charts);
   let chartCount = 0;
   charts.some((chart) => {
     // Alternative to forEach, will stop looping when true

@@ -30,16 +30,3 @@ function ctPointLabels(options) {
 }`;
 
 export { CT_POINT_LABELS };
-
-/*
-let samplePlugin = `
-ctPointLabels({
-    textAnchor: 'middle',
-    //labelInterpolationFnc: {return '$' + value.toFixed(2)}
-    labelInterpolationFnc: {console.log(value)}
-  })
-`;
-const makeChart = new Function(`return new Chartist.Line("#chart", data, options, {$samplePlugin});`)();
-
-export { CT_POINT_LABELS, makeChart };
-*/
