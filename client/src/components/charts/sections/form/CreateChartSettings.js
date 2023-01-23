@@ -1,10 +1,10 @@
 import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
-import { createCheckbox, createInputField, createCheckboxDisplayOptions, handleDisplayOptions } from "./formLayout";
+import { handleDisplayOptions } from "../../util/formLayout";
 const { Control, Label, Group, Check } = Form;
 const { Menu, Toggle, Item } = Dropdown;
 
-// Form HTML sections
-const createChartSettings = ({ data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID }) => {
+const CreateChartSettings = (props) => {
+  const { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID } = props;
   return (
     <Container className="section">
       <Row>
@@ -81,41 +81,4 @@ const createChartSettings = ({ data, selectedChart, functions, chartType, pullCh
   );
 };
 
-const createFormFields = ({ functions, settings, fields }) => {
-  return (
-    <Container className="formFields section">
-      <Row>
-        <h2>Chart Fields</h2>
-        <Form onSubmit={(event) => functions.handleSubmit(event, settings)}>
-          {fields.map((field) => {
-            if (field.type === "checkbox") {
-              return createCheckbox(field, settings);
-            } else if (field.type === "input") {
-              return createInputField(field, settings);
-            }
-          })}
-          <Button variant="primary" type="submit">
-            Load Chart From Form
-          </Button>
-        </Form>
-      </Row>
-    </Container>
-  );
-};
-
-const createDisplayOptions = (fields) => {
-  return (
-    <Container className="displayOptions section">
-      <h2> Select Chart Fields to Display</h2>
-      <Row>
-        {fields.map((field) => {
-          if (field.default === false) {
-            return createCheckboxDisplayOptions(field);
-          }
-        })}
-      </Row>
-    </Container>
-  );
-};
-
-export { createChartSettings, createFormFields, createDisplayOptions };
+export default CreateChartSettings;
