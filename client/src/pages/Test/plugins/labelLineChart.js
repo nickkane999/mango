@@ -29,4 +29,20 @@ function ctPointLabels(options) {
   }
 }`;
 
-export { CT_POINT_LABELS };
+const addPointLabels1String = (info) => {
+  const { positionFunction = null, labelOffsetX = null, labelOffsetY = null, textFunction = null, labelClass = null } = info;
+  const ADD_POINT_LABELS1 = `{
+    plugins: [
+      ctPointLabels({
+        textAnchor: "middle",
+        labelInterpolationFnc: function (text) {
+          return text + '%'
+        },
+        labelClass: "ct-label",
+      }),
+    ],
+  }`;
+  return ADD_POINT_LABELS1;
+};
+
+export { CT_POINT_LABELS, addPointLabels1String };

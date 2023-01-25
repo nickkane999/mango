@@ -1,10 +1,15 @@
-import { addPointLabels1String, addBarLabels1String } from "../data/pluginStrings";
+import { addBarLabels1String } from "../../../pages/Test/plugins/labelBarChart";
+import { addPointLabels1String } from "../../../pages/Test/plugins/labelLineChart";
+import { addBarLegend1String } from "../../../pages/Test/plugins/legendBarChart";
+import { addBarLegendFull1String } from "../../../pages/Test/plugins/legendBarChart2";
 
 const div = document.querySelector("#chartist-info");
 
 const plugins = {
   addPointLabels1: addPointLabels1String,
   addBarLabels1: addBarLabels1String,
+  addBarLegend1: addBarLegend1String,
+  addBarLegendFull1: addBarLegendFull1String,
 };
 
 const addPlugin = (pluginString, id) => {
@@ -18,8 +23,8 @@ const addPlugin = (pluginString, id) => {
 
 const updateChartistInfo = (data, options, plugin) => {
   const div = document.querySelector("#chartist-info");
-  console.log("my div");
-  console.log(div);
+  //console.log("my div");
+  //console.log(div);
   const dataScript = document.querySelector('script[data-json="data"]');
   const optionsScript = document.querySelector('script[options-json="data"]');
   const pluginScript = document.querySelector('script[plugin-json="data"]');
@@ -28,8 +33,8 @@ const updateChartistInfo = (data, options, plugin) => {
   options && scripts.push({ script: optionsScript, info: options, key: "options" });
   plugin && scripts.push({ script: pluginScript, info: plugin, key: "plugin" });
   scripts.forEach((script) => {
-    console.log("script loop");
-    console.log(JSON.stringify(script.info));
+    //console.log("script loop");
+    //console.log(JSON.stringify(script.info));
     if (script.script) {
       script.script.innerHTML = JSON.stringify(script.info);
     } else {
