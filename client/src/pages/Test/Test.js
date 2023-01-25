@@ -1,17 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import "./Test.scss";
-import { CT_POINT_LABELS } from "./plugins/labelLineChart";
-import { CT_BAR_LABELS } from "./plugins/labelBarChart";
-import { CT_BAR_LEGEND } from "./plugins/legendBarChart";
-import { CT_AXIS_TITLE } from "./plugins/axisTitleChart";
-import { addPlugin, pullChartistInfo, updateChartistInfo, sampleInsert } from "../../components/charts/util/charts";
+import { pluginStrings } from "./plugins/all";
+import { addPlugin, pullChartistInfo, updateChartistInfo, sampleInsert, pullPlugins } from "../../components/charts/util/charts";
 import { user } from "../../util/general";
 
 function Test() {
+  const { CT_POINT_LABELS, CT_BAR_LABELS, CT_BAR_LEGEND, CT_AXIS_TITLE } = pluginStrings;
   sampleInsert();
   addPlugin(CT_POINT_LABELS, "addPointLabels1");
   addPlugin(CT_BAR_LABELS, "addBarLabels1");
-  //addPlugin(CT_BAR_LEGEND, "addBarLegend1");
+  addPlugin(CT_BAR_LEGEND, "addBarLegend1");
   addPlugin(CT_AXIS_TITLE, "addAxisTitle");
 
   const pluginParameters = {
@@ -21,13 +19,38 @@ function Test() {
     textFunction: "return text + '$';",
     labelClass: "ct-label",
   };
-  const pluginVars = { pluginID: "addAxisTitle", pluginParameters };
-  let { data, options, plugin } = pullChartistInfo(pluginVars);
-  console.log("btw, this is");
-  console.log(data, options, plugin);
+  const pluginParameters2 = {
+    axisXTitle: "My Title",
+    axisXClass: "ct-axis-title",
+    axisXAnchor: null,
+    axisYTitle: "Dank charts",
+    axisYClass: "ct-axis-title",
+    axisYAnchor: true,
+    flipTitle: false,
+  };
+  const plugins = [
+    { pluginID: "addBarLegend1", pluginParameters: pluginParameters },
+    { pluginID: "addAxisTitle", pluginParameters: pluginParameters2 },
+    { pluginID: "addBarLabels1", pluginParameters: pluginParameters },
+  ];
+  const pluginInfo = { hasOptions: true, plugins };
+
+  let { data, options } = pullChartistInfo();
+  let plugin = pullPlugins(pluginInfo);
+  options = { chartPadding: { top: 20, right: 20, bottom: 20, left: 20 }, height: 400 };
+  options = JSON.stringify(options).slice(0, -1);
+  if (options) {
+    console.log(data, options, plugin);
+  }
   if (data && plugin) {
-    console.log(`new Function('return new Chartist.Bar("#chart", ${data}, ${plugin});`);
-    const makeChart = new Function(`new Chartist.Bar("#chart", ${data}, ${plugin});`);
+    let makeChart = "";
+    if (options) {
+      console.log(`new Function('return new Chartist.Bar("#chart", ${data}, ${options}, ${plugin});`);
+      makeChart = new Function(`new Chartist.Bar("#chart", ${data}, ${options}, ${plugin});`);
+    } else {
+      //console.log(`new Function('return new Chartist.Bar("#chart", ${data}, ${plugin});`);
+      makeChart = new Function(`new Chartist.Bar("#chart", ${data}, ${plugin});`);
+    }
     makeChart();
   }
 
@@ -117,4 +140,25 @@ new Function('return new Chartist.Bar(
     }),
   ],
 });
+*/
+
+/*
+new Chartist.Bar(
+  "#chart",
+  {
+    labels: [1, 2, 3, 4, 5, 6, 7],
+    series: [
+      [1, 5, 3, 4, 6, 2, 3],
+      [2, 4, 2, 5, 4, 3, 6],
+    ],
+  },
+  { height: 400 
+    plugins: [
+      Chartist.plugins.ctAxisTitle({
+        axisX: { axisTitle: "Time (mins)", axisClass: "ct-axis-title", offset: { x: 0, y: 50 }, textAnchor: "middle" },
+        axisY: { axisTitle: "Goals", axisClass: "ct-axis-title", offset: { x: 0, y: -1 }, flipTitle: false },
+      }),
+    ],  
+  },
+);
 */

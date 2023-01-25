@@ -31,8 +31,7 @@ function ctPointLabels(options) {
 
 const addPointLabels1String = (info) => {
   const { positionFunction = null, labelOffsetX = null, labelOffsetY = null, textFunction = null, labelClass = null } = info;
-  const ADD_POINT_LABELS1 = `{
-    plugins: [
+  const ADD_POINT_LABELS1 = `
       ctPointLabels({
         textAnchor: "middle",
         labelInterpolationFnc: function (text) {
@@ -40,8 +39,7 @@ const addPointLabels1String = (info) => {
         },
         labelClass: "ct-label",
       }),
-    ],
-  }`;
+      `;
   return ADD_POINT_LABELS1;
 };
 

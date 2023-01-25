@@ -1,15 +1,5 @@
-import { addBarLabels1String } from "../../../pages/Test/plugins/labelBarChart";
-import { addPointLabels1String } from "../../../pages/Test/plugins/labelLineChart";
-import { addBarLegend1String } from "../../../pages/Test/plugins/legendBarChart";
-import { addAxisTitleString } from "../../../pages/Test/plugins/axisTitleChart";
+import { plugins as pluginScripts, pluginStrings } from "../../../pages/Test/plugins/all";
 const div = document.querySelector("#chartist-info");
-
-const plugins = {
-  addPointLabels1: addPointLabels1String,
-  addBarLabels1: addBarLabels1String,
-  addBarLegend1: addBarLegend1String,
-  addAxisTitle: addAxisTitleString,
-};
 
 const addPlugin = (pluginString, id) => {
   const scriptPlugin = document.createElement("script");
@@ -45,14 +35,25 @@ const updateChartistInfo = (data, options, plugin) => {
   });
 };
 
-const pullChartistInfo = ({ pluginID, pluginParameters }) => {
+const pullChartistInfo = () => {
   const dataScript = document.querySelector('script[data-json="data"]');
   const data = dataScript ? dataScript.innerHTML : null;
   const optionsScript = document.querySelector('script[options-json="data"]');
   const options = optionsScript ? optionsScript.innerHTML : null;
-  const plugin = plugins[pluginID] ? plugins[pluginID](pluginParameters) : null;
-  console.log("my plugins");
-  return { data, options, plugin };
+  console.log("my chart data");
+  console.log(data, options);
+  return { data, options };
+};
+
+const pullPlugins = (info) => {
+  const { plugins, hasOptions } = info;
+  let pluginString = hasOptions ? "" : "{";
+  pluginString += " plugins: [";
+  plugins.forEach((data) => {
+    const { pluginID, pluginParameters } = data;
+    pluginString += pluginID && pluginScripts[pluginID] ? pluginScripts[pluginID](pluginParameters) + "," : null;
+  });
+  return pluginString + "]}";
 };
 
 const generateChart = (pluginID) => {
@@ -72,11 +73,11 @@ const sampleInsert = () => {
       [2, 4, 2, 5, 4, 3, 6],
     ],
   };
-  const options = {};
+  const options = null;
   updateChartistInfo(data, options, null);
 };
 
-export { addPlugin, pullChartistInfo, updateChartistInfo, sampleInsert, generateChart };
+export { addPlugin, pullChartistInfo, pullPlugins, updateChartistInfo, sampleInsert, generateChart };
 
 /*
 const addJSFile = (file, id) => {
@@ -89,3 +90,4 @@ const addJSFile = (file, id) => {
   }
 };
 */
+//new Chartist.Bar("#chart", {"labels":[1,2,3,4,5,6,7],"series":[[1,5,3,4,6,2,3],[2,4,2,5,4,3,6]]}, {"chartPadding":{"top":20,"right":20,"bottom":20,"left":20},"height":400, { plugins: [nullnull]});

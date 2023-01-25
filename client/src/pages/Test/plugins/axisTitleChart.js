@@ -129,30 +129,31 @@ const CT_AXIS_TITLE = `
 `;
 
 const addAxisTitleString = (info) => {
-  //const { positionFunction = null, labelOffsetX = null, labelOffsetY = null, textFunction = null, labelClass = null } = info;
-  const ADD_AXIS_TITLE = `{
-    plugins: [
+  const { axisXTitle = "Sample X Title", axisXClass = null, axisXAnchor = null, axisYTitle = "Sample Y Title", axisYClass = null, axisYAnchor = null, flipTitle = false } = info;
+  const { usesOptions } = info;
+  const ADD_AXIS_TITLE = `
         Chartist.plugins.ctAxisTitle({
           axisX: {
-            axisTitle: "Time (mins)",
-            axisClass: "ct-axis-title",
+            axisTitle: "${axisXTitle ? axisXTitle : ""}",
+            axisClass: "${axisXClass ? axisXClass : "ct-axis-title"}",
             offset: {
               x: 0,
               y: 50
             },
-            textAnchor: "middle"
+            textAnchor: "${axisXAnchor ? axisXAnchor : "middle"}",
           },
           axisY: {
-            axisTitle: "Goals",
-            axisClass: "ct-axis-title",
+            axisTitle: "${axisYTitle ? axisYTitle : ""}",
+            axisClass: "${axisYClass ? axisYClass : "ct-axis-title"}",
             offset: {
               x: 0,
               y: -1
             },
-            flipTitle: false
+            textAnchor: "${axisYAnchor ? axisYAnchor : "middle"}",
+            flipTitle: ${flipTitle ? "true" : "false"},
           }
         })
-      ]}`;
+      `;
   return ADD_AXIS_TITLE;
 };
 

@@ -239,11 +239,10 @@ const CT_BAR_LEGEND = `
 
 const addBarLegend1String = (info) => {
   //const { positionFunction = null, labelOffsetX = null, labelOffsetY = null, textFunction = null, labelClass = null } = info;
-  const ADD_BAR_LEGEND1 = `{
-    plugins: [
-        Chartist.plugins.legend()
-    ],
-}`;
+  const { usesOptions } = info;
+  const ADD_BAR_LEGEND1 = `
+    Chartist.plugins.legend()
+    `;
   return ADD_BAR_LEGEND1;
 };
 

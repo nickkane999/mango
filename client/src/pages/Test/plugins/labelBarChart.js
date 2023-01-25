@@ -51,8 +51,7 @@ var ctBarLabels = function (options) {
 
 const addBarLabels1String = (info) => {
   const { positionFunction = null, labelOffsetX = null, labelOffsetY = null, textFunction = null, labelClass = null } = info;
-  const ADD_BAR_LABELS1 = `{
-      plugins: [
+  const ADD_BAR_LABELS1 = `
         ctBarLabels({
           position: {
             x: function (data) {
@@ -68,8 +67,7 @@ const addBarLabels1String = (info) => {
           },
           labelClass: ${labelClass ? `"${labelClass}"` : `"ct-label;"`}
         }),
-      ],
-    }`;
+        `;
   return ADD_BAR_LABELS1;
 };
 
