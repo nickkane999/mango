@@ -1,9 +1,10 @@
-import { ADD_POINT_LABELS1 } from "../data/pluginStrings";
+import { addPointLabels1String, addBarLabels1String } from "../data/pluginStrings";
 
 const div = document.querySelector("#chartist-info");
 
 const plugins = {
-  addPointLabels1: ADD_POINT_LABELS1,
+  addPointLabels1: addPointLabels1String,
+  addBarLabels1: addBarLabels1String,
 };
 
 const addPlugin = (pluginString, id) => {
@@ -40,17 +41,20 @@ const updateChartistInfo = (data, options, plugin) => {
   });
 };
 
-const pullChartistInfo = (pluginID) => {
+const pullChartistInfo = ({ pluginID, pluginParameters }) => {
   const dataScript = document.querySelector('script[data-json="data"]');
   const data = dataScript ? dataScript.innerHTML : null;
   const optionsScript = document.querySelector('script[options-json="data"]');
   const options = optionsScript ? optionsScript.innerHTML : null;
-  const plugin = plugins[pluginID] ? plugins[pluginID] : null;
+  const plugin = plugins[pluginID] ? plugins[pluginID](pluginParameters) : null;
+  console.log("my plugins");
   return { data, options, plugin };
 };
 
 const generateChart = (pluginID) => {
   let { data, options, plugin } = pullChartistInfo(pluginID);
+  console.log("asdasdasdsa");
+  console.log(plugin);
   if (data && plugin) {
     const makeChart = new Function(`return new Chartist.Line("#chart", ${data}, ${plugin});`)();
   }
