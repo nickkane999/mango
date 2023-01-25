@@ -1,15 +1,17 @@
-import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
-import { createCheckboxDisplayOptions } from "../../util/formLayout";
+import { Container, Row } from "react-bootstrap";
+import { createCheckboxDisplayOptions, createCheckboxPluginOptions } from "../../util/formLayout";
 
 const CreateDisplayOptions = (info) => {
-  const { fields, title, className } = info;
+  const { fields, title, className, type } = info;
   return (
     <Container className={className}>
       <h2> {title}</h2>
       <Row>
         {Object.values(fields).map((field) => {
-          if (field.default === false) {
+          if (field.default === false && type === "chart") {
             return createCheckboxDisplayOptions(field);
+          } else if (type === "plugin") {
+            return createCheckboxPluginOptions(field, info);
           }
         })}
       </Row>

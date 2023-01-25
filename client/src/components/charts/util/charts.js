@@ -49,9 +49,9 @@ const pullPlugins = (info) => {
   const { plugins, hasOptions } = info;
   let pluginString = hasOptions ? "" : "{";
   pluginString += " plugins: [";
-  plugins.forEach((data) => {
-    const { pluginID, pluginParameters } = data;
-    pluginString += pluginID && pluginScripts[pluginID] ? pluginScripts[pluginID](pluginParameters) + "," : null;
+  Object.keys(plugins).forEach((key) => {
+    const { parameterJS, parameterSettings } = plugins[key];
+    pluginString += parameterJS(parameterSettings) + ",";
   });
   return pluginString + "]}";
 };
@@ -62,6 +62,16 @@ const generateChart = (pluginID) => {
   console.log(plugin);
   if (data && plugin) {
     const makeChart = new Function(`return new Chartist.Line("#chart", ${data}, ${plugin});`)();
+  }
+};
+
+const generateChartWithData = (info) => {
+  const { data, options, plugin } = info;
+  let chartType = info.chartType.charAt(0).toUpperCase() + info.chartType.slice(1);
+
+  if (data && plugin) {
+    console.log(`new Function(return new Chartist.${chartType}("#chart", ${data}, ${options}, ${plugin});`);
+    const makeChart = new Function(`return new Chartist.${chartType}("#chart", ${data}, ${options}, ${plugin});`)();
   }
 };
 
@@ -77,7 +87,7 @@ const sampleInsert = () => {
   updateChartistInfo(data, options, null);
 };
 
-export { addPlugin, pullChartistInfo, pullPlugins, updateChartistInfo, sampleInsert, generateChart };
+export { addPlugin, pullChartistInfo, pullPlugins, updateChartistInfo, sampleInsert, generateChart, generateChartWithData };
 
 /*
 const addJSFile = (file, id) => {

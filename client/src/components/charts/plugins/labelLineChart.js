@@ -38,7 +38,7 @@ const addPointLabels1String = (info) => {
           return text + '%'
         },
         labelClass: "ct-label",
-      }),
+      })
       `;
   return ADD_POINT_LABELS1;
 };

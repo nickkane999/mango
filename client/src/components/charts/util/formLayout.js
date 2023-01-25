@@ -30,7 +30,41 @@ const createCheckboxDisplayOptions = (field) => {
   return (
     <Col xs={3}>
       <Group key={field.key}>
-        <Check type="checkbox" label={field.name} onChange={(event) => toggleFormField(event, field.key)} defaultChecked={false} />
+        <Check type="checkbox" label={field.name} onChange={(event) => toggleFormField(event, field.key)} name={field.key} defaultChecked={false} />
+      </Group>
+    </Col>
+  );
+};
+
+const createCheckboxPluginOptions = (field, info) => {
+  const { setSelectedPlugin } = info.settings.sessionStorage;
+
+  return (
+    <Col xs={3}>
+      <Group key={field.key}>
+        <Check
+          type="checkbox"
+          onChange={(event) => {
+            setSelectedPlugin((prevState) => {
+              if (prevState.hasOwnProperty(event.target.name)) {
+                let newValue = { [event.target.name]: event.target.value === "on" ? true : false };
+                let newState = { ...prevState, ...newValue };
+                delete newState[event.target.name];
+                console.log("My plugins");
+                console.log(prevState);
+                return newState;
+              } else {
+                let newValue = { [event.target.name]: event.target.value === "on" ? true : false };
+                console.log("My plugins");
+                console.log(prevState);
+                return { ...prevState, ...newValue };
+              }
+            });
+          }}
+          label={field.name}
+          name={field.key}
+          defaultChecked={false}
+        />
       </Group>
     </Col>
   );
@@ -66,4 +100,4 @@ const toggleFormField = (event, className) => {
   }
 };
 
-export { createCheckbox, createInputField, createCheckboxDisplayOptions, handleDisplayOptions };
+export { createCheckbox, createInputField, createCheckboxDisplayOptions, handleDisplayOptions, createCheckboxPluginOptions };

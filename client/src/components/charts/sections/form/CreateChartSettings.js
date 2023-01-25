@@ -16,10 +16,10 @@ const CreateChartSettings = (props) => {
           <Group key="displayOptionFormFields">
             <Check type="checkbox" label="Chart Form" onChange={(event) => handleDisplayOptions(event, "form_fields")} defaultChecked={true} />
           </Group>
-          <Group key="displayOptionFields">
+          <Group key="displayChartOptionFields">
             <Check type="checkbox" label="Chart Fields" onChange={(event) => handleDisplayOptions(event, "chart_fields")} defaultChecked={true} />
           </Group>
-          <Group key="displayOptionFields">
+          <Group key="displayPluginOptionFields">
             <Check type="checkbox" label="Plugins" onChange={(event) => handleDisplayOptions(event, "plugin_fields")} defaultChecked={true} />
           </Group>
         </Col>
@@ -75,7 +75,7 @@ const CreateChartSettings = (props) => {
           <Button variant="primary" type="submit" onClick={() => functions.loadChartJSON(settings, pluginID)}>
             Load Chart From JSON
           </Button>
-          <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings, pluginID)}>
+          <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings)}>
             Load Template
           </Button>
         </Container>

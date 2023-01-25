@@ -66,7 +66,7 @@ const addBarLabels1String = (info) => {
             ${textFunction ? textFunction : "return text + '%';"}
           },
           labelClass: ${labelClass ? `"${labelClass}"` : `"ct-label;"`}
-        }),
+        })
         `;
   return ADD_BAR_LABELS1;
 };

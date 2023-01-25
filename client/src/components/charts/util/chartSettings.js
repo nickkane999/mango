@@ -1,4 +1,4 @@
-import { createChartVanillaJS } from "../data/LineChartFormData";
+import { updateChartistInfo, generateChart, generateChartWithData, pullPlugins } from "./charts.js";
 
 // Chart Setting functions
 const updateChartJSON = (event, settings) => {
@@ -65,20 +65,34 @@ const updateChartForAccount = (chart, settings) => {
 };
 
 const loadChartJSONTemplate = (settings) => {
-  const { createChartVanillaJS, updateFormData } = settings.functions;
-  const { chartContainer, template } = settings.misc;
+  const { createChartData, updateFormData } = settings.functions;
+  const { template, asdasdasdasdasd } = settings.misc;
   const { setFormData } = settings.sessionStorage;
-  const { pluginID } = settings.misc;
+  const { selectedPlugin, pluginData } = settings.misc;
 
   setFormData(template);
   document.querySelector(".chartJSON textarea").value = JSON.stringify(template, null, "\t");
-  createChartVanillaJS(template, pluginID);
+  let chartData = createChartData(template, selectedPlugin);
+  const { data, options } = chartData;
+  let loadedPlugins = {};
+  for (let key in selectedPlugin) {
+    if (selectedPlugin.hasOwnProperty(key) && pluginData.hasOwnProperty(key)) {
+      loadedPlugins[key] = pluginData[key];
+    }
+  }
+  const plugin = pullPlugins({ plugins: loadedPlugins, hasOptions: options ? true : false });
+  console.log("My plugin string: ");
+  console.log(plugin);
+
+  const fullChartInfo = { data: JSON.stringify(data), options: JSON.stringify(options).slice(0, -1), plugin, chartType: settings.misc.chartType };
+  updateChartistInfo(data, options, plugin);
+  generateChartWithData(fullChartInfo);
+
   updateFormData(template);
   setFormData(template); // WARNING: This is an Update to get the form data to work with external functions. MIGHT HAVE TO BE REMOVED
 };
 
 const hasChartType = (charts, type) => {
-  console.log(charts);
   let chartCount = 0;
   charts.some((chart) => {
     // Alternative to forEach, will stop looping when true

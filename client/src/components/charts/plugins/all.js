@@ -17,4 +17,51 @@ const pluginStrings = {
   CT_AXIS_TITLE: CT_AXIS_TITLE,
 };
 
-export { plugins, pluginStrings };
+const barPluginParameters = {
+  positionFunction: "return data.x1;",
+  labelOffsetX: 0,
+  labelOffsetY: 10,
+  textFunction: "return text + '$';",
+  labelClass: "ct-label",
+};
+const legendPluginParameters = {
+  positionFunction: "return data.x1;",
+  labelOffsetX: 0,
+  labelOffsetY: 10,
+  textFunction: "return text + '$';",
+  labelClass: "ct-label",
+};
+const axisPluginParameters = {
+  axisXTitle: "My Title",
+  axisXClass: "ct-axis-title",
+  axisXAnchor: null,
+  axisYTitle: "Dank charts",
+  axisYClass: "ct-axis-title",
+  axisYAnchor: true,
+  flipTitle: false,
+};
+
+const pluginData = {
+  addPointLabels1: {
+    loadingJS: CT_POINT_LABELS,
+    parameterJS: addPointLabels1String,
+    parameterDefault: barPluginParameters,
+  },
+  addBarLabels1: {
+    loadingJS: CT_BAR_LABELS,
+    parameterJS: addBarLabels1String,
+    parameterSettings: barPluginParameters,
+  },
+  addBarLegend1: {
+    loadingJS: CT_BAR_LEGEND,
+    parameterJS: addBarLegend1String,
+    parameterSettings: legendPluginParameters,
+  },
+  addAxisTitle: {
+    loadingJS: CT_AXIS_TITLE,
+    parameterJS: addAxisTitleString,
+    parameterSettings: axisPluginParameters,
+  },
+};
+
+export { plugins, pluginStrings, pluginData };

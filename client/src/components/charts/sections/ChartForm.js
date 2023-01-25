@@ -15,10 +15,17 @@ import CreateChartSettings from "./form/CreateChartSettings";
 import CreateFormFields from "./form/CreateFormFields";
 import CreateDisplayOptions from "./form/CreateDisplayOptions";
 
+import { pluginData } from "../plugins/all";
+
 const ChartForm = (props) => {
-  const { fields, createChart, createChartVanillaJS, template, chartType } = props.settings;
+  const { fields, createChart, createChartData, template, chartType } = props.settings;
+  const [selectedPlugin, setSelectedPlugin] = useState([]);
   const [hasSessionLoaded, setHasSessionLoaded] = useState(false);
   const { chartInfo, setChartInfo } = useContext(SessionContext);
+
+  for (let key in pluginData) {
+    addPlugin(pluginData[key]["loadingJS"], key);
+  }
 
   console.log("ChartForm props: ", props);
   let pluginID = "addPointLabels1";
@@ -94,24 +101,24 @@ const ChartForm = (props) => {
     setFormData,
     updateChartQuery,
     createChartQuery,
-    createChart,
-    createChartVanillaJS,
+    createChartData,
     template,
     fields,
     chartType,
-    pluginID,
+    pluginData,
+    selectedPlugin,
+    setSelectedPlugin,
   };
   settings = updateSessionInfo(info);
-  setChartInfo(settings);
+  //console.log(settings);
 
   // Wait for chartInfo (context containing all functions / variables needed for this chart form) to be loaded before rendering
   if (chartInfo) {
     // Define parameters used in each HTML section, then pass into the functions to return HTML
-    const chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID };
+    const chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user };
     const formFieldInfo = { functions, fields, settings };
-    const chartDisplayOptionsInfo = { fields: fields, title: "Select Chart Fields to Display", className: "section displayChartOptions" };
-    const pluginDisplayOptionsInfo = { fields: pluginFields, title: "Select Plugins to use", className: "section displayPluginOptions" };
-    console.log(pluginFields, fields);
+    const chartDisplayOptionsInfo = { settings, fields: fields, type: "chart", title: "Select Chart Fields to Display", className: "section displayChartOptions" };
+    const pluginDisplayOptionsInfo = { settings, fields: pluginFields, type: "plugin", title: "Select Plugins to use", className: "section displayPluginOptions" };
     return (
       <>
         <CreateChartSettings {...chartSettingsInfo} />

@@ -1,6 +1,3 @@
-import { LineChart } from "chartist";
-import { pullChartistInfo, updateChartistInfo, generateChart } from "../util/charts";
-
 export const fields = [
   { name: "Labels", key: "labels", type: "input", default: true },
   { name: "Series", key: "series", type: "input", default: true },
@@ -57,6 +54,7 @@ export const fields = [
   { name: "End Class", key: "endClass", type: "input", default: false },
 ];
 
+/*
 export const createChart = (chartRef, formData) => {
   new LineChart(
     chartRef.current,
@@ -176,9 +174,9 @@ export const createChart = (chartRef, formData) => {
     }
   );
 };
+*/
 
-export const createChartVanillaJS = (formData, pluginID) => {
-  const { plugin } = pullChartistInfo(pluginID);
+export const createChartData = (formData, pluginID) => {
   const data = {
     labels: formData.labels ? formData.labels : ["Mon", "Tue", "Wed", "Thu", "Fri"],
     series: formData.series ? formData.series : [[50, 20, 40, 20, 10]],
@@ -254,8 +252,7 @@ export const createChartVanillaJS = (formData, pluginID) => {
     },
   };
 
-  updateChartistInfo(data, options, plugin);
-  generateChart(pluginID);
+  return { data, options };
 };
 
 export const template = {
