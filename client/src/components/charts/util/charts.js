@@ -1,15 +1,14 @@
 import { addBarLabels1String } from "../../../pages/Test/plugins/labelBarChart";
 import { addPointLabels1String } from "../../../pages/Test/plugins/labelLineChart";
 import { addBarLegend1String } from "../../../pages/Test/plugins/legendBarChart";
-import { addBarLegendFull1String } from "../../../pages/Test/plugins/legendBarChart2";
-
+import { addAxisTitleString } from "../../../pages/Test/plugins/axisTitleChart";
 const div = document.querySelector("#chartist-info");
 
 const plugins = {
   addPointLabels1: addPointLabels1String,
   addBarLabels1: addBarLabels1String,
   addBarLegend1: addBarLegend1String,
-  addBarLegendFull1: addBarLegendFull1String,
+  addAxisTitle: addAxisTitleString,
 };
 
 const addPlugin = (pluginString, id) => {

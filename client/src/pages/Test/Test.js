@@ -3,7 +3,7 @@ import "./Test.scss";
 import { CT_POINT_LABELS } from "./plugins/labelLineChart";
 import { CT_BAR_LABELS } from "./plugins/labelBarChart";
 import { CT_BAR_LEGEND } from "./plugins/legendBarChart";
-import { CT_BAR_LEGEND_FULL } from "./plugins/legendBarChart2";
+import { CT_AXIS_TITLE } from "./plugins/axisTitleChart";
 import { addPlugin, pullChartistInfo, updateChartistInfo, sampleInsert } from "../../components/charts/util/charts";
 import { user } from "../../util/general";
 
@@ -11,8 +11,9 @@ function Test() {
   sampleInsert();
   addPlugin(CT_POINT_LABELS, "addPointLabels1");
   addPlugin(CT_BAR_LABELS, "addBarLabels1");
-  addPlugin(CT_BAR_LEGEND, "addBarLegend1");
-  addPlugin(CT_BAR_LEGEND_FULL, "addBarLegendFull1");
+  //addPlugin(CT_BAR_LEGEND, "addBarLegend1");
+  addPlugin(CT_AXIS_TITLE, "addAxisTitle");
+
   const pluginParameters = {
     positionFunction: "return data.x1;",
     labelOffsetX: 0,
@@ -20,7 +21,7 @@ function Test() {
     textFunction: "return text + '$';",
     labelClass: "ct-label",
   };
-  const pluginVars = { pluginID: "addBarLegendFull1", pluginParameters };
+  const pluginVars = { pluginID: "addAxisTitle", pluginParameters };
   let { data, options, plugin } = pullChartistInfo(pluginVars);
   console.log("btw, this is");
   console.log(data, options, plugin);
