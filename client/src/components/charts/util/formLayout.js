@@ -37,14 +37,20 @@ const createCheckboxDisplayOptions = (field) => {
 };
 
 const formSections = {
-  fields: ".displayOptions",
+  chart_fields: ".displayChartOptions",
+  plugin_fields: ".displayPluginOptions",
   settings: ".chartSettings",
   form_fields: ".formFields",
 };
 
 const handleDisplayOptions = (event, type) => {
+  console.log(formSections);
+  console.log(formSections[type]);
+  console.log(type);
   if (formSections[type]) {
     if (event.target.checked) {
+      console.log("aaa");
+      console.log(formSections[type]);
       document.querySelector(formSections[type]).style.display = "block";
     } else {
       document.querySelector(formSections[type]).style.display = "none";

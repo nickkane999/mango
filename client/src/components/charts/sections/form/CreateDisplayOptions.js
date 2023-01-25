@@ -1,10 +1,11 @@
 import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
 import { createCheckboxDisplayOptions } from "../../util/formLayout";
 
-const CreateDisplayOptions = (fields) => {
+const CreateDisplayOptions = (info) => {
+  const { fields, title, className } = info;
   return (
-    <Container className="displayOptions section">
-      <h2> Select Chart Fields to Display</h2>
+    <Container className={className}>
+      <h2> {title}</h2>
       <Row>
         {Object.values(fields).map((field) => {
           if (field.default === false) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, memo, useContext } from "react";
 import { Container } from "react-bootstrap";
 import "./ChartForm.css";
+import "./plugins.scss";
 
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, CREATE_CHART_BY_USER } from "../../../graphQL/queries";
@@ -9,7 +10,7 @@ import SessionContext, { updateSessionInfo } from "../context/chartStore";
 import { user } from "../../../util/general";
 import { CT_POINT_LABELS } from "../plugins/labelLineChart";
 import { addPlugin } from "../util/charts";
-
+import { fields as pluginFields } from "../data/plugins";
 import CreateChartSettings from "./form/CreateChartSettings";
 import CreateFormFields from "./form/CreateFormFields";
 import CreateDisplayOptions from "./form/CreateDisplayOptions";
@@ -106,14 +107,17 @@ const ChartForm = (props) => {
   // Wait for chartInfo (context containing all functions / variables needed for this chart form) to be loaded before rendering
   if (chartInfo) {
     // Define parameters used in each HTML section, then pass into the functions to return HTML
-    let chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID };
-    let formFieldInfo = { functions, fields, settings };
-    let displayOptionsInfo = fields;
+    const chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID };
+    const formFieldInfo = { functions, fields, settings };
+    const chartDisplayOptionsInfo = { fields: fields, title: "Select Chart Fields to Display", className: "section displayChartOptions" };
+    const pluginDisplayOptionsInfo = { fields: pluginFields, title: "Select Plugins to use", className: "section displayPluginOptions" };
+    console.log(pluginFields, fields);
     return (
       <>
         <CreateChartSettings {...chartSettingsInfo} />
         <CreateFormFields {...formFieldInfo} />
-        <CreateDisplayOptions {...displayOptionsInfo} />
+        <CreateDisplayOptions {...chartDisplayOptionsInfo} />
+        <CreateDisplayOptions {...pluginDisplayOptionsInfo} />
         <Container>
           <div id="chart"></div>
         </Container>

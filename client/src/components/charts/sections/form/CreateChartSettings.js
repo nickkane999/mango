@@ -11,13 +11,16 @@ const CreateChartSettings = (props) => {
         <h2>Chart Settings</h2>
         <Col xs={6}>
           <Group key="displayOptionSettings">
-            <Check type="checkbox" label="Display Chart JSON" onChange={(event) => handleDisplayOptions(event, "settings")} defaultChecked={true} />
+            <Check type="checkbox" label="Chart JSON" onChange={(event) => handleDisplayOptions(event, "settings")} defaultChecked={true} />
           </Group>
           <Group key="displayOptionFormFields">
             <Check type="checkbox" label="Chart Form" onChange={(event) => handleDisplayOptions(event, "form_fields")} defaultChecked={true} />
           </Group>
           <Group key="displayOptionFields">
-            <Check type="checkbox" label="Select Chart Fields" onChange={(event) => handleDisplayOptions(event, "fields")} defaultChecked={true} />
+            <Check type="checkbox" label="Chart Fields" onChange={(event) => handleDisplayOptions(event, "chart_fields")} defaultChecked={true} />
+          </Group>
+          <Group key="displayOptionFields">
+            <Check type="checkbox" label="Plugins" onChange={(event) => handleDisplayOptions(event, "plugin_fields")} defaultChecked={true} />
           </Group>
         </Col>
         {user && user.id ? (

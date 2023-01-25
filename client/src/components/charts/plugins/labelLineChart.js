@@ -29,17 +29,18 @@ function ctPointLabels(options) {
   }
 }`;
 
-export { CT_POINT_LABELS };
+const addPointLabels1String = (info) => {
+  const { positionFunction = null, labelOffsetX = null, labelOffsetY = null, textFunction = null, labelClass = null } = info;
+  const ADD_POINT_LABELS1 = `
+      ctPointLabels({
+        textAnchor: "middle",
+        labelInterpolationFnc: function (text) {
+          return text + '%'
+        },
+        labelClass: "ct-label",
+      }),
+      `;
+  return ADD_POINT_LABELS1;
+};
 
-/*
-let samplePlugin = `
-ctPointLabels({
-    textAnchor: 'middle',
-    //labelInterpolationFnc: {return '$' + value.toFixed(2)}
-    labelInterpolationFnc: {console.log(value)}
-  })
-`;
-const makeChart = new Function(`return new Chartist.Line("#chart", data, options, {$samplePlugin});`)();
-
-export { CT_POINT_LABELS, makeChart };
-*/
+export { CT_POINT_LABELS, addPointLabels1String };
