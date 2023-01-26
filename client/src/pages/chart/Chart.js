@@ -1,5 +1,5 @@
-import ChartMenu from "../../components/charts/sections/ChartMenu";
-import { ChartProvider } from "../../components/charts/context/chartStore";
+import ChartMenu from "../../features/charts/sections/ChartMenu";
+import { ChartProvider } from "../../features/charts/context/chartStore";
 import "./Chart.css";
 
 function Chart() {

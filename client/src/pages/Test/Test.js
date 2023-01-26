@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "./Test.scss";
 import { pluginStrings } from "./plugins/all";
-import { addPlugin, pullChartistInfo, updateChartistInfo, sampleInsert, pullPlugins } from "../../components/charts/util/charts";
+import { addPlugin, pullChartistInfo, updateChartistInfo, sampleInsert, pullPlugins } from "../../features/charts/util/charts";
 import { user } from "../../util/general";
 
 function Test() {
