@@ -14,7 +14,7 @@ function Account() {
     refetchQueries: [{ query: GET_CHARTS_BY_USER, variables: { userId: userId } }],
   });
 
-  const renderMaps = () => {
+  const renderCharts = () => {
     if (data && data.getChartsByUser.length > 0) {
       return (
         <>
@@ -28,7 +28,8 @@ function Account() {
               <Group>
                 <Label>Update JSON here</Label>
                 <Control className={"chart-json-" + i} as="textarea" rows="10" placeholder="Chart progress" name={"chart-json-" + i} defaultValue={chart.json} />
-                <Button onClick={() => updateChart(chart.id, i)}>Update JSON</Button>
+                <Control className={"chart-plugin-" + i} as="textarea" rows="10" placeholder="My plugin String" name={"chart-plugin-" + i} defaultValue={chart.plugins} />
+                <Button onClick={() => updateChart(chart.id, i)}>Update Chart</Button>
                 <Button onClick={() => deleteChart(chart.id)}>Delete Chart</Button>
               </Group>
             </Col>
@@ -54,11 +55,13 @@ function Account() {
   const updateChart = (chartid, index) => {
     if (chartid && user.id) {
       const chartJSON = document.querySelector(".chart-json-" + index).value;
+      const chartPlugin = document.querySelector(".chart-plugin-" + index).value;
       updateChartQuery({
         variables: {
           updateChartId: chartid,
           updateChartInput: {
             json: chartJSON,
+            plugins: chartPlugin,
           },
         },
         onError: (error) => {
@@ -91,7 +94,7 @@ function Account() {
       ) : (
         <div className="chart-view">
           <h2>My Charts</h2>
-          <Row>{renderMaps()}</Row>
+          <Row>{renderCharts()}</Row>
         </div>
       )}
     </Container>

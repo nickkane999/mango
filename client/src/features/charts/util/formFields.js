@@ -14,7 +14,6 @@ const updateFormInput = (event, settings) => {
     }
   }
   setFormData((formData) => ({ ...formData, [name]: value }));
-  console.log(settings.functions.getUpdatedFormData());
 };
 
 const updateFormCheckbox = (event, settings) => {

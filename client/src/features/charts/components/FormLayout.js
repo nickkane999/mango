@@ -67,6 +67,7 @@ const CheckboxPluginOptions = (props) => {
           }}
           label={field.name}
           name={field.key}
+          id={field.key}
           defaultChecked={false}
         />
       </Group>
