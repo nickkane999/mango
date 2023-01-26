@@ -134,23 +134,23 @@ const addAxisTitleString = (info) => {
   const ADD_AXIS_TITLE = `
         Chartist.plugins.ctAxisTitle({
           axisX: {
-            axisTitle: "${axisXTitle ? axisXTitle : ""}",
-            axisClass: "${axisXClass ? axisXClass : "ct-axis-title"}",
+            axisTitle: "${axisXTitle.data ? axisXTitle.data : ""}",
+            axisClass: "${axisXClass.data ? axisXClass.data : "ct-axis-title"}",
             offset: {
               x: 0,
               y: 50
             },
-            textAnchor: "${axisXAnchor ? axisXAnchor : "middle"}",
+            textAnchor: "${axisXAnchor.data ? axisXAnchor.data : "middle"}",
           },
           axisY: {
-            axisTitle: "${axisYTitle ? axisYTitle : ""}",
-            axisClass: "${axisYClass ? axisYClass : "ct-axis-title"}",
+            axisTitle: "${axisYTitle.data ? axisYTitle.data : ""}",
+            axisClass: "${axisYClass.data ? axisYClass.data : "ct-axis-title"}",
             offset: {
               x: 0,
               y: -1
             },
-            textAnchor: "${axisYAnchor ? axisYAnchor : "middle"}",
-            flipTitle: ${flipTitle ? "true" : "false"},
+            textAnchor: "${axisYAnchor.data ? axisYAnchor.data : "middle"}",
+            flipTitle: ${flipTitle.data ? "true" : "false"},
           }
         })
       `;

@@ -1,7 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import { createCheckboxDisplayOptions, createCheckboxPluginOptions } from "../../util/formLayout";
 
-const CreateDisplayOptions = (info) => {
+const ChartDisplayOptions = (info) => {
   const { fields, title, className, type } = info;
   return (
     <Container className={className}>
@@ -19,4 +19,4 @@ const CreateDisplayOptions = (info) => {
   );
 };
 
-export default CreateDisplayOptions;
+export default ChartDisplayOptions;

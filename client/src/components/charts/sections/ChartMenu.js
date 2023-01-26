@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import "./ChartMenu.css";
+import "./ChartMenu.scss";
 import { chartLayouts } from "../data/layouts";
 //import ChartSection from "./ChartSection";
 import ChartForm from "./ChartForm";

@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext, useRef } from "react";
+import React, { useState, createContext } from "react";
 import {
   updateChartJSON,
   loadChartJSON,

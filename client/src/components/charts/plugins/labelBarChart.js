@@ -55,17 +55,17 @@ const addBarLabels1String = (info) => {
         ctBarLabels({
           position: {
             x: function (data) {
-              ${positionFunction ? positionFunction + ";" : "return data.x1;"}
+              ${positionFunction.data ? positionFunction.data + ";" : "return data.x1;"}
             }
           },
           labelOffset: {
-            x: ${labelOffsetX ? labelOffsetX : 0},
-            y: ${labelOffsetY ? labelOffsetY : -10}
+            x: ${labelOffsetX.data ? labelOffsetX.data : 0},
+            y: ${labelOffsetY.data ? labelOffsetY.data : -10}
           },
           labelInterpolationFnc: function (text) {
-            ${textFunction ? textFunction : "return text + '%';"}
+            ${textFunction.data ? textFunction.data : "return text + '%';"}
           },
-          labelClass: ${labelClass ? `"${labelClass}"` : `"ct-label;"`}
+          labelClass: ${labelClass.data ? `"${labelClass.data}"` : `"ct-label;"`}
         })
         `;
   return ADD_BAR_LABELS1;

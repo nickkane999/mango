@@ -1,7 +1,7 @@
 import { Form, Container, Button, Row } from "react-bootstrap";
 import { createCheckbox, createInputField } from "../../util/formLayout";
 
-const CreateFormFields = (props) => {
+const ChartFormFields = (props) => {
   const { functions, settings, fields } = props;
   return (
     <Container className="formFields section">
@@ -24,4 +24,4 @@ const CreateFormFields = (props) => {
   );
 };
 
-export default CreateFormFields;
+export default ChartFormFields;

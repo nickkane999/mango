@@ -20,7 +20,7 @@ const createInputField = (field, settings) => {
     <Col className="form-group" xs={4}>
       <Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
         <Label>{field.name}</Label>
-        <Control placeholder={field.name} onChange={(event) => functions.updateFormInput(event, settings)} name={field.key} />
+        <Control defaultValue={field.data ? field.data : ""} placeholder={field.name} onChange={(event) => functions.updateFormInput(event, settings)} name={field.key} />
       </Group>
     </Col>
   );
@@ -47,6 +47,7 @@ const createCheckboxPluginOptions = (field, info) => {
           onChange={(event) => {
             setSelectedPlugin((prevState) => {
               if (prevState.hasOwnProperty(event.target.name)) {
+                document.querySelector("." + event.target.name).style.display = "none";
                 let newValue = { [event.target.name]: event.target.value === "on" ? true : false };
                 let newState = { ...prevState, ...newValue };
                 delete newState[event.target.name];
@@ -54,6 +55,7 @@ const createCheckboxPluginOptions = (field, info) => {
                 console.log(prevState);
                 return newState;
               } else {
+                document.querySelector("." + event.target.name).style.display = "block";
                 let newValue = { [event.target.name]: event.target.value === "on" ? true : false };
                 console.log("My plugins");
                 console.log(prevState);
@@ -75,6 +77,7 @@ const formSections = {
   plugin_fields: ".displayPluginOptions",
   settings: ".chartSettings",
   form_fields: ".formFields",
+  plugin_option_fields: ".pluginFields",
 };
 
 const handleDisplayOptions = (event, type) => {

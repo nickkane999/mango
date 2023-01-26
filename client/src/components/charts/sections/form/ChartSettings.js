@@ -3,7 +3,7 @@ import { handleDisplayOptions } from "../../util/formLayout";
 const { Control, Label, Group, Check } = Form;
 const { Menu, Toggle, Item } = Dropdown;
 
-const CreateChartSettings = (props) => {
+const ChartSettings = (props) => {
   const { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user, pluginID } = props;
   return (
     <Container className="section">
@@ -13,14 +13,17 @@ const CreateChartSettings = (props) => {
           <Group key="displayOptionSettings">
             <Check type="checkbox" label="Chart JSON" onChange={(event) => handleDisplayOptions(event, "settings")} defaultChecked={true} />
           </Group>
-          <Group key="displayOptionFormFields">
-            <Check type="checkbox" label="Chart Form" onChange={(event) => handleDisplayOptions(event, "form_fields")} defaultChecked={true} />
-          </Group>
           <Group key="displayChartOptionFields">
-            <Check type="checkbox" label="Chart Fields" onChange={(event) => handleDisplayOptions(event, "chart_fields")} defaultChecked={true} />
+            <Check type="checkbox" label="Select Fields" onChange={(event) => handleDisplayOptions(event, "chart_fields")} defaultChecked={true} />
+          </Group>
+          <Group key="displayOptionFormFields">
+            <Check type="checkbox" label="Enter field options" onChange={(event) => handleDisplayOptions(event, "form_fields")} defaultChecked={true} />
           </Group>
           <Group key="displayPluginOptionFields">
-            <Check type="checkbox" label="Plugins" onChange={(event) => handleDisplayOptions(event, "plugin_fields")} defaultChecked={true} />
+            <Check type="checkbox" label="Select Plugin" onChange={(event) => handleDisplayOptions(event, "plugin_fields")} defaultChecked={true} />
+          </Group>
+          <Group key="displayPluginDisplayOptionFields">
+            <Check type="checkbox" label="Enter plugin options" onChange={(event) => handleDisplayOptions(event, "plugin_option_fields")} defaultChecked={true} />
           </Group>
         </Col>
         {user && user.id ? (
@@ -84,4 +87,4 @@ const CreateChartSettings = (props) => {
   );
 };
 
-export default CreateChartSettings;
+export default ChartSettings;

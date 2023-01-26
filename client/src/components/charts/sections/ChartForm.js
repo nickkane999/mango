@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo, useContext } from "react";
 import { Container } from "react-bootstrap";
-import "./ChartForm.css";
+import "./ChartForm.scss";
 import "./plugins.scss";
 
 import { useLazyQuery, useMutation } from "@apollo/client";
@@ -11,11 +11,12 @@ import { user } from "../../../util/general";
 import { CT_POINT_LABELS } from "../plugins/labelLineChart";
 import { addPlugin } from "../util/charts";
 import { fields as pluginFields } from "../data/plugins";
-import CreateChartSettings from "./form/CreateChartSettings";
-import CreateFormFields from "./form/CreateFormFields";
-import CreateDisplayOptions from "./form/CreateDisplayOptions";
-
 import { pluginData } from "../plugins/all";
+
+import ChartSettings from "./form/ChartSettings";
+import ChartFormFields from "./form/ChartFormFields";
+import ChartDisplayOptions from "./form/ChartDisplayOptions";
+import ChartPluginFields from "./form/ChartPluginFields";
 
 const ChartForm = (props) => {
   const { fields, createChart, createChartData, template, chartType } = props.settings;
@@ -26,10 +27,6 @@ const ChartForm = (props) => {
   for (let key in pluginData) {
     addPlugin(pluginData[key]["loadingJS"], key);
   }
-
-  console.log("ChartForm props: ", props);
-  let pluginID = "addPointLabels1";
-  addPlugin(CT_POINT_LABELS, pluginID);
 
   /*
   useEffect(() => {
@@ -117,14 +114,16 @@ const ChartForm = (props) => {
     // Define parameters used in each HTML section, then pass into the functions to return HTML
     const chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user };
     const formFieldInfo = { functions, fields, settings };
+    const pluginFieldInfo = { functions, pluginData, settings };
     const chartDisplayOptionsInfo = { settings, fields: fields, type: "chart", title: "Select Chart Fields to Display", className: "section displayChartOptions" };
     const pluginDisplayOptionsInfo = { settings, fields: pluginFields, type: "plugin", title: "Select Plugins to use", className: "section displayPluginOptions" };
     return (
       <>
-        <CreateChartSettings {...chartSettingsInfo} />
-        <CreateFormFields {...formFieldInfo} />
-        <CreateDisplayOptions {...chartDisplayOptionsInfo} />
-        <CreateDisplayOptions {...pluginDisplayOptionsInfo} />
+        <ChartSettings {...chartSettingsInfo} />
+        <ChartDisplayOptions {...chartDisplayOptionsInfo} />
+        <ChartFormFields {...formFieldInfo} />
+        <ChartDisplayOptions {...pluginDisplayOptionsInfo} />
+        <ChartPluginFields {...pluginFieldInfo} />
         <Container>
           <div id="chart"></div>
         </Container>
