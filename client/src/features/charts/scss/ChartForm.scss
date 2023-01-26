@@ -11,17 +11,23 @@
 .chartSettings button {
   margin: 10px;
 }
+.load-chart-section {
+  margin-top: 20px;
+  .chart-selection-options {
+    button {
+      margin: 20px;
+      float: left;
+    }
+  }
+}
 .chart-selection {
   margin-top: 20px;
 }
-.chart-selection-options button {
-  float: left;
-  margin: 20px;
-}
-.save-chart-json {
+.chart-selection-options .save-chart-json {
   margin-top: 20px;
 }
-.no-user-charts {
+.no-user-charts,
+.save-chart-json {
   margin-top: 20px;
 }
 .addPointLabels1,

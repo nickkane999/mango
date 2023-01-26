@@ -4,12 +4,12 @@ const { Group } = Form;
 const { Menu, Toggle, Item } = Dropdown;
 
 const LoadChart = (props) => {
-  const [selectedChart, setSelectedChart] = useState({ name: "Load Existing Chart" });
+  const [selectedChart, setSelectedChart] = useState(null);
 
   const { data, functions, settings } = props;
   return (
-    <>
-      <Col className="chart-selection" xs={12}>
+    <div className="load-chart-section">
+      <Col className="chart-selection" xs={3}>
         <Group key="loadChart" className="load-chart">
           <Dropdown title="Charts" id="basic-nav-dropdown">
             <Toggle variant="success" id="dropdown-basic">
@@ -27,12 +27,14 @@ const LoadChart = (props) => {
           </Dropdown>
         </Group>
       </Col>
-      <Col className="chart-selection-options" xs={12}>
-        <Button onClick={() => functions.loadChartJSONFromAccount(selectedChart, settings)}>Load Selected JSON</Button>
-        <Button onClick={() => functions.updateChartForAccount(selectedChart, settings)}>Update DB JSON</Button>
-        <Button onClick={() => functions.updateChartJSONWithFormData(settings)}>Update JSON with Fields</Button>
-      </Col>
-    </>
+      {selectedChart ? (
+        <Col className="chart-selection-options form-group" xs={9}>
+          <Button onClick={() => functions.loadChartJSONFromAccount(selectedChart, settings)}>Load Selected JSON</Button>
+          <Button onClick={() => functions.updateChartForAccount(selectedChart, settings)}>Update DB JSON</Button>
+          <Button onClick={() => functions.updateChartJSONWithFormData(settings)}>Update JSON with Fields</Button>
+        </Col>
+      ) : null}
+    </div>
   );
 };
 

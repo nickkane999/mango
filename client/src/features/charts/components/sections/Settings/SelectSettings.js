@@ -4,9 +4,9 @@ const { Group, Check } = Form;
 
 const SelectSettings = () => {
   return (
-    <div className="select-settings">
+    <Col xs={6} className="select-settings">
       <h2>Chart Settings</h2>
-      <Col xs={6}>
+      <>
         <Group key="displayOptionSettings">
           <Check type="checkbox" label="Chart JSON" onChange={(event) => handleDisplayOptions(event, "settings")} defaultChecked={true} />
         </Group>
@@ -22,8 +22,8 @@ const SelectSettings = () => {
         <Group key="displayPluginDisplayOptionFields">
           <Check type="checkbox" label="Enter plugin options" onChange={(event) => handleDisplayOptions(event, "plugin_option_fields")} defaultChecked={true} />
         </Group>
-      </Col>
-    </div>
+      </>
+    </Col>
   );
 };
 
