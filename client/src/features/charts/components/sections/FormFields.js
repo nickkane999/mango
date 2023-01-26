@@ -1,5 +1,5 @@
 import { Form, Container, Button, Row } from "react-bootstrap";
-import { createCheckbox, createInputField } from "../../util/formLayout";
+import { Checkbox, InputField } from "../FormLayout";
 
 const ChartFormFields = (props) => {
   const { functions, settings, fields } = props;
@@ -10,9 +10,9 @@ const ChartFormFields = (props) => {
         <Form onSubmit={(event) => functions.handleSubmit(event, settings)}>
           {fields.map((field) => {
             if (field.type === "checkbox") {
-              return createCheckbox(field, settings);
+              <Checkbox field={field} settings={settings} />;
             } else if (field.type === "input") {
-              return createInputField(field, settings);
+              <InputField field={field} settings={settings} />;
             }
           })}
           <Button variant="primary" type="submit">

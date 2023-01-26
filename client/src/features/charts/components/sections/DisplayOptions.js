@@ -1,5 +1,5 @@
 import { Container, Row } from "react-bootstrap";
-import { createCheckboxDisplayOptions, createCheckboxPluginOptions } from "../../util/formLayout";
+import { CheckboxDisplayOptions, CheckboxPluginOptions } from "../FormLayout";
 
 const ChartDisplayOptions = (info) => {
   const { fields, title, className, type } = info;
@@ -9,9 +9,9 @@ const ChartDisplayOptions = (info) => {
       <Row>
         {Object.values(fields).map((field) => {
           if (field.default === false && type === "chart") {
-            return createCheckboxDisplayOptions(field);
+            return <CheckboxDisplayOptions field={field} />;
           } else if (type === "plugin") {
-            return createCheckboxPluginOptions(field, info);
+            return <CheckboxPluginOptions field={field} info={info} />;
           }
         })}
       </Row>

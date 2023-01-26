@@ -1,7 +1,7 @@
-import { CT_POINT_LABELS, addPointLabels1String } from "./labelLineChart";
-import { CT_BAR_LABELS, addBarLabels1String } from "./labelBarChart";
-import { CT_BAR_LEGEND, addBarLegend1String } from "./legendBarChart";
-import { CT_AXIS_TITLE, addAxisTitleString } from "./axisTitleChart";
+import { CT_POINT_LABELS, addPointLabels1String } from "./functionality/labelLineChart";
+import { CT_BAR_LABELS, addBarLabels1String } from "./functionality/labelBarChart";
+import { CT_BAR_LEGEND, addBarLegend1String } from "./functionality/legendBarChart";
+import { CT_AXIS_TITLE, addAxisTitleString } from "./functionality/axisTitleChart";
 
 const plugins = {
   addPointLabels1: addPointLabels1String,

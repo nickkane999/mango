@@ -1,22 +1,22 @@
 import React, { useState, useEffect, memo, useContext } from "react";
 import { Container } from "react-bootstrap";
-import "./ChartForm.scss";
-import "./plugins.scss";
+import "../scss/ChartForm.scss";
+import "../scss/plugins.scss";
 
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, CREATE_CHART_BY_USER } from "../../../graphQL/queries";
 import SessionContext, { updateSessionInfo } from "../context/chartStore";
 
 import { user } from "../../../util/general";
-import { CT_POINT_LABELS } from "../plugins/labelLineChart";
+import { CT_POINT_LABELS } from "../plugins/functionality/labelLineChart";
 import { addPlugin } from "../util/charts";
-import { fields as pluginFields } from "../data/plugins";
+import { fields as pluginFields } from "../plugins/plugins";
 import { pluginData } from "../plugins/all";
 
-import ChartSettings from "./form/ChartSettings";
-import ChartFormFields from "./form/ChartFormFields";
-import ChartDisplayOptions from "./form/ChartDisplayOptions";
-import ChartPluginFields from "./form/ChartPluginFields";
+import ChartSettings from "../components/sections/Settings";
+import ChartFormFields from "../components/sections/FormFields";
+import ChartDisplayOptions from "../components/sections/DisplayOptions";
+import ChartPluginFields from "../components/sections/PluginFields";
 
 const ChartForm = (props) => {
   const { fields, createChart, createChartData, template, chartType } = props.settings;

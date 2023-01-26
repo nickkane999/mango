@@ -1,6 +1,5 @@
 import { Form, Container, Button, Row } from "react-bootstrap";
-import { pluginData } from "../../plugins/all";
-import { createCheckbox, createInputField } from "../../util/formLayout";
+import { Checkbox, InputField } from "../FormLayout";
 
 const ChartPluginFields = (props) => {
   const { functions, settings, pluginData } = props;
@@ -17,9 +16,9 @@ const ChartPluginFields = (props) => {
                 {Object.keys(pluginFields).map((key, field) => {
                   field = pluginFields[key];
                   if (field.type === "checkbox") {
-                    return createCheckbox(field, settings);
+                    <Checkbox field={field} settings={settings} />;
                   } else if (field.type === "input") {
-                    return createInputField(field, settings);
+                    <InputField field={field} settings={settings} />;
                   }
                 })}
               </Container>

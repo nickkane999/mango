@@ -3,7 +3,8 @@ import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
 const { Control, Label, Group, Check } = Form;
 const { Menu, Toggle, Item } = Dropdown;
 
-const createCheckbox = (field, settings) => {
+const Checkbox = (props) => {
+  const { field, settings } = props;
   const { functions } = settings;
   return (
     <Col className="form-group" xs={4}>
@@ -14,7 +15,8 @@ const createCheckbox = (field, settings) => {
   );
 };
 
-const createInputField = (field, settings) => {
+const InputField = (props) => {
+  const { field, settings } = props;
   const { functions } = settings;
   return (
     <Col className="form-group" xs={4}>
@@ -26,7 +28,8 @@ const createInputField = (field, settings) => {
   );
 };
 
-const createCheckboxDisplayOptions = (field) => {
+const CheckboxDisplayOptions = (props) => {
+  const { field } = props;
   return (
     <Col xs={3}>
       <Group key={field.key}>
@@ -36,7 +39,8 @@ const createCheckboxDisplayOptions = (field) => {
   );
 };
 
-const createCheckboxPluginOptions = (field, info) => {
+const CheckboxPluginOptions = (props) => {
+  const { field, info } = props;
   const { setSelectedPlugin } = info.settings.sessionStorage;
 
   return (
@@ -103,4 +107,4 @@ const toggleFormField = (event, className) => {
   }
 };
 
-export { createCheckbox, createInputField, createCheckboxDisplayOptions, handleDisplayOptions, createCheckboxPluginOptions };
+export { Checkbox, InputField, CheckboxDisplayOptions, CheckboxPluginOptions, handleDisplayOptions };
