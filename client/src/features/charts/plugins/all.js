@@ -2,6 +2,7 @@ import { CT_POINT_LABELS, addPointLabels1String } from "./functionality/labelLin
 import { CT_BAR_LABELS, addBarLabels1String } from "./functionality/labelBarChart";
 import { CT_BAR_LEGEND, addBarLegend1String } from "./functionality/legendBarChart";
 import { CT_AXIS_TITLE, addAxisTitleString } from "./functionality/axisTitleChart";
+import { addPlugin } from "../util/charts";
 
 const plugins = {
   addPointLabels1: addPointLabels1String,
@@ -64,4 +65,10 @@ const pluginData = {
   },
 };
 
-export { plugins, pluginStrings, pluginData };
+const addPluginDataFunctions = (pluginData) => {
+  for (let key in pluginData) {
+    addPlugin(pluginData[key]["loadingJS"], key);
+  }
+};
+
+export { plugins, pluginStrings, pluginData, addPluginDataFunctions };

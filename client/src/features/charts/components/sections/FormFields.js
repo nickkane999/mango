@@ -10,9 +10,9 @@ const ChartFormFields = (props) => {
         <Form onSubmit={(event) => functions.handleSubmit(event, settings)}>
           {fields.map((field) => {
             if (field.type === "checkbox") {
-              <Checkbox field={field} settings={settings} />;
+              return <Checkbox key={field.name} field={field} settings={settings} />;
             } else if (field.type === "input") {
-              <InputField field={field} settings={settings} />;
+              return <InputField key={field.name} field={field} settings={settings} />;
             }
           })}
           <Button variant="primary" type="submit">

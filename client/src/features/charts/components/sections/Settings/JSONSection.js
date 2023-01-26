@@ -1,8 +1,4 @@
-import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
-import { handleDisplayOptions } from "../../FormLayout";
-import SelectSettings from "./SelectSettings";
-import AddChart from "./AddChart";
-import LoadChart from "./LoadChart";
+import { Form, Container, Button } from "react-bootstrap";
 
 const { Control, Label, Group } = Form;
 

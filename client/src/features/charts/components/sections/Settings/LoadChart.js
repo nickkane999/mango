@@ -1,10 +1,12 @@
 import { Form, Button, Col, Dropdown } from "react-bootstrap";
-
+import { useState } from "react";
 const { Group } = Form;
 const { Menu, Toggle, Item } = Dropdown;
 
 const LoadChart = (props) => {
-  const { data, selectedChart, functions, pullChart, settings } = props;
+  const [selectedChart, setSelectedChart] = useState({ name: "Load Existing Chart" });
+
+  const { data, functions, settings } = props;
   return (
     <>
       <Col className="chart-selection" xs={12}>
@@ -16,7 +18,7 @@ const LoadChart = (props) => {
             <Menu>
               {data.getChartsByUser.map((chart) => {
                 return (
-                  <Item key={chart.id} value={chart.id} onClick={() => pullChart(chart)}>
+                  <Item key={chart.id} value={chart.id} onClick={() => setSelectedChart(chart)}>
                     {chart.name}
                   </Item>
                 );

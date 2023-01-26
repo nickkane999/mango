@@ -8,10 +8,8 @@ import { GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, CREATE_CHART_BY_USER } from "
 import SessionContext, { updateSessionInfo } from "../context/chartStore";
 
 import { user } from "../../../util/general";
-import { CT_POINT_LABELS } from "../plugins/functionality/labelLineChart";
-import { addPlugin } from "../util/charts";
 import { fields as pluginFields } from "../plugins/plugins";
-import { pluginData } from "../plugins/all";
+import { pluginData, addPluginDataFunctions } from "../plugins/all";
 
 import ChartSettings from "../components/sections/Settings";
 import ChartFormFields from "../components/sections/FormFields";
@@ -19,55 +17,21 @@ import ChartDisplayOptions from "../components/sections/DisplayOptions";
 import ChartPluginFields from "../components/sections/PluginFields";
 
 const ChartForm = (props) => {
-  const { fields, createChart, createChartData, template, chartType } = props.settings;
+  const { fields, createChartData, template, chartType } = props.settings;
   const [selectedPlugin, setSelectedPlugin] = useState([]);
-  const [hasSessionLoaded, setHasSessionLoaded] = useState(false);
   const { chartInfo, setChartInfo } = useContext(SessionContext);
 
-  for (let key in pluginData) {
-    addPlugin(pluginData[key]["loadingJS"], key);
-  }
-
-  /*
-  useEffect(() => {
-    const { functions, sessionStorage, misc } = chartInfo;
-    const newAttributes = {
-      sessionStorage: {
-        ...sessionStorage,
-      },
-      functions: {
-        ...functions,
-        createChart: createChart,
-        createChartVanillaJS: createChartVanillaJS,
-      },
-      misc: {
-        ...misc,
-        chartType: props.chartType,
-        fields: fields,
-        template: template,
-      },
-    };
-    setChartInfo({ ...newAttributes });
-    setHasSessionLoaded(true);
-  }, [props.chartType]);
-  */
+  // Add Plugin <script> tags for chartist.js
+  addPluginDataFunctions(pluginData);
 
   // Defining state variables and functions to use for create page's HTML (defined in formSections file)
   const [formData, setFormData] = useState({});
   const [chartJSON, setChartJSON] = useState();
-  const [selectedChart, setSelectedChart] = useState({ name: "Load Existing Chart" });
-  const [saveChartName, setSaveChartName] = useState("");
   const getUpdatedFormData = () => {
     return formData;
   };
   const getUpdatedChartJSON = () => {
     return chartJSON;
-  };
-  const pullChart = (chart) => {
-    setSelectedChart(chart);
-  };
-  const handleSaveChartName = (event) => {
-    setSaveChartName(event.target.value);
   };
 
   // GraphQL queries and variables
@@ -85,10 +49,9 @@ const ChartForm = (props) => {
     }
   }, []);
 
+  // Update variables in file to work with html layout functions
   let settings = chartInfo;
   let functions = settings.functions;
-
-  // Update variables in file to work with html layout functions
   const info = {
     functions,
     settings,
@@ -112,7 +75,7 @@ const ChartForm = (props) => {
   // Wait for chartInfo (context containing all functions / variables needed for this chart form) to be loaded before rendering
   if (chartInfo) {
     // Define parameters used in each HTML section, then pass into the functions to return HTML
-    const chartSettingsInfo = { data, selectedChart, functions, chartType, pullChart, settings, handleSaveChartName, saveChartName, user };
+    const chartSettingsInfo = { data, functions, chartType, settings, user };
     const formFieldInfo = { functions, fields, settings };
     const pluginFieldInfo = { functions, pluginData, settings };
     const chartDisplayOptionsInfo = { settings, fields: fields, type: "chart", title: "Select Chart Fields to Display", className: "section displayChartOptions" };

@@ -1,7 +1,5 @@
-import { Form, Container, Button, Row, Col, Dropdown } from "react-bootstrap";
-
+import { Form, Col } from "react-bootstrap";
 const { Control, Label, Group, Check } = Form;
-const { Menu, Toggle, Item } = Dropdown;
 
 const Checkbox = (props) => {
   const { field, settings } = props;

@@ -22,7 +22,11 @@ function ChartMenu() {
   const displayChartOptions = () => {
     // loop through the chartLayouts object and return a dropdown item for each
     return Object.keys(chartLayouts).map((chart) => {
-      return <Dropdown.Item eventKey={chartLayouts[chart].key}>{chartLayouts[chart].title}</Dropdown.Item>;
+      return (
+        <Dropdown.Item key={chartLayouts[chart].key} eventKey={chartLayouts[chart].key}>
+          {chartLayouts[chart].title}
+        </Dropdown.Item>
+      );
     });
   };
 

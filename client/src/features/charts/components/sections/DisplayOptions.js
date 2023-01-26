@@ -9,9 +9,9 @@ const ChartDisplayOptions = (info) => {
       <Row>
         {Object.values(fields).map((field) => {
           if (field.default === false && type === "chart") {
-            return <CheckboxDisplayOptions field={field} />;
+            return <CheckboxDisplayOptions key={field.name} field={field} />;
           } else if (type === "plugin") {
-            return <CheckboxPluginOptions field={field} info={info} />;
+            return <CheckboxPluginOptions key={field.name} field={field} info={info} />;
           }
         })}
       </Row>

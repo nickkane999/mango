@@ -66,13 +66,13 @@ const updateChartForAccount = (chart, settings) => {
 
 const loadChartJSONTemplate = (settings) => {
   const { createChartData, updateFormData } = settings.functions;
-  const { template, asdasdasdasdasd } = settings.misc;
+  const { template } = settings.misc;
   const { setFormData } = settings.sessionStorage;
   const { selectedPlugin, pluginData } = settings.misc;
 
   setFormData(template);
   document.querySelector(".chartJSON textarea").value = JSON.stringify(template, null, "\t");
-  let chartData = createChartData(template, selectedPlugin);
+  let chartData = createChartData(template);
   const { data, options } = chartData;
   let loadedPlugins = {};
   for (let key in selectedPlugin) {

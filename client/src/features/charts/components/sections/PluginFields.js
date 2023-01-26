@@ -1,4 +1,4 @@
-import { Form, Container, Button, Row } from "react-bootstrap";
+import { Form, Container, Row } from "react-bootstrap";
 import { Checkbox, InputField } from "../FormLayout";
 
 const ChartPluginFields = (props) => {
@@ -16,9 +16,9 @@ const ChartPluginFields = (props) => {
                 {Object.keys(pluginFields).map((key, field) => {
                   field = pluginFields[key];
                   if (field.type === "checkbox") {
-                    <Checkbox field={field} settings={settings} />;
+                    return <Checkbox key={field.name} field={field} settings={settings} />;
                   } else if (field.type === "input") {
-                    <InputField field={field} settings={settings} />;
+                    return <InputField key={field.name} field={field} settings={settings} />;
                   }
                 })}
               </Container>
