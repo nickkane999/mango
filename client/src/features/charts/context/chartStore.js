@@ -58,6 +58,7 @@ export const updateSessionInfo = (info) => {
   const { settings } = info;
   const {
     getUpdatedFormData,
+    getUpdatedPluginFormData,
     getUpdatedChartJSON,
     setChartJSON,
     setFormData,
@@ -69,14 +70,17 @@ export const updateSessionInfo = (info) => {
     chartType,
     selectedPlugin,
     setSelectedPlugin,
+    setPluginFormData,
     saveChartFile,
     setSaveChartFile,
     pluginData,
   } = info;
   settings.functions.getUpdatedFormData = getUpdatedFormData;
+  settings.functions.getUpdatedPluginFormData = getUpdatedPluginFormData;
   settings.functions.getUpdatedChartJSON = getUpdatedChartJSON;
   settings.sessionStorage.setChartJSON = setChartJSON;
   settings.sessionStorage.setFormData = setFormData;
+  settings.sessionStorage.setPluginFormData = setPluginFormData;
   settings.sessionStorage.saveChartFile = saveChartFile;
   settings.sessionStorage.setSaveChartFile = setSaveChartFile;
   settings.sessionStorage.setSelectedPlugin = setSelectedPlugin;

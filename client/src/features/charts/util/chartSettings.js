@@ -1,4 +1,5 @@
 import { updateChartistInfo, generateChart, generateChartWithData, pullPlugins } from "./charts.js";
+import { refreshPluginsData } from "../plugins/all";
 import FileSaver from "file-saver";
 
 // Chart Setting functions
@@ -22,7 +23,8 @@ const hasChartType = (charts, type) => {
 
 // Commonly used functions in this file
 const createChartFromJSONData = (settings, chartData, plugins = null) => {
-  const { createChartData, updateFormData } = settings.functions;
+  const { createChartData, updateFormData, getUpdatedPluginFormData } = settings.functions;
+
   const { template } = settings.misc;
   const { setFormData } = settings.sessionStorage;
   let { pluginData } = settings.misc;
@@ -30,8 +32,15 @@ const createChartFromJSONData = (settings, chartData, plugins = null) => {
 
   setFormData(chartData);
   updateFormData(chartData);
+  let formData = settings.functions.getUpdatedFormData();
+
   chartData = createChartData(chartData);
   const { data, options } = chartData;
+
+  let pluginFormData = getUpdatedPluginFormData();
+  const refreshPluginsParameters = { pluginFormData, pluginData, settings };
+  pluginData = refreshPluginsData(refreshPluginsParameters);
+
   const loadedPlugins = createPluginInfo(selectedPlugin, pluginData);
   const plugin = pullPlugins({ plugins: loadedPlugins, hasOptions: options ? true : false });
   const fullChartInfo = { data: JSON.stringify(data), options: JSON.stringify(options).slice(0, -1), plugin, chartType: settings.misc.chartType };

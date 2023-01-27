@@ -14,13 +14,13 @@ const Checkbox = (props) => {
 };
 
 const InputField = (props) => {
-  const { field, settings } = props;
+  const { field, settings, type } = props;
   const { functions } = settings;
   return (
     <Col className="form-group" xs={4}>
       <Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
         <Label>{field.name}</Label>
-        <Control defaultValue={field.data ? field.data : ""} placeholder={field.name} onChange={(event) => functions.updateFormInput(event, settings)} name={field.key} />
+        <Control defaultValue={field.data ? field.data : ""} placeholder={field.name} onChange={(event) => functions.updateFormInput(event, settings, type)} name={field.key} />
       </Group>
     </Col>
   );
@@ -53,14 +53,10 @@ const CheckboxPluginOptions = (props) => {
                 let newValue = { [event.target.name]: event.target.value === "on" ? true : false };
                 let newState = { ...prevState, ...newValue };
                 delete newState[event.target.name];
-                console.log("My plugins");
-                console.log(prevState);
                 return newState;
               } else {
                 document.querySelector("." + event.target.name).style.display = "block";
                 let newValue = { [event.target.name]: event.target.value === "on" ? true : false };
-                console.log("My plugins");
-                console.log(prevState);
                 return { ...prevState, ...newValue };
               }
             });

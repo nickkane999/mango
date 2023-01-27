@@ -72,6 +72,22 @@ const addPluginDataFunctions = (pluginData) => {
   }
 };
 
+const refreshPluginsData = ({ pluginFormData, pluginData, settings }) => {
+  for (let key in pluginData) {
+    let pluginSetting = pluginData[key]["parameterSettings"];
+    Object.keys(pluginSetting).forEach((parameterKey) => {
+      let formKey = pluginSetting[parameterKey].key;
+      if (formKey in pluginFormData) {
+        pluginSetting[parameterKey].data = pluginFormData[formKey];
+      }
+    });
+    pluginData[key]["parameterSettings"] = pluginSetting;
+  }
+
+  console.log("New Plugin data: ", pluginData);
+  return pluginData;
+};
+
 const savePluginsFile = () => {
   let pluginString = "";
   for (let key in pluginData) {
@@ -82,4 +98,4 @@ const savePluginsFile = () => {
   return pluginString;
 };
 
-export { plugins, pluginStrings, pluginData, addPluginDataFunctions, savePluginsFile };
+export { plugins, pluginStrings, pluginData, addPluginDataFunctions, refreshPluginsData, savePluginsFile };

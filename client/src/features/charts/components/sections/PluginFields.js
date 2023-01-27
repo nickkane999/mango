@@ -16,9 +16,9 @@ const ChartPluginFields = (props) => {
                 {Object.keys(pluginFields).map((key, field) => {
                   field = pluginFields[key];
                   if (field.type === "checkbox") {
-                    return <Checkbox key={field.name} field={field} settings={settings} />;
+                    return <Checkbox key={field.name} field={field} settings={settings} type="plugin" />;
                   } else if (field.type === "input") {
-                    return <InputField key={field.name} field={field} settings={settings} />;
+                    return <InputField key={field.name} field={field} settings={settings} type="plugin" />;
                   }
                 })}
               </Container>

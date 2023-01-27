@@ -26,6 +26,7 @@ const ChartForm = (props) => {
 
   // Defining state variables and functions to use for create page's HTML (defined in formSections file)
   const [formData, setFormData] = useState({});
+  const [pluginFormData, setPluginFormData] = useState({});
   const [chartJSON, setChartJSON] = useState();
   const [saveChartFile, setSaveChartFile] = useState("");
   const getUpdatedFormData = () => {
@@ -33,6 +34,9 @@ const ChartForm = (props) => {
   };
   const getUpdatedChartJSON = () => {
     return chartJSON;
+  };
+  const getUpdatedPluginFormData = () => {
+    return pluginFormData;
   };
 
   // GraphQL queries and variables
@@ -57,9 +61,11 @@ const ChartForm = (props) => {
     functions,
     settings,
     getUpdatedFormData,
+    getUpdatedPluginFormData,
     getUpdatedChartJSON,
     setChartJSON,
     setFormData,
+    setPluginFormData,
     saveChartFile,
     setSaveChartFile,
     updateChartQuery,
