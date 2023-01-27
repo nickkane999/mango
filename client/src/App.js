@@ -5,7 +5,7 @@ import Chart from "./pages/chart/Chart";
 import Login from "./pages/login/Login";
 import NavMenu from "./components/nav/NavMenu";
 import Account from "./pages/account/Account";
-import Test from "./pages/Test/Test";
+import Test from "./pages/Test/Test2";
 
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "./assets/css/chartist.min.css";

@@ -1,4 +1,5 @@
 import { updateChartistInfo, generateChart, generateChartWithData, pullPlugins } from "./charts.js";
+import FileSaver from "file-saver";
 
 // Chart Setting functions
 const updateChartJSON = (event, settings) => {
@@ -35,7 +36,7 @@ const createChartFromJSONData = (settings, chartData, plugins = null) => {
   const plugin = pullPlugins({ plugins: loadedPlugins, hasOptions: options ? true : false });
   const fullChartInfo = { data: JSON.stringify(data), options: JSON.stringify(options).slice(0, -1), plugin, chartType: settings.misc.chartType };
   updateChartistInfo(data, options, plugin);
-  generateChartWithData(fullChartInfo);
+  generateChartWithData(fullChartInfo, settings);
 };
 //['addAxisTitle','addBarLegend1','addBarLabels1']
 const createPluginInfo = (selectedPlugin, pluginData) => {
@@ -157,4 +158,12 @@ const loadChartJSONTemplate = (settings) => {
   settings.sessionStorage.setFormData(template); // WARNING: This is an Update to get the form data to work with external functions. MIGHT HAVE TO BE REMOVED
 };
 
-export { loadChartJSON, saveChartJSON, updateChartJSON, loadChartJSONTemplate, hasChartType, loadChartJSONFromAccount, updateChartForAccount, updateChartJSONWithFormData };
+const saveChartFile = (settings) => {
+  const { saveChartFile } = settings.sessionStorage;
+  if (saveChartFile) {
+    const data = new Blob([saveChartFile], { type: "application/javascript" });
+    FileSaver.saveAs(data, "myChart.js");
+  }
+};
+
+export { loadChartJSON, saveChartJSON, updateChartJSON, loadChartJSONTemplate, hasChartType, loadChartJSONFromAccount, updateChartForAccount, updateChartJSONWithFormData, saveChartFile };

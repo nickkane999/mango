@@ -2,7 +2,8 @@ import { CT_POINT_LABELS, addPointLabels1String } from "./functionality/labelLin
 import { CT_BAR_LABELS, addBarLabels1String } from "./functionality/labelBarChart";
 import { CT_BAR_LEGEND, addBarLegend1String } from "./functionality/legendBarChart";
 import { CT_AXIS_TITLE, addAxisTitleString } from "./functionality/axisTitleChart";
-import { addPlugin } from "../util/charts";
+import { addPlugin, returnPluginString } from "../util/charts";
+import FileSaver from "file-saver";
 
 const plugins = {
   addPointLabels1: addPointLabels1String,
@@ -71,4 +72,14 @@ const addPluginDataFunctions = (pluginData) => {
   }
 };
 
-export { plugins, pluginStrings, pluginData, addPluginDataFunctions };
+const savePluginsFile = () => {
+  let pluginString = "";
+  for (let key in pluginData) {
+    pluginString += pluginData[key]["loadingJS"];
+  }
+  const plugins = new Blob([pluginString], { type: "text/plain;charset=utf-8" });
+  FileSaver.saveAs(plugins, "plugins.js");
+  return pluginString;
+};
+
+export { plugins, pluginStrings, pluginData, addPluginDataFunctions, savePluginsFile };

@@ -27,6 +27,7 @@ const ChartForm = (props) => {
   // Defining state variables and functions to use for create page's HTML (defined in formSections file)
   const [formData, setFormData] = useState({});
   const [chartJSON, setChartJSON] = useState();
+  const [saveChartFile, setSaveChartFile] = useState("");
   const getUpdatedFormData = () => {
     return formData;
   };
@@ -59,6 +60,8 @@ const ChartForm = (props) => {
     getUpdatedChartJSON,
     setChartJSON,
     setFormData,
+    saveChartFile,
+    setSaveChartFile,
     updateChartQuery,
     createChartQuery,
     createChartData,

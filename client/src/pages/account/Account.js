@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Container, Row, Col } from "react-bootstrap";
-import "./Account.css";
+import "./Account.scss";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { GET_CHARTS_BY_USER, UPDATE_CHART_BY_USER, DELETE_CHART_BY_USER } from "../../graphQL/queries";
 import { user, formattedDate } from "../../util/general";
+import { savePluginsFile } from "../../features/charts/plugins/all";
 
 function Account() {
   const userId = user.id;
@@ -86,9 +87,10 @@ function Account() {
   // Redirect to homepage after successful login
   const { Control, Label, Group } = Form;
   return (
-    <Container>
+    <Container className="options-view">
       <h1>Account: {user.username}</h1>
       <Button onClick={loadCharts}>Load Charts</Button>
+      <Button onClick={savePluginsFile}>Save Plugins File</Button>
       {data == null ? (
         <></>
       ) : (

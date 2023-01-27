@@ -8,6 +8,7 @@ import {
   loadChartJSONTemplate,
   loadChartJSONFromAccount,
   updateChartJSONWithFormData,
+  saveChartFile,
 } from "../util/chartSettings";
 import { updateFormInput, updateFormCheckbox, updateFormData, handleSubmit } from "../util/formFields";
 
@@ -31,6 +32,7 @@ export const initialState = {
     loadChartJSONTemplate: loadChartJSONTemplate,
     loadChartJSONFromAccount: loadChartJSONFromAccount,
     updateChartJSONWithFormData: updateChartJSONWithFormData,
+    saveChartFile: saveChartFile,
     handleSubmit: handleSubmit,
     getUpdatedFormData: null,
     getUpdatedChartJSON: null,
@@ -67,12 +69,16 @@ export const updateSessionInfo = (info) => {
     chartType,
     selectedPlugin,
     setSelectedPlugin,
+    saveChartFile,
+    setSaveChartFile,
     pluginData,
   } = info;
   settings.functions.getUpdatedFormData = getUpdatedFormData;
   settings.functions.getUpdatedChartJSON = getUpdatedChartJSON;
   settings.sessionStorage.setChartJSON = setChartJSON;
   settings.sessionStorage.setFormData = setFormData;
+  settings.sessionStorage.saveChartFile = saveChartFile;
+  settings.sessionStorage.setSaveChartFile = setSaveChartFile;
   settings.sessionStorage.setSelectedPlugin = setSelectedPlugin;
   settings.functions.updateChartQuery = updateChartQuery;
   settings.functions.createChartQuery = createChartQuery;

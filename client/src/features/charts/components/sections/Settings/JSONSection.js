@@ -17,6 +17,9 @@ const JSONSection = (props) => {
         <Button variant="primary" type="submit" onClick={() => functions.loadChartJSONTemplate(settings)}>
           Load Template
         </Button>
+        <Button variant="primary" type="submit" onClick={() => functions.saveChartFile(settings)}>
+          Save Chart File
+        </Button>
       </Container>
       <Container className="chartSettingsError">
         <p className="error"></p>

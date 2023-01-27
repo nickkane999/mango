@@ -65,12 +65,15 @@ const generateChart = (pluginID) => {
   }
 };
 
-const generateChartWithData = (info) => {
+const generateChartWithData = (info, settings) => {
   const { data, options, plugin } = info;
+  const { setSaveChartFile } = settings.sessionStorage;
   let chartType = info.chartType.charAt(0).toUpperCase() + info.chartType.slice(1);
 
   if (data && plugin) {
-    console.log(`new Function(return new Chartist.${chartType}("#chart", ${data}, ${options}, ${plugin});`);
+    let chartFile = `new Function(\`return new Chartist.${chartType}("#chart", ${data}, ${options}, ${plugin});\`)()`;
+    setSaveChartFile(chartFile);
+    console.log(chartFile);
     const makeChart = new Function(`return new Chartist.${chartType}("#chart", ${data}, ${options}, ${plugin});`)();
   }
 };
