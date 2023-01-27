@@ -28,7 +28,7 @@ const createChartFromJSONData = (settings, chartData, plugins = null) => {
   const { template } = settings.misc;
   const { setFormData } = settings.sessionStorage;
   let { pluginData } = settings.misc;
-  const selectedPlugin = plugins ? plugins : settings.misc.selectedPlugin;
+  const selectedPlugin = plugins ? plugins.formOptions : settings.misc.selectedPlugin;
 
   setFormData(chartData);
   updateFormData(chartData);
@@ -37,7 +37,7 @@ const createChartFromJSONData = (settings, chartData, plugins = null) => {
   chartData = createChartData(chartData);
   const { data, options } = chartData;
 
-  let pluginFormData = getUpdatedPluginFormData();
+  let pluginFormData = plugins ? plugins.formFields : getUpdatedPluginFormData();
   const refreshPluginsParameters = { pluginFormData, pluginData, settings };
   pluginData = refreshPluginsData(refreshPluginsParameters);
 
@@ -58,10 +58,15 @@ const createPluginInfo = (selectedPlugin, pluginData) => {
   return loadedPlugins;
 };
 
-const createPluginString = (selectedPlugin) => {
-  let pluginString = "{";
+const createPluginString = ({ pluginFormData, selectedPlugin }) => {
+  let pluginString = '{"formOptions": {';
   Object.keys(selectedPlugin).map((key) => (pluginString += '"' + key + '": true, '));
-  pluginString = pluginString.slice(0, -2) + "}";
+  pluginString = pluginString.slice(0, -2) + "}, ";
+
+  pluginString += '"formFields": {';
+  Object.keys(pluginFormData).map((key, value) => (pluginString += '"' + key + '": "' + pluginFormData[key] + '", '));
+  pluginString = pluginString.slice(0, -2) + "}}";
+
   return pluginString;
 };
 
@@ -69,9 +74,11 @@ const createPluginString = (selectedPlugin) => {
 const saveChartJSON = (saveChartName, user, settings) => {
   const { createChartQuery } = settings.functions;
   const { selectedPlugin } = settings.misc;
+  let pluginFormData = settings.functions.getUpdatedPluginFormData();
+  let info = { pluginFormData, selectedPlugin };
 
   let chartJSON = document.querySelector(".chartJSON textarea").value;
-  let pluginString = createPluginString(selectedPlugin);
+  let pluginString = createPluginString(info);
 
   let createChartInput = {
     json: chartJSON,
@@ -95,18 +102,31 @@ const saveChartJSON = (saveChartName, user, settings) => {
 
 // Last function to implement
 const loadChartJSONFromAccount = (chart, settings) => {
-  const { setSelectedPlugin } = settings.sessionStorage;
-
+  const { setSelectedPlugin, setPluginFormData } = settings.sessionStorage;
+  //settings.sessionStorage.setPluginFormData
   if (chart.id) {
     document.querySelector(".chartJSON textarea").value = chart.json;
     let chartData = JSON.parse(chart.json);
     let plugins = JSON.parse(chart.plugins);
-    setSelectedPlugin(JSON.parse(chart.plugins));
+    setSelectedPlugin(plugins.formOptions);
+    setPluginFormData(plugins.formFields);
     createChartFromJSONData(settings, chartData, plugins);
-    if (chart.plugins && plugins) {
-      Object.keys(plugins).map((key) => {
-        if (plugins[key] === true) {
+    if (chart.plugins && plugins.formOptions && plugins.formFields) {
+      let options = plugins.formOptions;
+      let fields = plugins.formFields;
+      Object.keys(options).map((key) => {
+        if (options[key] === true) {
           document.querySelector(`#${key}`).checked = true;
+          document.querySelector(`.${key}`).style.display = "block";
+        }
+      });
+      let booleanStrings = ["true", "false"];
+      Object.keys(fields).map((key) => {
+        if (booleanStrings.includes(fields[key])) {
+          document.querySelector(`.${key} input`).checked = fields[key];
+        } else {
+          document.querySelector(`.${key} input`).value = !isNaN(parseFloat(fields[key])) ? parseFloat(fields[key]) : fields[key];
+          //document.querySelector(`.${key} input`).value = fields[key];
         }
       });
     }
@@ -117,8 +137,10 @@ const loadChartJSONFromAccount = (chart, settings) => {
 const updateChartForAccount = (chart, settings) => {
   const { updateChartQuery } = settings.functions;
   const { selectedPlugin } = settings.misc;
+  let pluginFormData = settings.functions.getUpdatedPluginFormData();
   let chartJSON = document.querySelector(".chartJSON textarea").value;
-  let pluginString = createPluginString(selectedPlugin);
+  let info = { pluginFormData, selectedPlugin };
+  let pluginString = createPluginString(info);
 
   if (chart.id) {
     updateChartQuery({
@@ -149,9 +171,19 @@ const loadChartJSON = (settings) => {
   const chartJSON = settings.functions.getUpdatedChartJSON();
   try {
     let chartData = JSON.parse(chartJSON);
+    if (chartData && typeof chartData !== "object") {
+      chartData = JSON.parse(chartData);
+      if (chartData && typeof chartData !== "object") {
+        chartData = JSON.parse(chartData);
+      } else {
+        document.querySelector(".chartJSON textarea").value = JSON.parse(chartJSON);
+      }
+    } else {
+      document.querySelector(".chartJSON textarea").value = chartJSON;
+    }
+    console.log(chartData);
     createChartFromJSONData(settings, chartData);
     settings.sessionStorage.setChartJSON(JSON.stringify(chartJSON, null, "\t"));
-    document.querySelector(".chartJSON textarea").value = chartJSON;
   } catch (error) {
     console.log(error);
     console.log("My Chart JSON: " + chartJSON);

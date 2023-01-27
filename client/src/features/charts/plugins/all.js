@@ -19,6 +19,13 @@ const pluginStrings = {
   CT_AXIS_TITLE: CT_AXIS_TITLE,
 };
 
+const pointPluginParameters = {
+  positionFunction: { name: "Position Function Point", data: "return data.x1;", key: "positionFunctionPointPlugin", type: "input", default: true },
+  labelOffsetX: { name: "Label Offset X Point", data: 0, key: "labelOffsetXPointPlugin", type: "input", default: true },
+  labelOffsetY: { name: "Label Offset Y Point", data: -10, key: "labelOffsetYPointPlugin", type: "input", default: true },
+  textFunction: { name: "Text Function Point", data: "return text + '$';", key: "textFunctionPointPlugin", type: "input", default: true },
+  labelClass: { name: "Label Class Point", data: "ct-label", key: "labelClassPointPlugin", type: "input", default: true },
+};
 const barPluginParameters = {
   positionFunction: { name: "Position Function Bar", data: "return data.x1;", key: "positionFunctionBarPlugin", type: "input", default: true },
   labelOffsetX: { name: "Label Offset X Bar", data: 0, key: "labelOffsetXBarPlugin", type: "input", default: true },
@@ -47,7 +54,7 @@ const pluginData = {
   addPointLabels1: {
     loadingJS: CT_POINT_LABELS,
     parameterJS: addPointLabels1String,
-    parameterSettings: barPluginParameters,
+    parameterSettings: pointPluginParameters,
   },
   addBarLabels1: {
     loadingJS: CT_BAR_LABELS,
