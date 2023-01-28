@@ -1,7 +1,7 @@
 export const fields = [
   { name: "Labels", key: "labels", type: "input", default: true },
   { name: "Series", key: "series", type: "input", default: true },
-  { name: "Offset Axis X", key: "offset_axisx", type: "input", default: true },
+  { name: "Offset Axis X", key: "offset_axisx", type: "input", default: false },
   { name: "Position Axis X", key: "position_axisx", type: "input", default: false },
   { name: "LabelOffsetX Axis X", key: "labelOffsetX_axisx", type: "input", default: false },
   { name: "LabelOffsetY Axis X", key: "labelOffsetY_axisx", type: "input", default: false },
@@ -136,15 +136,13 @@ export const createChartData = (formData) => {
 export const template = {
   labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
   series: [[50, 20, 40, 20, 10]],
-  offset_axisx: 30,
+  offset_axisx: 60,
   position_axisx: "end",
   labelOffsetX_axisx: 0,
   labelOffsetY_axisx: 0,
   showLabel_axisx: true,
   showGrid_axisx: true,
-  labelInterpolationFnc_axisx: function (value) {
-    return value;
-  },
+  labelInterpolationFnc_axisx: "function (value) { return value; }",
   type_axisx: null,
   offset_axisy: 30,
   position_axisy: "start",
@@ -152,9 +150,7 @@ export const template = {
   labelOffsetY_axisy: 0,
   showLabel_axisy: true,
   showGrid_axisy: true,
-  labelInterpolationFnc_axisy: function (value) {
-    return value;
-  },
+  labelInterpolationFnc_axisy: "function (value) { return value; }",
   type_axisy: null,
   scaleMinSpace_axisy: 30,
   onlyInteger_axisy: false,
@@ -171,7 +167,7 @@ export const template = {
   chartPaddingTop: 15,
   chartPaddingRight: 5,
   chartPaddingBottom: 5,
-  chartPaddingLeft: 10,
+  chartPaddingLeft: 30,
   fullWidth: false,
   reverseData: false,
   chartClass: "ct-chart-line",

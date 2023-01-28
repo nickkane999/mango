@@ -15,14 +15,12 @@ function ctPointLabels(options) {
     if(chart instanceof Chartist.Line) {
       //console.log("I made it");
       chart.on('draw', function(data, i) {
-        console.log(options)
-        console.log(data);
         if(data.type === 'point') {
           data.group.elem('text', {
             x: data.x + options.labelOffset.x,
             y: data.y + options.labelOffset.y,
             style: 'text-anchor: ' + options.textAnchor
-          }, options.labelClass).text(data.value.y);
+          }, options.labelClass).text(options.labelInterpolationFnc(data.value.y));
         }
       });
     }
@@ -30,14 +28,14 @@ function ctPointLabels(options) {
 }`;
 
 const addPointLabels1String = (info) => {
-  const { positionFunction = null, labelOffsetX = null, labelOffsetY = null, textFunction = null, labelClass = null } = info;
+  const { textAnchor = null, textFunction = null, labelClass = null } = info;
   const ADD_POINT_LABELS1 = `
       ctPointLabels({
-        textAnchor: "middle",
+        textAnchor: "${textAnchor.data ? textAnchor.data : "middle"}",
         labelInterpolationFnc: function (text) {
-          return text + '%'
+          ${textFunction.data ? textFunction.data : "return text + '%';"}
         },
-        labelClass: "ct-label",
+        labelClass: "${labelClass.data ? labelClass.data : "ct-label"}",
       })
       `;
   return ADD_POINT_LABELS1;

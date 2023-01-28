@@ -21,6 +21,13 @@ const hasChartType = (charts, type) => {
   return chartCount > 0;
 };
 
+const modifyFunctionStrings = (string) => {
+  let newString = string;
+  newString = newString.replace(/"function/g, "function");
+  newString = newString.replace(/}"/g, "}");
+  return newString;
+};
+
 // Commonly used functions in this file
 const createChartFromJSONData = (settings, chartData, plugins = null) => {
   const { createChartData, updateFormData, getUpdatedPluginFormData } = settings.functions;
@@ -32,7 +39,6 @@ const createChartFromJSONData = (settings, chartData, plugins = null) => {
 
   setFormData(chartData);
   updateFormData(chartData);
-  let formData = settings.functions.getUpdatedFormData();
 
   chartData = createChartData(chartData);
   const { data, options } = chartData;
@@ -43,10 +49,11 @@ const createChartFromJSONData = (settings, chartData, plugins = null) => {
 
   const loadedPlugins = createPluginInfo(selectedPlugin, pluginData);
   const plugin = pullPlugins({ plugins: loadedPlugins, hasOptions: options ? true : false });
-  const fullChartInfo = { data: JSON.stringify(data), options: JSON.stringify(options).slice(0, -1), plugin, chartType: settings.misc.chartType };
+  const fullChartInfo = { data: JSON.stringify(data), options: modifyFunctionStrings(JSON.stringify(options).slice(0, -1)), plugin, chartType: settings.misc.chartType };
   updateChartistInfo(data, options, plugin);
   generateChartWithData(fullChartInfo, settings);
 };
+
 //['addAxisTitle','addBarLegend1','addBarLabels1']
 const createPluginInfo = (selectedPlugin, pluginData) => {
   let loadedPlugins = {};
@@ -59,6 +66,7 @@ const createPluginInfo = (selectedPlugin, pluginData) => {
 };
 
 const createPluginString = ({ pluginFormData, selectedPlugin }) => {
+  if (!pluginFormData || Object.keys(pluginFormData).length === 0 || !selectedPlugin || Object.keys(selectedPlugin).length === 0) return "";
   let pluginString = '{"formOptions": {';
   Object.keys(selectedPlugin).map((key) => (pluginString += '"' + key + '": true, '));
   pluginString = pluginString.slice(0, -2) + "}, ";
@@ -107,9 +115,12 @@ const loadChartJSONFromAccount = (chart, settings) => {
   if (chart.id) {
     document.querySelector(".chartJSON textarea").value = chart.json;
     let chartData = JSON.parse(chart.json);
-    let plugins = JSON.parse(chart.plugins);
-    setSelectedPlugin(plugins.formOptions);
-    setPluginFormData(plugins.formFields);
+    let plugins = chart.plugins && chart.plugins.length != 0 ? chart.plugins : null;
+    if (plugins) {
+      plugins = JSON.parse(chart.plugins);
+      setSelectedPlugin(plugins.formOptions);
+      setPluginFormData(plugins.formFields);
+    }
     createChartFromJSONData(settings, chartData, plugins);
     if (chart.plugins && plugins.formOptions && plugins.formFields) {
       let options = plugins.formOptions;
@@ -183,7 +194,7 @@ const loadChartJSON = (settings) => {
     }
     console.log(chartData);
     createChartFromJSONData(settings, chartData);
-    settings.sessionStorage.setChartJSON(JSON.stringify(chartJSON, null, "\t"));
+    settings.sessionStorage.setChartJSON(chartJSON);
   } catch (error) {
     console.log(error);
     console.log("My Chart JSON: " + chartJSON);
@@ -207,4 +218,15 @@ const saveChartFile = (settings) => {
   }
 };
 
-export { loadChartJSON, saveChartJSON, updateChartJSON, loadChartJSONTemplate, hasChartType, loadChartJSONFromAccount, updateChartForAccount, updateChartJSONWithFormData, saveChartFile };
+export {
+  loadChartJSON,
+  saveChartJSON,
+  updateChartJSON,
+  loadChartJSONTemplate,
+  hasChartType,
+  loadChartJSONFromAccount,
+  updateChartForAccount,
+  updateChartJSONWithFormData,
+  saveChartFile,
+  createChartFromJSONData,
+};

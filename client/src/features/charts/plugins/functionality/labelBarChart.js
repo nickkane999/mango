@@ -14,7 +14,6 @@ var ctBarLabels = function (options) {
           y: null,
         },
       };
-      console.log("testing");
       options = Chartist.extend({}, defaultOptions, options);
   
       var positionX =
@@ -60,7 +59,7 @@ const addBarLabels1String = (info) => {
           },
           labelOffset: {
             x: ${labelOffsetX.data ? labelOffsetX.data : 0},
-            y: ${labelOffsetY.data ? labelOffsetY.data : -10}
+            y: ${labelOffsetY.data ? labelOffsetY.data : 10}
           },
           labelInterpolationFnc: function (text) {
             ${textFunction.data ? textFunction.data : "return text + '%';"}

@@ -7,23 +7,21 @@ export const fields = [
   { name: "Position Axis X", key: "position_axisx", type: "input", default: false },
   { name: "LabelOffsetX Axis X", key: "labelOffsetX_axisx", type: "input", default: false },
   { name: "LabelOffsetY Axis X", key: "labelOffsetY_axisx", type: "input", default: false },
-  { name: "ShowLabel Axis X", key: "showLabel_axisx", type: "input", default: false },
+  { name: "ShowLabel Axis X", key: "showLabel_axisx", type: "checkbox", default: false },
   { name: "ShowGrid Axis X", key: "showGrid_axisx", type: "checkbox", default: false },
   { name: "LabelInterpolationFnc Axis X", key: "labelInterpolationFnc_axisx", type: "input", default: false },
-  { name: "Type Axis X", key: "type_axisx", type: "input", default: false },
-  { name: "OnlyInteger Axis X", key: "onlyInteger_axisx", type: "input", default: false },
   { name: "ScaleMinSpace Axis X", key: "scaleMinSpace_axisx", type: "input", default: false },
+  { name: "OnlyInteger Axis X", key: "onlyInteger_axisx", type: "checkbox", default: false },
 
   { name: "Offset Axis Y", key: "offset_axisy", type: "input", default: false },
   { name: "Position Axis Y", key: "position_axisy", type: "input", default: false },
   { name: "LabelOffsetX Axis Y", key: "labelOffsetX_axisy", type: "input", default: false },
   { name: "LabelOffsetY Axis Y", key: "labelOffsetY_axisy", type: "input", default: false },
-  { name: "ShowLabel Axis Y", key: "showLabel_axisy", type: "input", default: false },
+  { name: "ShowLabel Axis Y", key: "showLabel_axisy", type: "checkbox", default: false },
   { name: "ShowGrid Axis Y", key: "showGrid_axisy", type: "checkbox", default: false },
   { name: "LabelInterpolationFnc Axis Y", key: "labelInterpolationFnc_axisy", type: "input", default: false },
-  { name: "Type Axis Y", key: "type_axisy", type: "input", default: false },
   { name: "ScaleMinSpace Axis Y", key: "scaleMinSpace_axisy", type: "input", default: false },
-  { name: "OnlyInteger Axis Y", key: "onlyInteger_axisy", type: "input", default: false },
+  { name: "OnlyInteger Axis Y", key: "onlyInteger_axisy", type: "checkbox", default: false },
 
   { name: "Width", key: "width", type: "input", default: true },
   { name: "Height", key: "height", type: "input", default: true },
@@ -36,12 +34,12 @@ export const fields = [
   { name: "Chart Padding Left", key: "chartPaddingLeft", type: "input", default: false },
 
   { name: "Series Bar Distance", key: "seriesBarDistance", type: "input", default: false },
-  { name: "Stack Bars", key: "stackBars", type: "input", default: false },
+  { name: "Stack Bars", key: "stackBars", type: "checkbox", default: false },
   { name: "Stack Mode", key: "stackMode", type: "input", default: false },
-  { name: "Horizontal Bars", key: "horizontalBars", type: "input", default: false },
-  { name: "Distribute Series", key: "distributeSeries", type: "input", default: false },
-  { name: "Reverse Data", key: "reverseData", type: "input", default: false },
-  { name: "Show Grid Background", key: "showGridBackground", type: "input", default: false },
+  { name: "Horizontal Bars", key: "horizontalBars", type: "checkbox", default: false },
+  { name: "Distribute Series", key: "distributeSeries", type: "checkbox", default: false },
+  { name: "Reverse Data", key: "reverseData", type: "checkbox", default: false },
+  { name: "Show Grid Background", key: "showGridBackground", type: "checkbox", default: false },
 
   { name: "Chart Class", key: "chartClass", type: "input", default: false },
   { name: "Horizontal Bars Class", key: "horizontalBarsClass", type: "input", default: false },
@@ -74,7 +72,7 @@ export const createChartData = (formData) => {
       showLabel: formData.showLabel_axisx !== undefined ? formData.showLabel_axisx : true,
       showGrid: formData.showGrid_axisx !== undefined ? formData.showGrid_axisx : true,
       labelInterpolationFnc: formData.labelInterpolationFnc_axisx
-        ? new Function("return " + formData.labelInterpolationFnc_axisx)()
+        ? formData.labelInterpolationFnc_axisx
         : function (value) {
             return "$" + value;
           },
@@ -82,7 +80,7 @@ export const createChartData = (formData) => {
       onlyInteger: formData.onlyInteger_axisx !== undefined ? formData.onlyInteger_axisx : false,
     },
     axisY: {
-      offset: formData.offset_axisy ? Number(formData.offset_axisy) : 40,
+      offset: formData.offset_axisy ? Number(formData.offset_axisy) : 60,
       position: formData.position_axisy ? formData.position_axisy : "start",
       labelOffset: {
         x: formData.labelOffsetX_axisy ? Number(formData.labelOffsetX_axisy) : 0,
@@ -91,7 +89,7 @@ export const createChartData = (formData) => {
       showLabel: formData.showLabel_axisy !== undefined ? formData.showLabel_axisy : true,
       showGrid: formData.showGrid_axisy !== undefined ? formData.showGrid_axisy : false,
       labelInterpolationFnc: formData.labelInterpolationFnc_axisy
-        ? new Function("return " + formData.labelInterpolationFnc_axisy)()
+        ? formData.labelInterpolationFnc_axisy
         : function (value) {
             return "$" + value;
           },
@@ -144,10 +142,10 @@ export const template = {
   labelOffsetY_axisx: 0,
   showLabel_axisx: true,
   showGrid_axisx: true,
-  labelInterpolationFnc_axisx: "function (value) { return value + ' time'; }",
+  labelInterpolationFnc_axisx: "function (value) { return value + ''; }",
   scaleMinSpace_axisx: 30,
   onlyInteger_axisx: false,
-  offset_axisy: 40,
+  offset_axisy: 60,
   position_axisy: "start",
   labelOffsetX_axisy: 0,
   labelOffsetY_axisy: 0,

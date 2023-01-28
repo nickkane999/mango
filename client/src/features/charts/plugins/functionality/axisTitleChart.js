@@ -120,6 +120,7 @@ const CT_AXIS_TITLE = `
             transform: transform,
             "text-anchor": options.axisY.textAnchor
           });
+          console.log(title);
           data.svg.append(title, true);
         }
       });
@@ -129,16 +130,28 @@ const CT_AXIS_TITLE = `
 `;
 
 const addAxisTitleString = (info) => {
-  const { axisXTitle = "Sample X Title", axisXClass = null, axisXAnchor = null, axisYTitle = "Sample Y Title", axisYClass = null, axisYAnchor = null, flipTitle = false } = info;
-  const { usesOptions } = info;
+  const {
+    axisXTitle = "Sample X Title",
+    axisXClass = null,
+    axisXOffsetX = null,
+    axisXOffsetY = null,
+    axisXAnchor = null,
+    axisYTitle = "Sample Y Title",
+    axisYClass = null,
+    axisYOffsetX = null,
+    axisYOffsetY = null,
+    axisYAnchor = null,
+    flipTitle = false,
+  } = info;
+
   const ADD_AXIS_TITLE = `
         Chartist.plugins.ctAxisTitle({
           axisX: {
             axisTitle: "${axisXTitle.data ? axisXTitle.data : ""}",
             axisClass: "${axisXClass.data ? axisXClass.data : "ct-axis-title"}",
             offset: {
-              x: 0,
-              y: 50
+              x: ${axisXOffsetX.data ? axisXOffsetX.data : "0"},
+              y: ${axisXOffsetY.data ? axisXOffsetY.data : "50"},
             },
             textAnchor: "${axisXAnchor.data ? axisXAnchor.data : "middle"}",
           },
@@ -146,8 +159,8 @@ const addAxisTitleString = (info) => {
             axisTitle: "${axisYTitle.data ? axisYTitle.data : ""}",
             axisClass: "${axisYClass.data ? axisYClass.data : "ct-axis-title"}",
             offset: {
-              x: 0,
-              y: -1
+              x: ${axisYOffsetX.data ? axisYOffsetX.data : "0"},
+              y: ${axisYOffsetY.data ? axisYOffsetY.data : "20"},
             },
             textAnchor: "${axisYAnchor.data ? axisYAnchor.data : "middle"}",
             flipTitle: ${flipTitle.data ? "true" : "false"},

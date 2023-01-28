@@ -20,16 +20,14 @@ const pluginStrings = {
 };
 
 const pointPluginParameters = {
-  positionFunction: { name: "Position Function Point", data: "return data.x1;", key: "positionFunctionPointPlugin", type: "input", default: true },
-  labelOffsetX: { name: "Label Offset X Point", data: 0, key: "labelOffsetXPointPlugin", type: "input", default: true },
-  labelOffsetY: { name: "Label Offset Y Point", data: -10, key: "labelOffsetYPointPlugin", type: "input", default: true },
-  textFunction: { name: "Text Function Point", data: "return text + '$';", key: "textFunctionPointPlugin", type: "input", default: true },
+  textAnchor: { name: "Text Anchor Point", data: "middle", key: "textAnchorPointPlugin", type: "input", default: true },
+  textFunction: { name: "Text Function Point", data: "return text + '%';", key: "textFunctionPointPlugin", type: "input", default: true },
   labelClass: { name: "Label Class Point", data: "ct-label", key: "labelClassPointPlugin", type: "input", default: true },
 };
 const barPluginParameters = {
   positionFunction: { name: "Position Function Bar", data: "return data.x1;", key: "positionFunctionBarPlugin", type: "input", default: true },
   labelOffsetX: { name: "Label Offset X Bar", data: 0, key: "labelOffsetXBarPlugin", type: "input", default: true },
-  labelOffsetY: { name: "Label Offset Y Bar", data: -10, key: "labelOffsetYBarPlugin", type: "input", default: true },
+  labelOffsetY: { name: "Label Offset Y Bar", data: 10, key: "labelOffsetYBarPlugin", type: "input", default: true },
   textFunction: { name: "Text Function Bar", data: "return text + '$';", key: "textFunctionBarPlugin", type: "input", default: true },
   labelClass: { name: "Label Class Bar", data: "ct-label", key: "labelClassBarPlugin", type: "input", default: true },
 };
@@ -41,12 +39,16 @@ const legendPluginParameters = {
   labelClass: { name: "Label Class Legend", data: "ct-label", key: "labelClassLegendPlugin", type: "input", default: true },
 };
 const axisPluginParameters = {
-  axisXTitle: { name: "Axis X Title Axis Plugin", data: "My Title", key: "axisXTitleAxisPlugin", type: "input", default: true },
+  axisXTitle: { name: "Axis X Title Axis Plugin", data: "My X Title", key: "axisXTitleAxisPlugin", type: "input", default: true },
   axisXClass: { name: "Axis X Class Axis Plugin", data: "ct-axis-title", key: "axisXClassAxisPlugin", type: "input", default: true },
-  axisXAnchor: { name: "Axis X Anchor Axis Plugin", data: null, key: "axisXAnchorAxisPlugin", type: "input", default: true },
-  axisYTitle: { name: "Axis Y Title Axis Plugin", data: "Dank charts", key: "axisYTitleAxisPlugin", type: "input", default: true },
+  axisXOffsetX: { name: "Axis X Offset X Axis Plugin", data: 0, key: "axisXOffsetXAxisPlugin", type: "input", default: true },
+  axisXOffsetY: { name: "Axis X Offset Y Axis Plugin", data: 50, key: "axisXOffsetYAxisPlugin", type: "input", default: true },
+  axisXAnchor: { name: "Axis X Anchor Axis Plugin", data: "middle", key: "axisXAnchorAxisPlugin", type: "input", default: true },
+  axisYTitle: { name: "Axis Y Title Axis Plugin", data: "My Y Title", key: "axisYTitleAxisPlugin", type: "input", default: true },
   axisYClass: { name: "Axis Y Class Axis Plugin", data: "ct-axis-title", key: "axisYClassAxisPlugin", type: "input", default: true },
-  axisYAnchor: { name: "Axis Y Anchor Axis Plugin", data: true, key: "axisYAnchorAxisPlugin", type: "checkbox", default: true },
+  axisYOffsetX: { name: "Axis Y Offset X Axis Plugin", data: 0, key: "axisYOffsetXAxisPlugin", type: "input", default: true },
+  axisYOffsetY: { name: "Axis Y Offset Y Axis Plugin", data: 20, key: "axisYOffsetYAxisPlugin", type: "input", default: true },
+  axisYAnchor: { name: "Axis Y Anchor Axis Plugin", data: "middle", key: "axisYAnchorAxisPlugin", type: "input", default: true },
   flipTitle: { name: "Flip Title Axis Plugin", data: true, key: "flipTitleAxisPlugin", type: "checkbox", default: true },
 };
 

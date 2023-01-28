@@ -6,7 +6,7 @@ const { Menu, Toggle, Item } = Dropdown;
 const LoadChart = (props) => {
   const [selectedChart, setSelectedChart] = useState(null);
 
-  const { data, functions, settings } = props;
+  const { data, functions, settings, chartType } = props;
   return (
     <div className="load-chart-section">
       <Col className="chart-selection" xs={3}>
@@ -17,11 +17,13 @@ const LoadChart = (props) => {
             </Toggle>
             <Menu>
               {data.getChartsByUser.map((chart) => {
-                return (
-                  <Item key={chart.id} value={chart.id} onClick={() => setSelectedChart(chart)}>
-                    {chart.name}
-                  </Item>
-                );
+                if (chart.type === chartType) {
+                  return (
+                    <Item key={chart.id} value={chart.id} onClick={() => setSelectedChart(chart)}>
+                      {chart.name}
+                    </Item>
+                  );
+                }
               })}
             </Menu>
           </Dropdown>

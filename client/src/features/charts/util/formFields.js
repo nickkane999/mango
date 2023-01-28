@@ -1,3 +1,5 @@
+import { createChartFromJSONData } from "./chartSettings.js";
+
 const updateFormInput = (event, settings, type) => {
   const { setFormData, setPluginFormData } = settings.sessionStorage;
   let { name, value } = event.target;
@@ -40,10 +42,8 @@ const updateFormData = (chartData) => {
 
 const handleSubmit = (event, settings) => {
   event.preventDefault();
-  const { chartContainer } = settings.misc;
-  const { createChart } = settings.functions;
   const formData = settings.functions.getUpdatedFormData();
-  createChart(chartContainer, formData);
+  createChartFromJSONData(settings, formData);
 };
 
 export { updateFormInput, updateFormCheckbox, updateFormData, handleSubmit };

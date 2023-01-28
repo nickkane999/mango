@@ -8,6 +8,9 @@ import { user, formattedDate } from "../../util/general";
 import { savePluginsFile } from "../../features/charts/plugins/all";
 
 function Account() {
+  if (!user) {
+    window.location.href = "/login";
+  }
   const userId = user.id;
   const [loadChartsQuery, { data }] = useLazyQuery(GET_CHARTS_BY_USER);
   const [updateChartQuery] = useMutation(UPDATE_CHART_BY_USER);

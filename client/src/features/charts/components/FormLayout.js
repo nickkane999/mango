@@ -2,12 +2,12 @@ import { Form, Col } from "react-bootstrap";
 const { Control, Label, Group, Check } = Form;
 
 const Checkbox = (props) => {
-  const { field, settings } = props;
+  const { field, settings, type } = props;
   const { functions } = settings;
   return (
     <Col className="form-group" xs={4}>
       <Group className={field.key + " field" + (!field.default ? " hidden" : "")}>
-        <Check type="checkbox" label={field.name} onChange={(event) => functions.updateFormCheckbox(event, settings)} defaultChecked={false} name={field.key} />
+        <Check type="checkbox" label={field.name} onChange={(event) => functions.updateFormCheckbox(event, settings, type)} defaultChecked={false} name={field.key} />
       </Group>
     </Col>
   );
@@ -80,13 +80,8 @@ const formSections = {
 };
 
 const handleDisplayOptions = (event, type) => {
-  console.log(formSections);
-  console.log(formSections[type]);
-  console.log(type);
   if (formSections[type]) {
     if (event.target.checked) {
-      console.log("aaa");
-      console.log(formSections[type]);
       document.querySelector(formSections[type]).style.display = "block";
     } else {
       document.querySelector(formSections[type]).style.display = "none";
