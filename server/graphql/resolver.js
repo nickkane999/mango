@@ -75,7 +75,7 @@ module.exports = {
       const wasDeleted = (await User.deleteOne({ _id: id })).deletedCount;
       return wasDeleted;
     },
-    async createChart(_, { createChartInput: { name, type, json, userId } }) {
+    async createChart(_, { createChartInput: { name, type, json, plugins, userId } }) {
       const user = await User.findById(userId);
       if (!user) {
         throw new Error("User not found");
@@ -87,11 +87,12 @@ module.exports = {
         createdDate: newDate,
         updatedDate: newDate,
         json,
+        plugins,
         user,
       }).save();
       return chart;
     },
-    async updateChart(_, { id, updateChartInput: { name, type, json } }) {
+    async updateChart(_, { id, updateChartInput: { name, type, json, plugins } }) {
       const chart = await Chart.findById(id);
       if (!chart) {
         throw new Error("Chart not found");
@@ -103,6 +104,7 @@ module.exports = {
           name,
           type,
           json,
+          plugins,
           updatedDate: newDate,
         }
       );

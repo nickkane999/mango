@@ -36,12 +36,14 @@ module.exports = gql`
     updatedDate: String!
     user: User!
     json: String!
+    plugins: String
   }
 
   input CreateChartInput {
     name: String!
     type: String!
     json: String!
+    plugins: String
     userId: ID!
   }
 
@@ -49,6 +51,7 @@ module.exports = gql`
     name: String
     type: String
     json: String
+    plugins: String
   }
 
   type Query {

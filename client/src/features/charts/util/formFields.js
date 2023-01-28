@@ -1,5 +1,7 @@
-const updateFormInput = (event, settings) => {
-  const { setFormData } = settings.sessionStorage;
+import { createChartFromJSONData } from "./chartSettings.js";
+
+const updateFormInput = (event, settings, type) => {
+  const { setFormData, setPluginFormData } = settings.sessionStorage;
   let { name, value } = event.target;
   if (value.indexOf(",") !== -1) {
     value = value.split(",");
@@ -9,17 +11,17 @@ const updateFormInput = (event, settings) => {
       });
       let seriesArray = [];
       seriesArray.push(value);
-      setFormData((formData) => ({ ...formData, [name]: seriesArray }));
+      type !== "plugin" ? setFormData((formData) => ({ ...formData, [name]: seriesArray })) : setPluginFormData((formData) => ({ ...formData, [name]: value }));
       return;
     }
   }
-  setFormData((formData) => ({ ...formData, [name]: value }));
+  type !== "plugin" ? setFormData((formData) => ({ ...formData, [name]: value })) : setPluginFormData((formData) => ({ ...formData, [name]: value }));
 };
 
-const updateFormCheckbox = (event, settings) => {
-  const setFormData = settings.functions.setFormData;
+const updateFormCheckbox = (event, settings, type) => {
+  const { setFormData, setPluginFormData } = settings.sessionStorage;
   const { name } = event.target;
-  setFormData((formData) => ({ ...formData, [name]: event.target.checked }));
+  type !== "plugin" ? setFormData((formData) => ({ ...formData, [name]: event.target.checked })) : setPluginFormData((formData) => ({ ...formData, [name]: event.target.checked }));
 };
 
 const updateFormData = (chartData) => {
@@ -40,10 +42,8 @@ const updateFormData = (chartData) => {
 
 const handleSubmit = (event, settings) => {
   event.preventDefault();
-  const { chartContainer } = settings.misc;
-  const { createChart } = settings.functions;
   const formData = settings.functions.getUpdatedFormData();
-  createChart(chartContainer, formData);
+  createChartFromJSONData(settings, formData);
 };
 
 export { updateFormInput, updateFormCheckbox, updateFormData, handleSubmit };

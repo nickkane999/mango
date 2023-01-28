@@ -1,0 +1,26 @@
+import { ctBarLabels } from "chartist-plugin-barlabels";
+
+new Chartist.Bar(
+  "#chart",
+  { labels: ["Mon", "Tue", "Wed", "Thu", "Fri"], series: [[50, 20, 40, 20, 10]] },
+  {
+    plugins: [
+      ctBarLabels({
+        position: {
+          x: function (data) {
+            return data.x1;
+          },
+        },
+        labelOffset: {
+          x: 0,
+          y: 10,
+        },
+        labelInterpolationFnc: function (text) {
+          return text + "$";
+        },
+        labelClass: "ct-label",
+      }),
+      Chartist.plugins.legend(),
+    ],
+  }
+);

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import "./ChartMenu.css";
+import "../scss/ChartMenu.scss";
 import { chartLayouts } from "../data/layouts";
-import ChartSection from "./ChartSection";
+//import ChartSection from "./ChartSection";
+import ChartForm from "./ChartForm";
 //import PieChartArea from "./PieChart";
 
 function ChartMenu() {
@@ -11,15 +12,21 @@ function ChartMenu() {
 
   const selectChartType = (key) => {
     let data = chartLayouts[key];
+    data.settings.chartType = key;
     setSelectedChartName(data.title);
     //setSelectedOption(data);
-    setCurrentComponent(<ChartSection settings={data.settings} chartType={key} />);
+    //setCurrentComponent(<ChartSection settings={data.settings} chartType={key} />);
+    setCurrentComponent(<ChartForm settings={data.settings} />);
   };
 
   const displayChartOptions = () => {
     // loop through the chartLayouts object and return a dropdown item for each
     return Object.keys(chartLayouts).map((chart) => {
-      return <Dropdown.Item eventKey={chartLayouts[chart].key}>{chartLayouts[chart].title}</Dropdown.Item>;
+      return (
+        <Dropdown.Item key={chartLayouts[chart].key} eventKey={chartLayouts[chart].key}>
+          {chartLayouts[chart].title}
+        </Dropdown.Item>
+      );
     });
   };
 

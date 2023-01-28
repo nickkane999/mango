@@ -20,3 +20,11 @@ docker run -p 5000:5000 mango-server
 
 docker build -t mango-client .
 docker run -p 3000:3000 mango-client
+
+# Basic User guide for app
+
+1. Create an account from the Account page
+2. Use the Charts page to create your bar or line chart.
+3. Save your chart to your account if you need to use it again
+4. Save your chart on a file, use this file on your server to display the chart. Will need to have a <div id="chart"></div> section to load your Graphic
+5. If your chart uses an available plugin, go to the account page and Save the Plugins File to your computer. Loading this on your page will ensure your graphic matches the one you created on the app.

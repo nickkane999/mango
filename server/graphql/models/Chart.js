@@ -6,6 +6,7 @@ const chartSchema = new Schema({
   createdDate: String,
   updatedDate: String,
   user: { type: Schema.Types.ObjectId, ref: "User" },
+  plugins: String,
   json: String,
 });
 

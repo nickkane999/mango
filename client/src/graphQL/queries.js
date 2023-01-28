@@ -34,6 +34,7 @@ const GET_CHARTS_BY_USER = gql`
       name
       type
       json
+      plugins
       updatedDate
       createdDate
     }
@@ -47,6 +48,7 @@ const UPDATE_CHART_BY_USER = gql`
       name
       type
       json
+      plugins
       updatedDate
     }
   }
